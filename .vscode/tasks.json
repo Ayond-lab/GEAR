@@ -1,0 +1,18 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "gear: test",
+      "type": "shell",
+      "command": "make test",
+      "problemMatcher": ["$go"]
+    },
+    {
+      "label": "gear: manifests",
+      "type": "shell",
+      "command": "make manifests",
+      "problemMatcher": []
+    }
+  ]
+}
+
