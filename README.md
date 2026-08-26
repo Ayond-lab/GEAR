@@ -1,9 +1,5 @@
 # GEAR Development Build
 
-Status: development scaffold  
-Target maturity: TRL 4 laboratory validation  
-Demonstration domain: synthetic CV screening
-
 GEAR is a governed execution layer for consequential automation. This subtree contains the development implementation described by the technical specification: authority separation, sidecar enforcement, deterministic policy decisions, and a tamper-evident audit chain.
 
 The initial scaffold is intentionally dependency-light. Milestone 0 establishes contracts, API shape, local invariants, conformance placeholders, and build targets. Later milestones can replace the local stand-ins with kubebuilder, Kubernetes clients, OPA bundle loading, bbolt persistence, and mTLS runtime wiring.
