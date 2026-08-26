@@ -36,6 +36,21 @@ type Verification struct {
 	Affected []Range
 }
 
+type hashableEntry struct {
+	Seq          uint64   `json:"seq"`
+	PrevHash     string   `json:"prevHash"`
+	TS           string   `json:"ts"`
+	Type         string   `json:"type"`
+	ActionRef    string   `json:"actionRef"`
+	Actor        string   `json:"actor"`
+	Mandate      string   `json:"mandate"`
+	Rule         string   `json:"rule"`
+	Decision     string   `json:"decision"`
+	InputsDigest string   `json:"inputsDigest"`
+	Model        string   `json:"model"`
+	DataAccessed []string `json:"dataAccessed"`
+}
+
 func Append(prev Entry, next Entry) (Entry, error) {
 	if next.Seq == 0 {
 		next.Seq = prev.Seq + 1
@@ -56,8 +71,20 @@ func Append(prev Entry, next Entry) (Entry, error) {
 }
 
 func HashEntry(entry Entry) (string, error) {
-	entry.Hash = ""
-	canonical, err := CanonicalJSON(entry)
+	canonical, err := CanonicalJSON(hashableEntry{
+		Seq:          entry.Seq,
+		PrevHash:     entry.PrevHash,
+		TS:           entry.TS,
+		Type:         entry.Type,
+		ActionRef:    entry.ActionRef,
+		Actor:        entry.Actor,
+		Mandate:      entry.Mandate,
+		Rule:         entry.Rule,
+		Decision:     entry.Decision,
+		InputsDigest: entry.InputsDigest,
+		Model:        entry.Model,
+		DataAccessed: entry.DataAccessed,
+	})
 	if err != nil {
 		return "", err
 	}
@@ -124,4 +151,3 @@ func coalesce(ranges []Range) []Range {
 	}
 	return out
 }
-

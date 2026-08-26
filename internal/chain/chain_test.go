@@ -13,7 +13,7 @@ func TestAppendAndVerifyFiveHundredEntries(t *testing.T) {
 
 func TestVerifyDetectsModification(t *testing.T) {
 	entries := buildEntries(t, 25)
-	entries[12].Decision = "authorise"
+	entries[12].Decision = "deny"
 
 	result := Verify(entries)
 
@@ -75,4 +75,3 @@ func buildEntries(t *testing.T, count int) []Entry {
 	}
 	return entries
 }
-
