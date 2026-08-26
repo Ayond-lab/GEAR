@@ -1,0 +1,6 @@
+/*
+Copyright 2026 GEAR contributors.
+
+Licensed for development use in the TRL 4 laboratory validation scaffold.
+*/
+

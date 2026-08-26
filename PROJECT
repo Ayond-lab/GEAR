@@ -1,0 +1,44 @@
+domain: eu
+layout:
+- go.kubebuilder.io/v4
+projectName: gear
+repo: gear
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: false
+  domain: eu
+  group: gear
+  kind: Ability
+  path: gear/api/v1
+  version: v1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: false
+  domain: eu
+  group: gear
+  kind: Mandate
+  path: gear/api/v1
+  version: v1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: false
+  domain: eu
+  group: gear
+  kind: GovernedAction
+  path: gear/api/v1
+  version: v1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: false
+  domain: eu
+  group: gear
+  kind: EscalationItem
+  path: gear/api/v1
+  version: v1
+version: "3"
+

@@ -23,3 +23,14 @@ The initial scaffold is intentionally dependency-light. Milestone 0 establishes 
 6. CV demonstration path.
 7. Console and evidence.
 
+## Local Checks
+
+```bash
+make controller-gen
+make generate
+make manifests
+make test
+make opa-test
+```
+
+`controller-gen` is installed into `bin/` by the Makefile. The first Milestone 1 wiring is present; strict generated CRDs and deepcopy output land when the API skeletons are converted to Kubernetes runtime types.

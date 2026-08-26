@@ -1,23 +1,36 @@
 SHELL := /bin/bash
 
-.PHONY: tools generate manifests test test-go test-inference test-console test-envtest opa-test cluster-up docker-build kind-load deploy conformance experiment evidence-pack
+LOCALBIN ?= $(shell pwd)/bin
+CONTROLLER_GEN ?= $(LOCALBIN)/controller-gen
+CONTROLLER_TOOLS_VERSION ?= v0.17.3
+
+.PHONY: tools controller-gen generate manifests test test-go test-inference test-console test-envtest opa-test cluster-up docker-build kind-load deploy conformance experiment evidence-pack
 
 tools:
 	@echo "Required external tools: go 1.24, python 3.12, node 22, kubectl, helm, opa, k3d/k3s, cilium, hubble, k6"
 	@command -v go >/dev/null || { echo "missing: go"; exit 127; }
 	@command -v python3 >/dev/null || { echo "missing: python3"; exit 127; }
 	@command -v node >/dev/null || { echo "missing: node"; exit 127; }
+	@$(MAKE) controller-gen
 
-generate:
-	@echo "Generation placeholder: CRD types are dependency-light skeletons for Milestone 0."
-	@echo "Run kubebuilder/controller-gen wiring in Milestone 1."
+$(LOCALBIN):
+	mkdir -p $(LOCALBIN)
 
-manifests:
+controller-gen: $(CONTROLLER_GEN)
+
+$(CONTROLLER_GEN): | $(LOCALBIN)
+	@test -s $(CONTROLLER_GEN) || GOBIN=$(LOCALBIN) go install sigs.k8s.io/controller-tools/cmd/controller-gen@$(CONTROLLER_TOOLS_VERSION)
+
+generate: controller-gen
+	$(CONTROLLER_GEN) object:headerFile="hack/boilerplate.go.txt" paths="./api/..."
+
+manifests: controller-gen
+	$(CONTROLLER_GEN) crd paths="./api/..." output:crd:artifacts:config=deploy/base/crds
 	@test -f deploy/base/crds/gear.eu_abilities.yaml
 	@test -f deploy/base/crds/gear.eu_mandates.yaml
 	@test -f deploy/base/crds/gear.eu_governedactions.yaml
 	@test -f deploy/base/crds/gear.eu_escalationitems.yaml
-	@echo "Static Milestone 0 CRD manifests are present."
+	@echo "CRD manifests are present."
 
 test: test-go test-inference test-console
 
