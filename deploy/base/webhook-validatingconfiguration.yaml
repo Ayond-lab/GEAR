@@ -1,0 +1,31 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: gear-webhooks
+  annotations:
+    cert-manager.io/inject-ca-from: gear-system/gear-webhooks-serving-cert
+webhooks:
+  - name: mandates.gear.eu
+    admissionReviewVersions: ["v1"]
+    sideEffects: None
+    failurePolicy: Fail
+    matchPolicy: Equivalent
+    namespaceSelector:
+      matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: NotIn
+          values:
+            - gear-system
+    rules:
+      - apiGroups: ["gear.eu"]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["mandates"]
+        scope: Namespaced
+    clientConfig:
+      service:
+        namespace: gear-system
+        name: gear-webhooks
+        path: /validate-gear-eu-v1-mandate
+        port: 443
+

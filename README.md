@@ -38,3 +38,5 @@ make opa-test
 The API skeletons have now been converted to Kubernetes runtime types. `make generate` emits `api/v1/zz_generated.deepcopy.go`, and `make manifests` emits CRD schemas from the Go API definitions.
 
 The first `gear-webhooks` validation slice is present in `internal/webhooks`: mandate creation/update validation resolves the referenced `Ability` and rejects mandates that widen the ability manifest. `make test-envtest` now runs the webhook validation tests.
+
+`cmd/gear-webhooks` now starts a controller-runtime manager, registers the Mandate validating webhook at `/validate-gear-eu-v1-mandate`, and exposes health/readiness probes. `deploy/base` includes the webhook Deployment, Service, RBAC, namespace, and fail-closed `ValidatingWebhookConfiguration`.

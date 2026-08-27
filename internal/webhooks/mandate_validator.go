@@ -9,15 +9,18 @@ import (
 	"gear/internal/subsume"
 
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
+	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/apimachinery/pkg/util/validation/field"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+	"sigs.k8s.io/controller-runtime/pkg/webhook/admission"
 )
 
 var (
-	ErrNilReader  = errors.New("mandate validator requires a Kubernetes reader")
-	ErrNilMandate = errors.New("mandate validator requires a mandate")
+	ErrNilReader        = errors.New("mandate validator requires a Kubernetes reader")
+	ErrNilMandate       = errors.New("mandate validator requires a mandate")
+	ErrUnexpectedObject = errors.New("mandate validator received an unexpected object type")
 )
 
 type MandateValidator struct {
@@ -28,12 +31,36 @@ func NewMandateValidator(reader client.Reader) MandateValidator {
 	return MandateValidator{Reader: reader}
 }
 
-func (v MandateValidator) ValidateCreate(ctx context.Context, mandate *gearv1.Mandate) error {
+func (v MandateValidator) ValidateCreateMandate(ctx context.Context, mandate *gearv1.Mandate) error {
 	return v.validateMandate(ctx, mandate)
 }
 
-func (v MandateValidator) ValidateUpdate(ctx context.Context, _ *gearv1.Mandate, mandate *gearv1.Mandate) error {
+func (v MandateValidator) ValidateUpdateMandate(ctx context.Context, _ *gearv1.Mandate, mandate *gearv1.Mandate) error {
 	return v.validateMandate(ctx, mandate)
+}
+
+func (v MandateValidator) ValidateCreate(ctx context.Context, obj runtime.Object) (admission.Warnings, error) {
+	mandate, ok := obj.(*gearv1.Mandate)
+	if !ok {
+		return nil, fmt.Errorf("%w: %T", ErrUnexpectedObject, obj)
+	}
+	return nil, v.ValidateCreateMandate(ctx, mandate)
+}
+
+func (v MandateValidator) ValidateUpdate(ctx context.Context, oldObj runtime.Object, newObj runtime.Object) (admission.Warnings, error) {
+	oldMandate, ok := oldObj.(*gearv1.Mandate)
+	if !ok {
+		return nil, fmt.Errorf("%w: old=%T", ErrUnexpectedObject, oldObj)
+	}
+	newMandate, ok := newObj.(*gearv1.Mandate)
+	if !ok {
+		return nil, fmt.Errorf("%w: new=%T", ErrUnexpectedObject, newObj)
+	}
+	return nil, v.ValidateUpdateMandate(ctx, oldMandate, newMandate)
+}
+
+func (v MandateValidator) ValidateDelete(context.Context, runtime.Object) (admission.Warnings, error) {
+	return nil, nil
 }
 
 func ValidateMandateSubsumption(ability gearv1.AbilitySpec, mandate gearv1.MandateSpec) error {

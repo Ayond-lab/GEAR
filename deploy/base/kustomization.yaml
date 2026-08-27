@@ -1,6 +1,10 @@
 resources:
+  - namespace.yaml
   - crds/gear.eu_abilities.yaml
   - crds/gear.eu_mandates.yaml
   - crds/gear.eu_governedactions.yaml
   - crds/gear.eu_escalationitems.yaml
-
+  - webhook-rbac.yaml
+  - webhook-deployment.yaml
+  - webhook-service.yaml
+  - webhook-validatingconfiguration.yaml

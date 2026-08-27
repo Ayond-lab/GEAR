@@ -30,6 +30,9 @@ manifests: controller-gen
 	@test -f deploy/base/crds/gear.eu_mandates.yaml
 	@test -f deploy/base/crds/gear.eu_governedactions.yaml
 	@test -f deploy/base/crds/gear.eu_escalationitems.yaml
+	@test -f deploy/base/webhook-deployment.yaml
+	@test -f deploy/base/webhook-service.yaml
+	@test -f deploy/base/webhook-validatingconfiguration.yaml
 	@echo "CRD manifests are present."
 
 test: test-go test-inference test-console

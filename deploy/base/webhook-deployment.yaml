@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gear-webhooks
+  namespace: gear-system
+  labels:
+    app.kubernetes.io/name: gear-webhooks
+    app.kubernetes.io/part-of: gear
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: gear-webhooks
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: gear-webhooks
+        app.kubernetes.io/part-of: gear
+    spec:
+      serviceAccountName: gear-webhooks
+      automountServiceAccountToken: true
+      containers:
+        - name: gear-webhooks
+          image: ghcr.io/ayond-lab/gear-webhooks:dev
+          imagePullPolicy: IfNotPresent
+          args:
+            - --metrics-bind-address=0
+            - --health-probe-bind-address=:8081
+            - --webhook-cert-dir=/tmp/k8s-webhook-server/serving-certs
+            - --webhook-port=9443
+          ports:
+            - name: webhook
+              containerPort: 9443
+            - name: healthz
+              containerPort: 8081
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: healthz
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: healthz
+          volumeMounts:
+            - name: serving-cert
+              mountPath: /tmp/k8s-webhook-server/serving-certs
+              readOnly: true
+      volumes:
+        - name: serving-cert
+          secret:
+            secretName: gear-webhooks-serving-cert
+

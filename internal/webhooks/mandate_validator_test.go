@@ -2,17 +2,21 @@ package webhooks
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
+	"net/http"
 	"strings"
 	"testing"
 
 	gearv1 "gear/api/v1"
 
+	admissionv1 "k8s.io/api/admission/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
+	"sigs.k8s.io/controller-runtime/pkg/webhook/admission"
 )
 
 func TestValidateMandateSubsumptionAllowsNarrowedMandate(t *testing.T) {
@@ -43,7 +47,7 @@ func TestMandateValidatorFetchesAbilityAndAllowsValidMandate(t *testing.T) {
 	validator := NewMandateValidator(fakeClient(t, cvScreenAbility()))
 	mandate := narrowedMandate()
 
-	err := validator.ValidateCreate(context.Background(), mandate)
+	err := validator.ValidateCreateMandate(context.Background(), mandate)
 
 	if err != nil {
 		t.Fatalf("expected mandate to be accepted, got %v", err)
@@ -54,7 +58,7 @@ func TestMandateValidatorRejectsUnknownAbility(t *testing.T) {
 	validator := NewMandateValidator(fakeClient(t))
 	mandate := narrowedMandate()
 
-	err := validator.ValidateCreate(context.Background(), mandate)
+	err := validator.ValidateCreateMandate(context.Background(), mandate)
 
 	if !apierrors.IsInvalid(err) {
 		t.Fatalf("expected invalid error for unknown ability, got %T: %v", err, err)
@@ -69,7 +73,7 @@ func TestMandateValidatorRejectsWidenedConnectorGrant(t *testing.T) {
 	mandate := narrowedMandate()
 	mandate.Spec.ConnectorGrants = append(mandate.Spec.ConnectorGrants, gearv1.ConnectorScope{Connector: "mail", Scope: "send"})
 
-	err := validator.ValidateCreate(context.Background(), mandate)
+	err := validator.ValidateCreateMandate(context.Background(), mandate)
 
 	if !apierrors.IsInvalid(err) {
 		t.Fatalf("expected invalid error for widened connector grant, got %T: %v", err, err)
@@ -80,26 +84,91 @@ func TestMandateValidatorRejectsWidenedConnectorGrant(t *testing.T) {
 }
 
 func TestMandateValidatorRejectsNilReader(t *testing.T) {
-	err := NewMandateValidator(nil).ValidateCreate(context.Background(), narrowedMandate())
+	err := NewMandateValidator(nil).ValidateCreateMandate(context.Background(), narrowedMandate())
 	if !errors.Is(err, ErrNilReader) {
 		t.Fatalf("expected nil reader error, got %v", err)
 	}
 }
 
 func TestMandateValidatorRejectsNilMandate(t *testing.T) {
-	err := NewMandateValidator(fakeClient(t)).ValidateCreate(context.Background(), nil)
+	err := NewMandateValidator(fakeClient(t)).ValidateCreateMandate(context.Background(), nil)
 	if !errors.Is(err, ErrNilMandate) {
 		t.Fatalf("expected nil mandate error, got %v", err)
 	}
 }
 
+func TestMandateAdmissionHandlerAllowsNarrowedMandate(t *testing.T) {
+	scheme := testScheme(t)
+	handler := admission.WithCustomValidator(
+		scheme,
+		&gearv1.Mandate{},
+		NewMandateValidator(fakeClientWithScheme(t, scheme, cvScreenAbility())),
+	)
+
+	response := handler.Handle(context.Background(), admissionRequest(t, narrowedMandate()))
+
+	if !response.Allowed {
+		t.Fatalf("expected admission to allow narrowed mandate, got %#v", response.Result)
+	}
+}
+
+func TestMandateAdmissionHandlerRejectsWidenedMandate(t *testing.T) {
+	scheme := testScheme(t)
+	mandate := narrowedMandate()
+	mandate.Spec.ActionGrants = append(mandate.Spec.ActionGrants, gearv1.ActionGrant{Class: "DELETE_RECORD", Disposition: "permit"})
+	handler := admission.WithCustomValidator(
+		scheme,
+		&gearv1.Mandate{},
+		NewMandateValidator(fakeClientWithScheme(t, scheme, cvScreenAbility())),
+	)
+
+	response := handler.Handle(context.Background(), admissionRequest(t, mandate))
+
+	if response.Allowed {
+		t.Fatal("expected admission to reject widened mandate")
+	}
+	if response.Result.Code == http.StatusOK {
+		t.Fatalf("expected non-OK admission status, got %#v", response.Result)
+	}
+	if !strings.Contains(response.Result.Message, "action class is outside manifest") {
+		t.Fatalf("expected subsumption violation in admission response, got %#v", response.Result)
+	}
+}
+
 func fakeClient(t *testing.T, objects ...runtime.Object) client.Reader {
+	t.Helper()
+	return fakeClientWithScheme(t, testScheme(t), objects...)
+}
+
+func fakeClientWithScheme(t *testing.T, scheme *runtime.Scheme, objects ...runtime.Object) client.Reader {
+	t.Helper()
+	return fake.NewClientBuilder().WithScheme(scheme).WithRuntimeObjects(objects...).Build()
+}
+
+func testScheme(t *testing.T) *runtime.Scheme {
 	t.Helper()
 	scheme := runtime.NewScheme()
 	if err := gearv1.AddToScheme(scheme); err != nil {
 		t.Fatal(err)
 	}
-	return fake.NewClientBuilder().WithScheme(scheme).WithRuntimeObjects(objects...).Build()
+	return scheme
+}
+
+func admissionRequest(t *testing.T, mandate *gearv1.Mandate) admission.Request {
+	t.Helper()
+	data, err := json.Marshal(mandate)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return admission.Request{
+		AdmissionRequest: admissionv1.AdmissionRequest{
+			UID:       "test-request",
+			Operation: admissionv1.Create,
+			Object: runtime.RawExtension{
+				Raw: data,
+			},
+		},
+	}
 }
 
 func cvScreenAbility() *gearv1.Ability {
