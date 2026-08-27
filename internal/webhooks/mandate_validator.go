@@ -20,7 +20,8 @@ import (
 var (
 	ErrNilReader        = errors.New("mandate validator requires a Kubernetes reader")
 	ErrNilMandate       = errors.New("mandate validator requires a mandate")
-	ErrUnexpectedObject = errors.New("mandate validator received an unexpected object type")
+	ErrNilDefaulter     = errors.New("webhook registration requires a defaulter")
+	ErrUnexpectedObject = errors.New("webhook received an unexpected object type")
 )
 
 type MandateValidator struct {

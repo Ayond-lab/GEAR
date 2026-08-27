@@ -8,3 +8,4 @@ resources:
   - webhook-deployment.yaml
   - webhook-service.yaml
   - webhook-validatingconfiguration.yaml
+  - webhook-mutatingconfiguration.yaml

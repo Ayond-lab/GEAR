@@ -40,3 +40,5 @@ The API skeletons have now been converted to Kubernetes runtime types. `make gen
 The first `gear-webhooks` validation slice is present in `internal/webhooks`: mandate creation/update validation resolves the referenced `Ability` and rejects mandates that widen the ability manifest. `make test-envtest` now runs the webhook validation tests.
 
 `cmd/gear-webhooks` now starts a controller-runtime manager, registers the Mandate validating webhook at `/validate-gear-eu-v1-mandate`, and exposes health/readiness probes. `deploy/base` includes the webhook Deployment, Service, RBAC, namespace, and fail-closed `ValidatingWebhookConfiguration`.
+
+Ability pods labelled `gear.eu/ability=<ability-name>` are now handled by a mutating webhook at `/mutate-v1-pod`. It injects the `gear-pep` sidecar, the UID-scoped egress init container, PEP-only credential volumes, disables pod-level service account token automounting, and pins ability/PEP UIDs to `1001` and `1337`.

@@ -33,7 +33,8 @@ manifests: controller-gen
 	@test -f deploy/base/webhook-deployment.yaml
 	@test -f deploy/base/webhook-service.yaml
 	@test -f deploy/base/webhook-validatingconfiguration.yaml
-	@echo "CRD manifests are present."
+	@test -f deploy/base/webhook-mutatingconfiguration.yaml
+	@echo "CRD and webhook manifests are present."
 
 test: test-go test-inference test-console
 

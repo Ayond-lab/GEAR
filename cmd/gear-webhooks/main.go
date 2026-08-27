@@ -48,6 +48,10 @@ func main() {
 		mgr.GetScheme(),
 		mgr.GetClient(),
 	))
+	must("register pod mutating webhook", gearwebhooks.RegisterPodMutationWebhookWithManager(
+		mgr.GetWebhookServer(),
+		mgr.GetScheme(),
+	))
 	must("add health check", mgr.AddHealthzCheck("healthz", healthz.Ping))
 	must("add readiness check", mgr.AddReadyzCheck("webhook", mgr.GetWebhookServer().StartedChecker()))
 	must("start manager", mgr.Start(ctrl.SetupSignalHandler()))

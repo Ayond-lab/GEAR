@@ -27,6 +27,21 @@ func TestRegisterMandateWebhook(t *testing.T) {
 	}
 }
 
+func TestRegisterPodMutationWebhook(t *testing.T) {
+	server := &recordingServer{}
+	err := RegisterPodMutationWebhook(server, podScheme(t), NewPodMutator())
+	if err != nil {
+		t.Fatalf("expected pod mutation webhook registration to succeed, got %v", err)
+	}
+
+	if server.path != PodMutationPath {
+		t.Fatalf("expected path %q, got %q", PodMutationPath, server.path)
+	}
+	if server.handler == nil {
+		t.Fatal("expected handler to be registered")
+	}
+}
+
 func TestRegisterMandateWebhookRejectsNilServer(t *testing.T) {
 	err := RegisterMandateWebhook(nil, testScheme(t), NewMandateValidator(fakeClient(t)))
 	if !errors.Is(err, ErrNilWebhookServer) {
@@ -38,6 +53,13 @@ func TestRegisterMandateWebhookRejectsNilScheme(t *testing.T) {
 	err := RegisterMandateWebhook(&recordingServer{}, nil, NewMandateValidator(fakeClient(t)))
 	if !errors.Is(err, ErrNilScheme) {
 		t.Fatalf("expected nil scheme error, got %v", err)
+	}
+}
+
+func TestRegisterPodMutationWebhookRejectsNilDefaulter(t *testing.T) {
+	err := RegisterPodMutationWebhook(&recordingServer{}, podScheme(t), nil)
+	if !errors.Is(err, ErrNilDefaulter) {
+		t.Fatalf("expected nil defaulter error, got %v", err)
 	}
 }
 
