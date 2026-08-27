@@ -45,7 +45,8 @@ test-console:
 	cd console && node --test src/*.test.js
 
 test-envtest:
-	@echo "Envtest suite lands with gear-webhooks in Milestone 1."
+	@command -v go >/dev/null || { echo "missing: go"; exit 127; }
+	go test ./internal/webhooks
 
 opa-test:
 	@if command -v opa >/dev/null; then opa test policy/bundle; else echo "missing: opa; skipped policy bundle tests"; fi
