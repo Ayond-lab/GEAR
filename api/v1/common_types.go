@@ -1,18 +1,5 @@
 package v1
 
-type ObjectMeta struct {
-	Name      string            `json:"name,omitempty"`
-	Namespace string            `json:"namespace,omitempty"`
-	Labels    map[string]string `json:"labels,omitempty"`
-}
-
-type Time string
-
-type SecretReference struct {
-	Name      string `json:"name"`
-	Namespace string `json:"namespace,omitempty"`
-}
-
 type Publisher struct {
 	ID   string `json:"id"`
 	Name string `json:"name,omitempty"`
@@ -71,4 +58,3 @@ type RuleRef struct {
 	ID      string `json:"id"`
 	Version int    `json:"version"`
 }
-

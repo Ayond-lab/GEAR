@@ -34,3 +34,5 @@ make opa-test
 ```
 
 `controller-gen` is installed into `bin/` by the Makefile. The first Milestone 1 wiring is present; strict generated CRDs and deepcopy output land when the API skeletons are converted to Kubernetes runtime types.
+
+The API skeletons have now been converted to Kubernetes runtime types. `make generate` emits `api/v1/zz_generated.deepcopy.go`, and `make manifests` emits CRD schemas from the Go API definitions.

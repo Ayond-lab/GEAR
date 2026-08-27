@@ -1,14 +1,19 @@
 package v1
 
+import metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
 // Ability is the publisher-declared capability boundary for one ability
-// version. Kubernetes status is represented here as a normal field until
-// kubebuilder markers are added in Milestone 1.
+// version.
+//
+// +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:resource:scope=Namespaced,shortName=ability
 type Ability struct {
-	APIVersion string        `json:"apiVersion,omitempty"`
-	Kind       string        `json:"kind,omitempty"`
-	Metadata   ObjectMeta    `json:"metadata"`
-	Spec       AbilitySpec   `json:"spec"`
-	Status     AbilityStatus `json:"status,omitempty"`
+	metav1.TypeMeta   `json:",inline"`
+	metav1.ObjectMeta `json:"metadata,omitempty"`
+
+	Spec   AbilitySpec   `json:"spec,omitempty"`
+	Status AbilityStatus `json:"status,omitempty"`
 }
 
 type AbilitySpec struct {
@@ -30,3 +35,11 @@ type AbilityStatus struct {
 	Reason          string `json:"reason,omitempty"`
 }
 
+// AbilityList contains a list of Ability resources.
+//
+// +kubebuilder:object:root=true
+type AbilityList struct {
+	metav1.TypeMeta `json:",inline"`
+	metav1.ListMeta `json:"metadata,omitempty"`
+	Items           []Ability `json:"items"`
+}

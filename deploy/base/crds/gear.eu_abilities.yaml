@@ -1,31 +1,126 @@
+---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.17.3
   name: abilities.gear.eu
 spec:
   group: gear.eu
-  scope: Namespaced
   names:
-    plural: abilities
-    singular: ability
     kind: Ability
+    listKind: AbilityList
+    plural: abilities
     shortNames:
-      - ability
+    - ability
+    singular: ability
+  scope: Namespaced
   versions:
-    - name: v1
-      served: true
-      storage: true
-      subresources:
-        status: {}
-      schema:
-        openAPIV3Schema:
-          type: object
-          required: ["spec"]
-          properties:
-            spec:
-              type: object
-              x-kubernetes-preserve-unknown-fields: true
-            status:
-              type: object
-              x-kubernetes-preserve-unknown-fields: true
-
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Ability is the publisher-declared capability boundary for one ability
+          version.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              actionClasses:
+                items:
+                  type: string
+                type: array
+              ceilings:
+                properties:
+                  dailyActions:
+                    type: integer
+                type: object
+              certificationStatus:
+                type: string
+              connectorScopes:
+                items:
+                  properties:
+                    connector:
+                      type: string
+                    scope:
+                      type: string
+                  required:
+                  - connector
+                  - scope
+                  type: object
+                type: array
+              dataClasses:
+                items:
+                  type: string
+                type: array
+              declaredTriggers:
+                items:
+                  properties:
+                    id:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - id
+                  - type
+                  type: object
+                type: array
+              manifestDigest:
+                type: string
+              publisher:
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                required:
+                - id
+                type: object
+              reversibilityClasses:
+                additionalProperties:
+                  type: string
+                type: object
+              version:
+                type: string
+            required:
+            - actionClasses
+            - ceilings
+            - certificationStatus
+            - connectorScopes
+            - dataClasses
+            - declaredTriggers
+            - manifestDigest
+            - publisher
+            - reversibilityClasses
+            - version
+            type: object
+          status:
+            properties:
+              observedVersion:
+                type: string
+              reason:
+                type: string
+              valid:
+                type: boolean
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
