@@ -3,13 +3,14 @@ export const views = ["mandate-derivation", "escalation-queue", "evidence-audit"
 export const viewDefinitions = [
   {
     id: "mandate-derivation",
-    label: "Mandate",
-    endpoint: "/api/mandate",
-    metrics: ["abilityRef", "abilityVersion", "manifestDigest"]
+    label: "Mandate Assistant",
+    endpoint: "/api/assistant/evaluate",
+    method: "POST",
+    workflow: ["request", "interpret", "refuse-or-sign", "execute"]
   },
   {
     id: "escalation-queue",
-    label: "Escalations",
+    label: "Human Review",
     endpoint: "/api/escalations",
     decisions: ["approve", "decline", "info"]
   },
@@ -18,6 +19,20 @@ export const viewDefinitions = [
     label: "Evidence",
     endpoints: ["/api/audit", "/api/evidence", "/api/privacy-scan", "/api/latency"]
   }
+];
+
+export const defaultHRPrompt = "Rank the candidates who are citizens of EEA.";
+
+export const lawfulAlternativePrompt =
+  "Record work-authorisation status for human planning without ranking, filtering, or excluding candidates.";
+
+export const workflowStages = [
+  { id: "request", label: "HR request" },
+  { id: "interpret", label: "Interpret mandate" },
+  { id: "refuse-or-sign", label: "Refuse or sign" },
+  { id: "execute", label: "Run governed path" },
+  { id: "review", label: "Human review" },
+  { id: "evidence", label: "Evidence" }
 ];
 
 export const hiddenPolicyInputs = [

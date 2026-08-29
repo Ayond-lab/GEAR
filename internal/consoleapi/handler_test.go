@@ -34,6 +34,54 @@ func TestMandateViewShowsRefusalAndNarrowedMandate(t *testing.T) {
 	}
 }
 
+func TestAssistantWorkflowRefusesUnsafePromptAndReturnsLawfulRun(t *testing.T) {
+	server := httptest.NewServer(NewHandler(testConfig(t)))
+	defer server.Close()
+
+	resp := postJSON(t, server.URL+"/api/assistant/evaluate", []byte(`{"prompt":"Rank the candidates who are citizens of EEA."}`))
+	if resp.StatusCode != http.StatusOK {
+		t.Fatalf("expected assistant workflow 200, got %d", resp.StatusCode)
+	}
+	defer resp.Body.Close()
+	var view AssistantView
+	if err := json.NewDecoder(resp.Body).Decode(&view); err != nil {
+		t.Fatal(err)
+	}
+	if view.Outcome != "refused" || view.Interpretation.ActionClass != "CANDIDATE_RANK" || view.Interpretation.Criterion != "citizenship" {
+		t.Fatalf("expected protected ranking refusal, got %#v", view)
+	}
+	if view.Refusal == nil || view.RefusalAuditRef == "" || view.RecommendedMandate == nil {
+		t.Fatalf("expected refusal audit and recommended narrowed mandate, got %#v", view)
+	}
+	if view.Run.Applications != 60 || view.Run.Authorised != 45 || view.Run.PendingEscalations != 3 {
+		t.Fatalf("expected synthetic CV run summary, got %#v", view.Run)
+	}
+	if len(view.PolicyFields) != 10 || len(view.HiddenInputs) != 4 || len(view.Guardrails) == 0 {
+		t.Fatalf("expected workflow guardrails and policy boundary, got %#v", view)
+	}
+}
+
+func TestAssistantWorkflowSignsLawfulPrompt(t *testing.T) {
+	server := httptest.NewServer(NewHandler(testConfig(t)))
+	defer server.Close()
+
+	resp := postJSON(t, server.URL+"/api/assistant/evaluate", []byte(`{"prompt":"Record work-authorisation status for human planning without ranking, filtering, or excluding candidates."}`))
+	if resp.StatusCode != http.StatusOK {
+		t.Fatalf("expected assistant workflow 200, got %d", resp.StatusCode)
+	}
+	defer resp.Body.Close()
+	var view AssistantView
+	if err := json.NewDecoder(resp.Body).Decode(&view); err != nil {
+		t.Fatal(err)
+	}
+	if view.Outcome != "signed" || view.Refusal != nil || view.RecommendedMandate == nil {
+		t.Fatalf("expected signed lawful prompt, got %#v", view)
+	}
+	if view.Interpretation.Decision != "allow" || view.Interpretation.ActionClass != "RECORD_ANNOTATE" {
+		t.Fatalf("expected deterministic interpretation record, got %#v", view.Interpretation)
+	}
+}
+
 func TestEscalationDecisionFlowUsesReasonRefs(t *testing.T) {
 	server := httptest.NewServer(NewHandler(testConfig(t)))
 	defer server.Close()

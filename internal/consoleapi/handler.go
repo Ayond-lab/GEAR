@@ -19,10 +19,15 @@ import (
 	"gear/internal/cvdemo"
 	"gear/internal/evidencepack"
 	"gear/internal/latency"
+	"gear/internal/legality"
 	"gear/internal/mandatederive"
 )
 
-const unlawfulPurposeLabel = "Protected citizenship selection purpose"
+const (
+	unlawfulPurposeLabel = "Protected citizenship selection purpose"
+	defaultHRPrompt      = "Rank the candidates who are citizens of EEA."
+	lawfulPlanningPrompt = "Record work-authorisation status for human planning without ranking, filtering, or excluding candidates."
+)
 
 type Config struct {
 	ConsoleDir     string
@@ -114,10 +119,50 @@ type ScannedArtifact struct {
 	Findings []auditprivacy.Finding `json:"findings"`
 }
 
+type AssistantRequest struct {
+	Prompt string `json:"prompt"`
+}
+
+type AssistantView struct {
+	Prompt             string                  `json:"prompt"`
+	Outcome            string                  `json:"outcome"`
+	Interpretation     PromptInterpretation    `json:"interpretation"`
+	Refusal            *mandatederive.Refusal  `json:"refusal,omitempty"`
+	RefusalAuditRef    string                  `json:"refusalAuditRef,omitempty"`
+	RecommendedPrompt  string                  `json:"recommendedPrompt"`
+	RecommendedMandate *gearv1.Mandate         `json:"recommendedMandate,omitempty"`
+	Clauses            []mandatederive.Clause  `json:"clauses"`
+	Guardrails         []WorkflowGuardrail     `json:"guardrails"`
+	Run                RunCounts               `json:"run"`
+	PolicyFields       []string                `json:"policyFields"`
+	HiddenInputs       []string                `json:"hiddenInputs"`
+	ActionGrants       []gearv1.ActionGrant    `json:"actionGrants"`
+	ConnectorGrants    []gearv1.ConnectorScope `json:"connectorGrants"`
+	Thresholds         map[string]string       `json:"thresholds"`
+	Caps               gearv1.Caps             `json:"caps"`
+}
+
+type PromptInterpretation struct {
+	ActionClass    string `json:"actionClass"`
+	Criterion      string `json:"criterion"`
+	Verb           string `json:"verb"`
+	Decision       string `json:"decision"`
+	Reason         string `json:"reason"`
+	DataBoundary   string `json:"dataBoundary"`
+	ExecutionModel string `json:"executionModel"`
+}
+
+type WorkflowGuardrail struct {
+	Label       string `json:"label"`
+	Value       string `json:"value"`
+	Disposition string `json:"disposition"`
+}
+
 func NewHandler(config Config) http.Handler {
 	server := &Server{config: normaliseConfig(config), decisions: map[string]humanDecision{}}
 	mux := http.NewServeMux()
 	mux.HandleFunc("/healthz", server.healthz)
+	mux.HandleFunc("/api/assistant/evaluate", server.evaluateAssistant)
 	mux.HandleFunc("/api/mandate", server.mandate)
 	mux.HandleFunc("/api/escalations", server.escalations)
 	mux.HandleFunc("/api/escalations/decision", server.decideEscalation)
@@ -135,6 +180,28 @@ func (s *Server) healthz(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	writeJSON(w, http.StatusOK, map[string]string{"component": "gear-console-api", "status": "ok"})
+}
+
+func (s *Server) evaluateAssistant(w http.ResponseWriter, r *http.Request) {
+	var request AssistantRequest
+	switch r.Method {
+	case http.MethodGet:
+		request.Prompt = defaultHRPrompt
+	case http.MethodPost:
+		if err := decodeStrict(r, &request); err != nil {
+			http.Error(w, "invalid assistant request", http.StatusBadRequest)
+			return
+		}
+	default:
+		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	view, err := s.assistantView(r.Context(), request.Prompt)
+	if err != nil {
+		http.Error(w, "assistant workflow unavailable", http.StatusServiceUnavailable)
+		return
+	}
+	writeJSON(w, http.StatusOK, view)
 }
 
 func (s *Server) mandate(w http.ResponseWriter, r *http.Request) {
@@ -323,14 +390,91 @@ func (s *Server) mandateView(ctx context.Context) (MandateView, error) {
 		RefusalAuditEntries: audit.Snapshot(),
 		NarrowedMandate:     accepted.Mandate,
 		Clauses:             accepted.Clauses,
-		PolicyFields:        []string{"actionClass", "abilityRef", "abilityVersion", "mandateRef", "mandateVersion", "confidence", "dataClasses", "reversibility", "counters", "payloadDigest"},
-		HiddenInputs:        []string{"modelOutput", "promptText", "extractedFreeText", "abilityNarrative"},
+		PolicyFields:        policyFields(),
+		HiddenInputs:        hiddenInputs(),
 	}
 	if accepted.Mandate != nil {
 		view.ActionGrants = accepted.Mandate.Spec.ActionGrants
 		view.ConnectorGrants = accepted.Mandate.Spec.ConnectorGrants
 		view.Thresholds = accepted.Mandate.Spec.Thresholds
 		view.Caps = accepted.Mandate.Spec.Caps
+	}
+	return view, nil
+}
+
+func (s *Server) assistantView(ctx context.Context, prompt string) (AssistantView, error) {
+	prompt = strings.TrimSpace(prompt)
+	if prompt == "" {
+		prompt = defaultHRPrompt
+	}
+
+	audit := &cvdemo.MemoryAudit{Now: s.now}
+	deriver := mandatederive.NewDeriver(audit)
+	deriver.Now = s.now
+	ability := cvdemo.CVScreenAbilitySpec()
+
+	evaluated, err := deriver.Derive(ctx, mandatederive.Request{
+		MandateID:           "MND-CONSOLE-PROMPT",
+		Version:             1,
+		AbilityRef:          cvdemo.AbilityRef,
+		Ability:             ability,
+		PurposeStatement:    prompt,
+		LegalBasis:          "Right-to-work verification",
+		ExpiresAt:           "2027-02-01T00:00:00Z",
+		OperatorResponseRef: "fixture://synthetic-cv-lab/reasons/console-operator-response",
+	})
+	if err != nil {
+		return AssistantView{}, err
+	}
+
+	selected := evaluated
+	recommendedPrompt := prompt
+	if evaluated.Outcome == "refused" {
+		recommendedPrompt = lawfulPlanningPrompt
+		selected, err = deriver.Derive(ctx, mandatederive.Request{
+			MandateID:        cvdemo.MandateRef,
+			Version:          cvdemo.MandateVersion,
+			AbilityRef:       cvdemo.AbilityRef,
+			Ability:          ability,
+			PurposeStatement: "Identify candidates who will require work authorisation, for planning.",
+			LegalBasis:       "Right-to-work verification",
+			ExpiresAt:        "2027-02-01T00:00:00Z",
+		})
+		if err != nil {
+			return AssistantView{}, err
+		}
+	}
+
+	run, err := cvdemo.RunRecordAnnotationPath(ctx, s.now)
+	if err != nil {
+		return AssistantView{}, err
+	}
+
+	view := AssistantView{
+		Prompt:             prompt,
+		Outcome:            evaluated.Outcome,
+		Interpretation:     interpretPrompt(prompt),
+		Refusal:            evaluated.Refusal,
+		RefusalAuditRef:    evaluated.AuditRef,
+		RecommendedPrompt:  recommendedPrompt,
+		RecommendedMandate: selected.Mandate,
+		Clauses:            selected.Clauses,
+		Run: RunCounts{
+			Applications:       run.Summary.Applications,
+			TriggeredActions:   run.Summary.TriggeredActions,
+			Authorised:         run.Summary.Authorised,
+			Escalated:          run.Summary.Escalated,
+			PendingEscalations: run.Summary.PendingEscalations,
+		},
+		PolicyFields: policyFields(),
+		HiddenInputs: hiddenInputs(),
+	}
+	if selected.Mandate != nil {
+		view.ActionGrants = selected.Mandate.Spec.ActionGrants
+		view.ConnectorGrants = selected.Mandate.Spec.ConnectorGrants
+		view.Thresholds = selected.Mandate.Spec.Thresholds
+		view.Caps = selected.Mandate.Spec.Caps
+		view.Guardrails = guardrailsFromMandate(selected.Mandate)
 	}
 	return view, nil
 }
@@ -480,4 +624,100 @@ func ExistingConsoleDir(path string) string {
 		}
 	}
 	return "console"
+}
+
+func interpretPrompt(prompt string) PromptInterpretation {
+	evaluation := legality.EvaluatePurpose(prompt)
+	decision := string(evaluation.Decision)
+	if decision == "" {
+		decision = string(legality.DecisionAllow)
+	}
+	criterion := evaluation.Criterion
+	if criterion == "" {
+		criterion = "work-authorisation"
+	}
+	verb := evaluation.Verb
+	if verb == "" {
+		verb = observableVerb(prompt)
+	}
+	reason := evaluation.Reason
+	if reason == "" {
+		reason = "purpose can be represented as a narrowed operational mandate"
+	}
+	return PromptInterpretation{
+		ActionClass:    actionClassForPrompt(prompt),
+		Criterion:      criterion,
+		Verb:           verb,
+		Decision:       decision,
+		Reason:         reason,
+		DataBoundary:   "policy receives digest references and the fixed ten fields, not raw CV text",
+		ExecutionModel: "ability requests effects through gear-pep; gear-policy decides; gear-audit records before execution",
+	}
+}
+
+func actionClassForPrompt(prompt string) string {
+	lowered := strings.ToLower(prompt)
+	switch {
+	case strings.Contains(lowered, "record") || strings.Contains(lowered, "annotate") || strings.Contains(lowered, "extract") || strings.Contains(lowered, "check") || strings.Contains(lowered, "work-authorisation") || strings.Contains(lowered, "work authorization"):
+		return "RECORD_ANNOTATE"
+	case strings.Contains(lowered, "rank") || strings.Contains(lowered, "score") || strings.Contains(lowered, "prioriti"):
+		return "CANDIDATE_RANK"
+	case strings.Contains(lowered, "email") || strings.Contains(lowered, "contact") || strings.Contains(lowered, "message"):
+		return "OUTBOUND_COMMS"
+	case strings.Contains(lowered, "fill") || strings.Contains(lowered, "update") || strings.Contains(lowered, "modify"):
+		return "RECORD_MODIFY"
+	default:
+		return "RECORD_ANNOTATE"
+	}
+}
+
+func observableVerb(prompt string) string {
+	lowered := strings.ToLower(prompt)
+	for _, verb := range []string{"record", "annotate", "extract", "flag_for_review", "check"} {
+		if strings.Contains(lowered, strings.ReplaceAll(verb, "_", " ")) || strings.Contains(lowered, verb) {
+			return verb
+		}
+	}
+	return "record"
+}
+
+func guardrailsFromMandate(mandate *gearv1.Mandate) []WorkflowGuardrail {
+	if mandate == nil {
+		return nil
+	}
+	guardrails := []WorkflowGuardrail{
+		{Label: "Application source", Value: firstSource(mandate.Spec.Sources), Disposition: "permit"},
+		{Label: "Record annotation", Value: dispositionFor(mandate.Spec.ActionGrants, "RECORD_ANNOTATE"), Disposition: dispositionFor(mandate.Spec.ActionGrants, "RECORD_ANNOTATE")},
+		{Label: "Ranking by citizenship", Value: dispositionFor(mandate.Spec.ActionGrants, "CANDIDATE_RANK"), Disposition: dispositionFor(mandate.Spec.ActionGrants, "CANDIDATE_RANK")},
+		{Label: "Outbound candidate contact", Value: dispositionFor(mandate.Spec.ActionGrants, "OUTBOUND_COMMS"), Disposition: dispositionFor(mandate.Spec.ActionGrants, "OUTBOUND_COMMS")},
+		{Label: "Daily cap", Value: fmt.Sprintf("%d actions", mandate.Spec.Caps.DailyActions), Disposition: "limit"},
+		{Label: "Confidence threshold", Value: mandate.Spec.Thresholds["extractionConfidence"], Disposition: "limit"},
+		{Label: "Mandate expiry", Value: mandate.Spec.ExpiresAt.UTC().Format("2006-01-02"), Disposition: "limit"},
+		{Label: "Sensitive data access", Value: "fixture refs and digests only", Disposition: "blocked"},
+	}
+	return guardrails
+}
+
+func firstSource(sources []gearv1.Source) string {
+	if len(sources) == 0 {
+		return "none"
+	}
+	return sources[0].Type + ":" + sources[0].ID
+}
+
+func dispositionFor(grants []gearv1.ActionGrant, class string) string {
+	for _, grant := range grants {
+		if grant.Class == class {
+			return grant.Disposition
+		}
+	}
+	return "absent"
+}
+
+func policyFields() []string {
+	return []string{"actionClass", "abilityRef", "abilityVersion", "mandateRef", "mandateVersion", "confidence", "dataClasses", "reversibility", "counters", "payloadDigest"}
+}
+
+func hiddenInputs() []string {
+	return []string{"modelOutput", "promptText", "extractedFreeText", "abilityNarrative"}
 }

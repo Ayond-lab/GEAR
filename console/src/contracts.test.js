@@ -2,11 +2,14 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   decisionFields,
+  defaultHRPrompt,
   hasRequiredViews,
   hiddenPolicyInputs,
+  lawfulAlternativePrompt,
   policyBoundary,
   viewDefinitions,
-  views
+  views,
+  workflowStages
 } from "./contracts.js";
 
 test("console declares required views", () => {
@@ -17,6 +20,18 @@ test("console declares required views", () => {
   ]);
   assert.equal(hasRequiredViews(), true);
   assert.equal(viewDefinitions.length, 3);
+  assert.equal(viewDefinitions[0].label, "Mandate Assistant");
+  assert.equal(viewDefinitions[0].endpoint, "/api/assistant/evaluate");
+  assert.equal(viewDefinitions[1].label, "Human Review");
+});
+
+test("console declares the HR assistant workflow", () => {
+  assert.equal(defaultHRPrompt, "Rank the candidates who are citizens of EEA.");
+  assert.ok(lawfulAlternativePrompt.includes("Record work-authorisation status"));
+  assert.deepEqual(
+    workflowStages.map((stage) => stage.id),
+    ["request", "interpret", "refuse-or-sign", "execute", "review", "evidence"]
+  );
 });
 
 test("console excludes unsupported free-form policy inputs", () => {
