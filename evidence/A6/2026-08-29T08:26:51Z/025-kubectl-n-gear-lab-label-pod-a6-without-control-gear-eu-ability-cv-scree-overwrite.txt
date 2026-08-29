@@ -1,0 +1,4 @@
+$ kubectl -n gear-lab label pod a6-without-control gear.eu/ability=cv-screen --overwrite
+
+# output
+pod/a6-without-control labeled

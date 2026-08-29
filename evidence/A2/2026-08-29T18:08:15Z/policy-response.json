@@ -1,0 +1,10 @@
+{
+  "actionRef": "ga-ebec76300c763ac8",
+  "decision": "deny",
+  "ruleFired": {
+    "id": "D1",
+    "version": 1
+  },
+  "reason": "action class forbidden by mandate clause D1",
+  "auditRef": "ae-0000001"
+}

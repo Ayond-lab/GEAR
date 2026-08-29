@@ -1,0 +1,7 @@
+$ kubectl -n gear-lab logs a6-without-control -c gear-uid-egress
+
+# output
+error: container gear-uid-egress is not valid for pod a6-without-control
+
+# error
+exit status 1

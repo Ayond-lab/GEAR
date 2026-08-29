@@ -1,0 +1,6 @@
+{
+  "fixtureCount": 60,
+  "inferenceService": "deterministic synthetic extractor",
+  "policyTrials": 200,
+  "workers": 4
+}

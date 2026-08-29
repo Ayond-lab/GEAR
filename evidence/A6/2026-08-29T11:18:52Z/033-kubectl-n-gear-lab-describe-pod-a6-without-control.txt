@@ -1,0 +1,86 @@
+$ kubectl -n gear-lab describe pod a6-without-control
+
+# output
+Name:             a6-without-control
+Namespace:        gear-lab
+Priority:         0
+Service Account:  default
+Node:             k3d-gear-lab-server-0/172.20.0.3
+Start Time:       Sat, 29 Aug 2026 12:19:14 +0100
+Labels:           gear.eu/a6-control=without
+                  gear.eu/ability=cv-screen
+Annotations:      <none>
+Status:           Running
+IP:               10.42.0.230
+IPs:
+  IP:  10.42.0.230
+Containers:
+  ability:
+    Container ID:   containerd://847a68a8b6b71f9fadc3d4a6274d76ce66cc2b4c48dae8a75b9b16c5a76e017a
+    Image:          ghcr.io/ayond-lab/gear-hostile-runner:dev
+    Image ID:       sha256:e2922b5e13be3a15c19d5baa40a781e522ffae333c18cb2cefc717a77f6a0cab
+    Port:           <none>
+    Host Port:      <none>
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sat, 29 Aug 2026 12:19:15 +0100
+      Finished:     Sat, 29 Aug 2026 12:19:21 +0100
+    Ready:          False
+    Restart Count:  0
+    Environment:
+      A6_CONTROL:              without-control
+      A6_START_DELAY_SECONDS:  6
+      A6_POLICY_DNS:           a6-gear-policy.gear-system.svc.cluster.local
+      A6_INFERENCE_DNS:        a6-gear-inference.gear-system.svc.cluster.local
+      A6_FIXTURE_DNS:          a6-gear-fixture-store.gear-system.svc.cluster.local
+      A6_POLICY_IP:            10.42.0.63
+    Mounts:                    <none>
+  gear-pep:
+    Container ID:  containerd://d5686b71a604478381d3a50c8940f4a1ef087d25635010c6785bb379db9c1e69
+    Image:         ghcr.io/ayond-lab/gear-pep:dev
+    Image ID:      sha256:0f8b85c8fe3dc5cfe05f44452cf6d5e45cc2d3c9bd7a990853cd9f26909d27dc
+    Port:          9191/TCP (pep-loopback)
+    Host Port:     0/TCP (pep-loopback)
+    Args:
+      --listen=127.0.0.1:9191
+    State:          Running
+      Started:      Sat, 29 Aug 2026 12:19:15 +0100
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      GEAR_PEP_LISTEN:   127.0.0.1:9191
+      GEAR_ABILITY_REF:  cv-screen
+    Mounts:
+      /var/run/gear/connectors from gear-connector-credentials (ro)
+      /var/run/gear/mtls from gear-pep-mtls (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       False 
+  ContainersReady             False 
+  PodScheduled                True 
+Volumes:
+  gear-pep-mtls:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  gear-pep-mtls
+    Optional:    false
+  gear-connector-credentials:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  gear-connector-credentials
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  8s    default-scheduler  Successfully assigned gear-lab/a6-without-control to k3d-gear-lab-server-0
+  Normal  Pulled     8s    kubelet            Container image "ghcr.io/ayond-lab/gear-hostile-runner:dev" already present on machine and can be accessed by the pod
+  Normal  Created    8s    kubelet            Container created
+  Normal  Started    8s    kubelet            Container started
+  Normal  Pulled     8s    kubelet            Container image "ghcr.io/ayond-lab/gear-pep:dev" already present on machine and can be accessed by the pod
+  Normal  Created    8s    kubelet            Container created
+  Normal  Started    8s    kubelet            Container started

@@ -1,0 +1,5 @@
+$ kubectl -n gear-system rollout status deployment/a6-gear-policy --timeout=120s
+
+# output
+Waiting for deployment "a6-gear-policy" rollout to finish: 0 of 1 updated replicas are available...
+deployment "a6-gear-policy" successfully rolled out

@@ -1,0 +1,6 @@
+$ kubectl -n gear-system delete deployment a6-gear-policy a6-gear-inference a6-gear-fixture-store --ignore-not-found=true
+
+# output
+deployment.apps "a6-gear-policy" deleted from gear-system namespace
+deployment.apps "a6-gear-inference" deleted from gear-system namespace
+deployment.apps "a6-gear-fixture-store" deleted from gear-system namespace

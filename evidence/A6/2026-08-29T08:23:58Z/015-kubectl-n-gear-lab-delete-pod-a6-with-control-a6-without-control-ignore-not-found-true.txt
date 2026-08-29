@@ -1,0 +1,5 @@
+$ kubectl -n gear-lab delete pod a6-with-control a6-without-control --ignore-not-found=true
+
+# output
+pod "a6-with-control" deleted from gear-lab namespace
+pod "a6-without-control" deleted from gear-lab namespace

@@ -1,0 +1,20 @@
+[
+  {
+    "seq": 1,
+    "prevHash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "hash": "sha256:2b2c75e8387423f67a6cf5dfcb2d03cd6ffec9fa9ae92f129c8901a3e823dc3d",
+    "ts": "2026-08-29T14:08:08.551907Z",
+    "type": "mandate-refused",
+    "actionRef": "mandate-6aeb72677f9f21f4",
+    "actor": "gear-mandate",
+    "mandate": "MND-A1-REFUSED:1",
+    "rule": "LG-PROTECTED-SELECTIVE-01:1",
+    "decision": "deny",
+    "inputsDigest": "sha256:5906d76d9b71e19125570686f65891bab81929d0435ed223d82944984bc4b6ac",
+    "model": "none",
+    "dataAccessed": [
+      "sha256:0a0cb01ead78568286e72e56577632622e6e9f15af846d3aad96310ff4f963a4",
+      "sha256:operator-response-a1"
+    ]
+  }
+]

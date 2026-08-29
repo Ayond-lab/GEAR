@@ -1,0 +1,9 @@
+# A6 Environment
+
+- Cluster: `k3d-gear-lab`
+- Runner image: `ghcr.io/ayond-lab/gear-hostile-runner:dev`
+- Target image: `ghcr.io/ayond-lab/gear-hostile-target:dev`
+- PEP image: `ghcr.io/ayond-lab/gear-pep:dev`
+- Netinit image: `ghcr.io/ayond-lab/gear-netinit:dev`
+- Git SHA: `9a59832260627867b3152bdb06c25feabf30a8b8`
+- Kubernetes context: `k3d-gear-lab`

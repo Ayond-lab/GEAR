@@ -1,0 +1,1949 @@
+$ kubectl config use-context k3d-gear-lab
+
+# output
+Switched to context "k3d-gear-lab".
+
+$ git rev-parse HEAD
+
+# output
+9a59832260627867b3152bdb06c25feabf30a8b8
+
+$ kubectl config current-context
+
+# output
+k3d-gear-lab
+
+$ kubectl get nodes -o wide
+
+# output
+NAME                    STATUS   ROLES           AGE   VERSION        INTERNAL-IP   EXTERNAL-IP   OS-IMAGE           KERNEL-VERSION     CONTAINER-RUNTIME
+k3d-gear-lab-server-0   Ready    control-plane   30m   v1.35.5+k3s1   172.20.0.3    <none>        K3s v1.35.5+k3s1   6.10.14-linuxkit   containerd://2.2.3-k3s1
+
+$ kubectl -n kube-system get daemonset cilium -o wide
+
+# output
+NAME     DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE   CONTAINERS     IMAGES                                                                                                  SELECTOR
+cilium   1         1         1       1            1           kubernetes.io/os=linux   30m   cilium-agent   quay.io/cilium/cilium:v1.20.1@sha256:ae9ea21f7427fe24bc6ea7247eb552157a1b0a431744045d3f641545ca71d11b   k8s-app=cilium
+
+$ cilium status --wait
+
+# output
+2026/08/29 09:23:59 (0x347f35bd6160) (0x347f36616be0) Create stream
+2026/08/29 09:23:59 (0x347f35bd6160) (0x347f36616be0) Stream added, broadcasting: 1
+2026/08/29 09:23:59 (0x347f35bd6160) Reply frame received for 1
+2026/08/29 09:23:59 (0x347f35bd6160) (0x347f36616c80) Create stream
+2026/08/29 09:23:59 (0x347f35bd6160) (0x347f36616c80) Stream added, broadcasting: 3
+2026/08/29 09:23:59 (0x347f35bd6160) Reply frame received for 3
+2026/08/29 09:23:59 (0x347f35bd6160) (0x347f36514000) Create stream
+2026/08/29 09:23:59 (0x347f35bd6160) (0x347f36514000) Stream added, broadcasting: 5
+2026/08/29 09:23:59 (0x347f35bd6160) Reply frame received for 5
+2026/08/29 09:23:59 (0x347f35bd6160) Data frame received for 3
+2026/08/29 09:23:59 (0x347f36616c80) (3) Data frame handling
+2026/08/29 09:23:59 (0x347f36616c80) (3) Data frame sent
+2026/08/29 09:23:59 (0x347f35bd6160) Data frame received for 3
+2026/08/29 09:23:59 (0x347f36616c80) (3) Data frame handling
+2026/08/29 09:23:59 (0x347f35bd6160) Data frame received for 5
+2026/08/29 09:23:59 (0x347f36514000) (5) Data frame handling
+2026/08/29 09:23:59 (0x347f35bd6160) Data frame received for 1
+2026/08/29 09:23:59 (0x347f36616be0) (1) Data frame handling
+2026/08/29 09:23:59 (0x347f36616be0) (1) Data frame sent
+2026/08/29 09:23:59 (0x347f35bd6160) (0x347f36616be0) Stream removed, broadcasting: 1
+2026/08/29 09:23:59 (0x347f35bd6160) Go away received
+2026/08/29 09:23:59 (0x347f35bd6160) (0x347f36616be0) Stream removed, broadcasting: 1
+2026/08/29 09:23:59 (0x347f35bd6160) (0x347f36616c80) Stream removed, broadcasting: 3
+2026/08/29 09:23:59 (0x347f35bd6160) (0x347f36514000) Stream removed, broadcasting: 5
+2026/08/29 09:23:59 (0x347f362fc790) (0x347f366170e0) Create stream
+2026/08/29 09:23:59 (0x347f362fc790) (0x347f366170e0) Stream added, broadcasting: 1
+2026/08/29 09:23:59 (0x347f362fc790) Reply frame received for 1
+2026/08/29 09:23:59 (0x347f362fc790) (0x347f367a6960) Create stream
+2026/08/29 09:23:59 (0x347f362fc790) (0x347f367a6960) Stream added, broadcasting: 3
+2026/08/29 09:23:59 (0x347f362fc790) Reply frame received for 3
+2026/08/29 09:23:59 (0x347f362fc790) (0x347f36617180) Create stream
+2026/08/29 09:23:59 (0x347f362fc790) (0x347f36617180) Stream added, broadcasting: 5
+2026/08/29 09:23:59 (0x347f362fc790) Reply frame received for 5
+2026/08/29 09:23:59 (0x347f362fc790) Data frame received for 3
+2026/08/29 09:23:59 (0x347f367a6960) (3) Data frame handling
+2026/08/29 09:23:59 (0x347f367a6960) (3) Data frame sent
+2026/08/29 09:23:59 (0x347f362fc790) Data frame received for 3
+2026/08/29 09:23:59 (0x347f367a6960) (3) Data frame handling
+2026/08/29 09:23:59 (0x347f367a6960) (3) Data frame sent
+2026/08/29 09:23:59 (0x347f362fc790) Data frame received for 3
+2026/08/29 09:23:59 (0x347f367a6960) (3) Data frame handling
+2026/08/29 09:23:59 (0x347f367a6960) (3) Data frame sent
+2026/08/29 09:23:59 (0x347f362fc790) Data frame received for 5
+2026/08/29 09:23:59 (0x347f36617180) (5) Data frame handling
+2026/08/29 09:23:59 (0x347f362fc790) Data frame received for 3
+2026/08/29 09:23:59 (0x347f367a6960) (3) Data frame handling
+2026/08/29 09:23:59 (0x347f362fc790) Data frame received for 1
+2026/08/29 09:23:59 (0x347f366170e0) (1) Data frame handling
+2026/08/29 09:23:59 (0x347f366170e0) (1) Data frame sent
+2026/08/29 09:23:59 (0x347f362fc790) (0x347f366170e0) Stream removed, broadcasting: 1
+2026/08/29 09:23:59 (0x347f362fc790) (0x347f366170e0) Stream removed, broadcasting: 1
+2026/08/29 09:23:59 (0x347f362fc790) (0x347f367a6960) Stream removed, broadcasting: 3
+2026/08/29 09:23:59 (0x347f362fc790) (0x347f36617180) Stream removed, broadcasting: 5
+2026/08/29 09:23:59 (0x347f362fc790) Go away received
+[33m    /¯¯\
+[36m /¯¯[33m\__/[32m¯¯\[0m    Cilium:             [33m1 warnings[0m
+[36m \__[31m/¯¯\[32m__/[0m    Operator:           [32mOK[0m
+[32m /¯¯[31m\__/[35m¯¯\[0m    Envoy DaemonSet:    [32mOK[0m
+[32m \__[34m/¯¯\[35m__/[0m    Hubble Relay:       [32mOK[0m
+[34m[34m[34m    \__/[0m       ClusterMesh:        [36mdisabled[0m
+
+DaemonSet              cilium                   Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+DaemonSet              cilium-envoy             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             cilium-operator          Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             hubble-relay             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Containers:            cilium                   Running: [32m1[0m
+                       cilium-envoy             Running: [32m1[0m
+                       cilium-operator          Running: [32m1[0m
+                       clustermesh-apiserver    
+                       hubble-relay             Running: [32m1[0m
+Cluster Pods:          10/10 managed by Cilium
+Helm chart version:    1.20.1
+Image versions         cilium             quay.io/cilium/cilium:v1.20.1@sha256:ae9ea21f7427fe24bc6ea7247eb552157a1b0a431744045d3f641545ca71d11b: 1
+                       cilium-envoy       quay.io/cilium/cilium-envoy:v1.37.5-1786810558-766ccfb37260a43e9d228837aa84ce3faf9f64e7@sha256:75b8094c7127736a2ffd2dce3945e0931cb6df21b0372ff661940eca26730b91: 1
+                       cilium-operator    quay.io/cilium/operator-generic:v1.20.1@sha256:6c3885fc7b629099fdbe2a5c87869c86feb825fa18fae299eac0f61918d16ecf: 1
+                       hubble-relay       quay.io/cilium/hubble-relay:v1.20.1@sha256:59be0ae7d475ab9011a5e954618c0f27b5778b17140381425b308b55ba4917f4: 1
+Warnings:              cilium             cilium-nvnv8    2 endpoints are not ready
+2026/08/29 09:24:01 (0x347f36802d10) (0x347f35bf32c0) Create stream
+2026/08/29 09:24:01 (0x347f36802d10) (0x347f35bf32c0) Stream added, broadcasting: 1
+2026/08/29 09:24:01 (0x347f36802d10) Reply frame received for 1
+2026/08/29 09:24:01 (0x347f36802d10) (0x347f35e5ad20) Create stream
+2026/08/29 09:24:01 (0x347f36802d10) (0x347f35e5ad20) Stream added, broadcasting: 3
+2026/08/29 09:24:01 (0x347f36802d10) Reply frame received for 3
+2026/08/29 09:24:01 (0x347f36802d10) (0x347f3601a500) Create stream
+2026/08/29 09:24:01 (0x347f36802d10) (0x347f3601a500) Stream added, broadcasting: 5
+2026/08/29 09:24:01 (0x347f36802d10) Reply frame received for 5
+2026/08/29 09:24:01 (0x347f36802d10) Data frame received for 3
+2026/08/29 09:24:01 (0x347f35e5ad20) (3) Data frame handling
+2026/08/29 09:24:01 (0x347f35e5ad20) (3) Data frame sent
+2026/08/29 09:24:01 (0x347f36802d10) Data frame received for 5
+2026/08/29 09:24:01 (0x347f3601a500) (5) Data frame handling
+2026/08/29 09:24:01 (0x347f36802d10) Data frame received for 3
+2026/08/29 09:24:01 (0x347f35e5ad20) (3) Data frame handling
+2026/08/29 09:24:01 (0x347f36802d10) Data frame received for 1
+2026/08/29 09:24:01 (0x347f35bf32c0) (1) Data frame handling
+2026/08/29 09:24:01 (0x347f35bf32c0) (1) Data frame sent
+2026/08/29 09:24:01 (0x347f36802d10) (0x347f35bf32c0) Stream removed, broadcasting: 1
+2026/08/29 09:24:01 (0x347f36802d10) Go away received
+2026/08/29 09:24:01 (0x347f36802d10) (0x347f35bf32c0) Stream removed, broadcasting: 1
+2026/08/29 09:24:01 (0x347f36802d10) (0x347f35e5ad20) Stream removed, broadcasting: 3
+2026/08/29 09:24:01 (0x347f36802d10) (0x347f3601a500) Stream removed, broadcasting: 5
+2026/08/29 09:24:01 (0x347f36c7c0b0) (0x347f3601a5a0) Create stream
+2026/08/29 09:24:01 (0x347f36c7c0b0) (0x347f3601a5a0) Stream added, broadcasting: 1
+2026/08/29 09:24:01 (0x347f36c7c0b0) Reply frame received for 1
+2026/08/29 09:24:01 (0x347f36c7c0b0) (0x347f35f28c80) Create stream
+2026/08/29 09:24:01 (0x347f36c7c0b0) (0x347f35f28c80) Stream added, broadcasting: 3
+2026/08/29 09:24:01 (0x347f36c7c0b0) Reply frame received for 3
+2026/08/29 09:24:01 (0x347f36c7c0b0) (0x347f35bf3360) Create stream
+2026/08/29 09:24:01 (0x347f36c7c0b0) (0x347f35bf3360) Stream added, broadcasting: 5
+2026/08/29 09:24:01 (0x347f36c7c0b0) Reply frame received for 5
+2026/08/29 09:24:01 (0x347f36c7c0b0) Data frame received for 3
+2026/08/29 09:24:01 (0x347f35f28c80) (3) Data frame handling
+2026/08/29 09:24:01 (0x347f35f28c80) (3) Data frame sent
+2026/08/29 09:24:01 (0x347f36c7c0b0) Data frame received for 3
+2026/08/29 09:24:01 (0x347f35f28c80) (3) Data frame handling
+2026/08/29 09:24:01 (0x347f35f28c80) (3) Data frame sent
+2026/08/29 09:24:01 (0x347f36c7c0b0) Data frame received for 5
+2026/08/29 09:24:01 (0x347f35bf3360) (5) Data frame handling
+2026/08/29 09:24:01 (0x347f36c7c0b0) Data frame received for 3
+2026/08/29 09:24:01 (0x347f35f28c80) (3) Data frame handling
+2026/08/29 09:24:01 (0x347f35f28c80) (3) Data frame sent
+2026/08/29 09:24:01 (0x347f36c7c0b0) Data frame received for 3
+2026/08/29 09:24:01 (0x347f35f28c80) (3) Data frame handling
+2026/08/29 09:24:01 (0x347f36c7c0b0) Data frame received for 1
+2026/08/29 09:24:01 (0x347f3601a5a0) (1) Data frame handling
+2026/08/29 09:24:01 (0x347f3601a5a0) (1) Data frame sent
+2026/08/29 09:24:01 (0x347f36c7c0b0) (0x347f3601a5a0) Stream removed, broadcasting: 1
+2026/08/29 09:24:01 (0x347f36c7c0b0) Go away received
+2026/08/29 09:24:01 (0x347f36c7c0b0) (0x347f3601a5a0) Stream removed, broadcasting: 1
+2026/08/29 09:24:01 (0x347f36c7c0b0) (0x347f35f28c80) Stream removed, broadcasting: 3
+2026/08/29 09:24:01 (0x347f36c7c0b0) (0x347f35bf3360) Stream removed, broadcasting: 5
+[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[33m    /¯¯\
+[36m /¯¯[33m\__/[32m¯¯\[0m    Cilium:             [33m1 warnings[0m
+[36m \__[31m/¯¯\[32m__/[0m    Operator:           [32mOK[0m
+[32m /¯¯[31m\__/[35m¯¯\[0m    Envoy DaemonSet:    [32mOK[0m
+[32m \__[34m/¯¯\[35m__/[0m    Hubble Relay:       [32mOK[0m
+[34m[34m[34m    \__/[0m       ClusterMesh:        [36mdisabled[0m
+
+DaemonSet              cilium                   Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+DaemonSet              cilium-envoy             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             cilium-operator          Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             hubble-relay             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Containers:            cilium                   Running: [32m1[0m
+                       cilium-envoy             Running: [32m1[0m
+                       cilium-operator          Running: [32m1[0m
+                       clustermesh-apiserver    
+                       hubble-relay             Running: [32m1[0m
+Cluster Pods:          10/10 managed by Cilium
+Helm chart version:    1.20.1
+Image versions         cilium             quay.io/cilium/cilium:v1.20.1@sha256:ae9ea21f7427fe24bc6ea7247eb552157a1b0a431744045d3f641545ca71d11b: 1
+                       cilium-envoy       quay.io/cilium/cilium-envoy:v1.37.5-1786810558-766ccfb37260a43e9d228837aa84ce3faf9f64e7@sha256:75b8094c7127736a2ffd2dce3945e0931cb6df21b0372ff661940eca26730b91: 1
+                       cilium-operator    quay.io/cilium/operator-generic:v1.20.1@sha256:6c3885fc7b629099fdbe2a5c87869c86feb825fa18fae299eac0f61918d16ecf: 1
+                       hubble-relay       quay.io/cilium/hubble-relay:v1.20.1@sha256:59be0ae7d475ab9011a5e954618c0f27b5778b17140381425b308b55ba4917f4: 1
+Warnings:              cilium             cilium-nvnv8    2 endpoints are not ready
+2026/08/29 09:24:03 (0x347f35bd6210) (0x347f35c80aa0) Create stream
+2026/08/29 09:24:03 (0x347f35bd6210) (0x347f35c80aa0) Stream added, broadcasting: 1
+2026/08/29 09:24:03 (0x347f35bd6210) Reply frame received for 1
+2026/08/29 09:24:03 (0x347f35bd6210) (0x347f36617040) Create stream
+2026/08/29 09:24:03 (0x347f35bd6210) (0x347f36617040) Stream added, broadcasting: 3
+2026/08/29 09:24:03 (0x347f35bd6210) Reply frame received for 3
+2026/08/29 09:24:03 (0x347f35bd6210) (0x347f366170e0) Create stream
+2026/08/29 09:24:03 (0x347f35bd6210) (0x347f366170e0) Stream added, broadcasting: 5
+2026/08/29 09:24:03 (0x347f35bd6210) Reply frame received for 5
+2026/08/29 09:24:03 (0x347f35bd6210) Data frame received for 3
+2026/08/29 09:24:03 (0x347f36617040) (3) Data frame handling
+2026/08/29 09:24:03 (0x347f36617040) (3) Data frame sent
+2026/08/29 09:24:03 (0x347f35bd6210) Data frame received for 3
+2026/08/29 09:24:03 (0x347f36617040) (3) Data frame handling
+2026/08/29 09:24:03 (0x347f35bd6210) Data frame received for 5
+2026/08/29 09:24:03 (0x347f366170e0) (5) Data frame handling
+2026/08/29 09:24:03 (0x347f35bd6210) Data frame received for 1
+2026/08/29 09:24:03 (0x347f35c80aa0) (1) Data frame handling
+2026/08/29 09:24:03 (0x347f35c80aa0) (1) Data frame sent
+2026/08/29 09:24:03 (0x347f35bd6210) (0x347f35c80aa0) Stream removed, broadcasting: 1
+2026/08/29 09:24:03 (0x347f35bd6210) Go away received
+2026/08/29 09:24:03 (0x347f35bd6210) (0x347f35c80aa0) Stream removed, broadcasting: 1
+2026/08/29 09:24:03 (0x347f35bd6210) (0x347f36617040) Stream removed, broadcasting: 3
+2026/08/29 09:24:03 (0x347f35bd6210) (0x347f366170e0) Stream removed, broadcasting: 5
+2026/08/29 09:24:03 (0x347f368a82c0) (0x347f35fd4be0) Create stream
+2026/08/29 09:24:03 (0x347f368a82c0) (0x347f35fd4be0) Stream added, broadcasting: 1
+2026/08/29 09:24:03 (0x347f368a82c0) Reply frame received for 1
+2026/08/29 09:24:03 (0x347f368a82c0) (0x347f367a7c20) Create stream
+2026/08/29 09:24:03 (0x347f368a82c0) (0x347f367a7c20) Stream added, broadcasting: 3
+2026/08/29 09:24:03 (0x347f368a82c0) Reply frame received for 3
+2026/08/29 09:24:03 (0x347f368a82c0) (0x347f35fd4d20) Create stream
+2026/08/29 09:24:03 (0x347f368a82c0) (0x347f35fd4d20) Stream added, broadcasting: 5
+2026/08/29 09:24:03 (0x347f368a82c0) Reply frame received for 5
+2026/08/29 09:24:03 (0x347f368a82c0) Data frame received for 3
+2026/08/29 09:24:03 (0x347f367a7c20) (3) Data frame handling
+2026/08/29 09:24:03 (0x347f367a7c20) (3) Data frame sent
+2026/08/29 09:24:03 (0x347f368a82c0) Data frame received for 3
+2026/08/29 09:24:03 (0x347f367a7c20) (3) Data frame handling
+2026/08/29 09:24:03 (0x347f367a7c20) (3) Data frame sent
+2026/08/29 09:24:03 (0x347f368a82c0) Data frame received for 3
+2026/08/29 09:24:03 (0x347f367a7c20) (3) Data frame handling
+2026/08/29 09:24:03 (0x347f368a82c0) Data frame received for 5
+2026/08/29 09:24:03 (0x347f35fd4d20) (5) Data frame handling
+2026/08/29 09:24:03 (0x347f368a82c0) Data frame received for 1
+2026/08/29 09:24:03 (0x347f35fd4be0) (1) Data frame handling
+2026/08/29 09:24:03 (0x347f35fd4be0) (1) Data frame sent
+2026/08/29 09:24:03 (0x347f368a82c0) (0x347f35fd4be0) Stream removed, broadcasting: 1
+2026/08/29 09:24:03 (0x347f367a7c20) (3) Data frame sent
+2026/08/29 09:24:03 (0x347f368a82c0) Data frame received for 3
+2026/08/29 09:24:03 (0x347f367a7c20) (3) Data frame handling
+2026/08/29 09:24:03 (0x347f368a82c0) Go away received
+2026/08/29 09:24:03 (0x347f368a82c0) (0x347f35fd4be0) Stream removed, broadcasting: 1
+2026/08/29 09:24:03 (0x347f368a82c0) (0x347f367a7c20) Stream removed, broadcasting: 3
+2026/08/29 09:24:03 (0x347f368a82c0) (0x347f35fd4d20) Stream removed, broadcasting: 5
+[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[33m    /¯¯\
+[36m /¯¯[33m\__/[32m¯¯\[0m    Cilium:             [33m1 warnings[0m
+[36m \__[31m/¯¯\[32m__/[0m    Operator:           [32mOK[0m
+[32m /¯¯[31m\__/[35m¯¯\[0m    Envoy DaemonSet:    [32mOK[0m
+[32m \__[34m/¯¯\[35m__/[0m    Hubble Relay:       [32mOK[0m
+[34m[34m[34m    \__/[0m       ClusterMesh:        [36mdisabled[0m
+
+DaemonSet              cilium                   Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+DaemonSet              cilium-envoy             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             cilium-operator          Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             hubble-relay             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Containers:            cilium                   Running: [32m1[0m
+                       cilium-envoy             Running: [32m1[0m
+                       cilium-operator          Running: [32m1[0m
+                       clustermesh-apiserver    
+                       hubble-relay             Running: [32m1[0m
+Cluster Pods:          10/10 managed by Cilium
+Helm chart version:    1.20.1
+Image versions         cilium             quay.io/cilium/cilium:v1.20.1@sha256:ae9ea21f7427fe24bc6ea7247eb552157a1b0a431744045d3f641545ca71d11b: 1
+                       cilium-envoy       quay.io/cilium/cilium-envoy:v1.37.5-1786810558-766ccfb37260a43e9d228837aa84ce3faf9f64e7@sha256:75b8094c7127736a2ffd2dce3945e0931cb6df21b0372ff661940eca26730b91: 1
+                       cilium-operator    quay.io/cilium/operator-generic:v1.20.1@sha256:6c3885fc7b629099fdbe2a5c87869c86feb825fa18fae299eac0f61918d16ecf: 1
+                       hubble-relay       quay.io/cilium/hubble-relay:v1.20.1@sha256:59be0ae7d475ab9011a5e954618c0f27b5778b17140381425b308b55ba4917f4: 1
+Warnings:              cilium             cilium-nvnv8    1 endpoints are not ready
+2026/08/29 09:24:06 (0x347f368a8000) (0x347f35fd4be0) Create stream
+2026/08/29 09:24:06 (0x347f368a8000) (0x347f35fd4be0) Stream added, broadcasting: 1
+2026/08/29 09:24:06 (0x347f368a8000) Reply frame received for 1
+2026/08/29 09:24:06 (0x347f368a8000) (0x347f35fd4d20) Create stream
+2026/08/29 09:24:06 (0x347f368a8000) (0x347f35fd4d20) Stream added, broadcasting: 3
+2026/08/29 09:24:06 (0x347f368a8000) Reply frame received for 3
+2026/08/29 09:24:06 (0x347f368a8000) (0x347f35c80140) Create stream
+2026/08/29 09:24:06 (0x347f368a8000) (0x347f35c80140) Stream added, broadcasting: 5
+2026/08/29 09:24:06 (0x347f368a8000) Reply frame received for 5
+2026/08/29 09:24:06 (0x347f368a8000) Data frame received for 3
+2026/08/29 09:24:06 (0x347f35fd4d20) (3) Data frame handling
+2026/08/29 09:24:06 (0x347f35fd4d20) (3) Data frame sent
+2026/08/29 09:24:06 (0x347f368a8000) Data frame received for 3
+2026/08/29 09:24:06 (0x347f35fd4d20) (3) Data frame handling
+2026/08/29 09:24:06 (0x347f368a8000) Data frame received for 5
+2026/08/29 09:24:06 (0x347f35c80140) (5) Data frame handling
+2026/08/29 09:24:06 (0x347f368a8000) Data frame received for 1
+2026/08/29 09:24:06 (0x347f35fd4be0) (1) Data frame handling
+2026/08/29 09:24:06 (0x347f35fd4be0) (1) Data frame sent
+2026/08/29 09:24:06 (0x347f368a8000) (0x347f35fd4be0) Stream removed, broadcasting: 1
+2026/08/29 09:24:06 (0x347f368a8000) (0x347f35fd4d20) Stream removed, broadcasting: 3
+2026/08/29 09:24:06 (0x347f368a8000) (0x347f35c80140) Stream removed, broadcasting: 5
+2026/08/29 09:24:06 (0x347f368a8000) (0x347f35fd4be0) Stream removed, broadcasting: 1
+2026/08/29 09:24:06 (0x347f368a8000) Go away received
+2026/08/29 09:24:06 (0x347f35bd6210) (0x347f35fd4000) Create stream
+2026/08/29 09:24:06 (0x347f35bd6210) (0x347f35fd4000) Stream added, broadcasting: 1
+2026/08/29 09:24:06 (0x347f35bd6210) Reply frame received for 1
+2026/08/29 09:24:06 (0x347f35bd6210) (0x347f35c80140) Create stream
+2026/08/29 09:24:06 (0x347f35bd6210) (0x347f35c80140) Stream added, broadcasting: 3
+2026/08/29 09:24:06 (0x347f35bd6210) Reply frame received for 3
+2026/08/29 09:24:06 (0x347f35bd6210) (0x347f35fd4be0) Create stream
+2026/08/29 09:24:06 (0x347f35bd6210) (0x347f35fd4be0) Stream added, broadcasting: 5
+2026/08/29 09:24:06 (0x347f35bd6210) Reply frame received for 5
+2026/08/29 09:24:06 (0x347f35bd6210) Data frame received for 3
+2026/08/29 09:24:06 (0x347f35c80140) (3) Data frame handling
+2026/08/29 09:24:06 (0x347f35c80140) (3) Data frame sent
+2026/08/29 09:24:06 (0x347f35bd6210) Data frame received for 3
+2026/08/29 09:24:06 (0x347f35c80140) (3) Data frame handling
+2026/08/29 09:24:06 (0x347f35c80140) (3) Data frame sent
+2026/08/29 09:24:06 (0x347f35bd6210) Data frame received for 3
+2026/08/29 09:24:06 (0x347f35c80140) (3) Data frame handling
+2026/08/29 09:24:06 (0x347f35c80140) (3) Data frame sent
+2026/08/29 09:24:06 (0x347f35bd6210) Data frame received for 5
+2026/08/29 09:24:06 (0x347f35fd4be0) (5) Data frame handling
+2026/08/29 09:24:06 (0x347f35bd6210) Data frame received for 3
+2026/08/29 09:24:06 (0x347f35c80140) (3) Data frame handling
+2026/08/29 09:24:06 (0x347f35bd6210) Data frame received for 1
+2026/08/29 09:24:06 (0x347f35fd4000) (1) Data frame handling
+2026/08/29 09:24:06 (0x347f35fd4000) (1) Data frame sent
+2026/08/29 09:24:06 (0x347f35bd6210) (0x347f35fd4000) Stream removed, broadcasting: 1
+2026/08/29 09:24:06 (0x347f35bd6210) Go away received
+2026/08/29 09:24:06 (0x347f35bd6210) (0x347f35fd4000) Stream removed, broadcasting: 1
+2026/08/29 09:24:06 (0x347f35bd6210) (0x347f35c80140) Stream removed, broadcasting: 3
+2026/08/29 09:24:06 (0x347f35bd6210) (0x347f35fd4be0) Stream removed, broadcasting: 5
+[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[33m    /¯¯\
+[36m /¯¯[33m\__/[32m¯¯\[0m    Cilium:             [33m1 warnings[0m
+[36m \__[31m/¯¯\[32m__/[0m    Operator:           [32mOK[0m
+[32m /¯¯[31m\__/[35m¯¯\[0m    Envoy DaemonSet:    [32mOK[0m
+[32m \__[34m/¯¯\[35m__/[0m    Hubble Relay:       [32mOK[0m
+[34m[34m[34m    \__/[0m       ClusterMesh:        [36mdisabled[0m
+
+DaemonSet              cilium                   Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+DaemonSet              cilium-envoy             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             cilium-operator          Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             hubble-relay             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Containers:            cilium                   Running: [32m1[0m
+                       cilium-envoy             Running: [32m1[0m
+                       cilium-operator          Running: [32m1[0m
+                       clustermesh-apiserver    
+                       hubble-relay             Running: [32m1[0m
+Cluster Pods:          10/10 managed by Cilium
+Helm chart version:    1.20.1
+Image versions         cilium             quay.io/cilium/cilium:v1.20.1@sha256:ae9ea21f7427fe24bc6ea7247eb552157a1b0a431744045d3f641545ca71d11b: 1
+                       cilium-envoy       quay.io/cilium/cilium-envoy:v1.37.5-1786810558-766ccfb37260a43e9d228837aa84ce3faf9f64e7@sha256:75b8094c7127736a2ffd2dce3945e0931cb6df21b0372ff661940eca26730b91: 1
+                       cilium-operator    quay.io/cilium/operator-generic:v1.20.1@sha256:6c3885fc7b629099fdbe2a5c87869c86feb825fa18fae299eac0f61918d16ecf: 1
+                       hubble-relay       quay.io/cilium/hubble-relay:v1.20.1@sha256:59be0ae7d475ab9011a5e954618c0f27b5778b17140381425b308b55ba4917f4: 1
+Warnings:              cilium             cilium-nvnv8    1 endpoints are not ready
+2026/08/29 09:24:08 (0x347f36360c60) (0x347f35bf3720) Create stream
+2026/08/29 09:24:08 (0x347f36360c60) (0x347f35bf3720) Stream added, broadcasting: 1
+2026/08/29 09:24:08 (0x347f36360c60) Reply frame received for 1
+2026/08/29 09:24:08 (0x347f36360c60) (0x347f35bf37c0) Create stream
+2026/08/29 09:24:08 (0x347f36360c60) (0x347f35bf37c0) Stream added, broadcasting: 3
+2026/08/29 09:24:08 (0x347f36360c60) Reply frame received for 3
+2026/08/29 09:24:08 (0x347f36360c60) (0x347f3601a500) Create stream
+2026/08/29 09:24:08 (0x347f36360c60) (0x347f3601a500) Stream added, broadcasting: 5
+2026/08/29 09:24:08 (0x347f36360c60) Reply frame received for 5
+2026/08/29 09:24:08 (0x347f36360c60) Data frame received for 3
+2026/08/29 09:24:08 (0x347f35bf37c0) (3) Data frame handling
+2026/08/29 09:24:08 (0x347f35bf37c0) (3) Data frame sent
+2026/08/29 09:24:08 (0x347f36360c60) Data frame received for 3
+2026/08/29 09:24:08 (0x347f35bf37c0) (3) Data frame handling
+2026/08/29 09:24:08 (0x347f36360c60) Data frame received for 5
+2026/08/29 09:24:08 (0x347f3601a500) (5) Data frame handling
+2026/08/29 09:24:08 (0x347f36360c60) Data frame received for 1
+2026/08/29 09:24:08 (0x347f35bf3720) (1) Data frame handling
+2026/08/29 09:24:08 (0x347f35bf3720) (1) Data frame sent
+2026/08/29 09:24:08 (0x347f36360c60) (0x347f35bf3720) Stream removed, broadcasting: 1
+2026/08/29 09:24:08 (0x347f36360c60) Go away received
+2026/08/29 09:24:08 (0x347f36360c60) (0x347f35bf3720) Stream removed, broadcasting: 1
+2026/08/29 09:24:08 (0x347f36360c60) (0x347f35bf37c0) Stream removed, broadcasting: 3
+2026/08/29 09:24:08 (0x347f36360c60) (0x347f3601a500) Stream removed, broadcasting: 5
+2026/08/29 09:24:08 (0x347f362fc790) (0x347f35f28500) Create stream
+2026/08/29 09:24:08 (0x347f362fc790) (0x347f35f28500) Stream added, broadcasting: 1
+2026/08/29 09:24:08 (0x347f362fc790) Reply frame received for 1
+2026/08/29 09:24:08 (0x347f362fc790) (0x347f36070d20) Create stream
+2026/08/29 09:24:08 (0x347f362fc790) (0x347f36070d20) Stream added, broadcasting: 3
+2026/08/29 09:24:08 (0x347f362fc790) Reply frame received for 3
+2026/08/29 09:24:08 (0x347f362fc790) (0x347f35f285a0) Create stream
+2026/08/29 09:24:08 (0x347f362fc790) (0x347f35f285a0) Stream added, broadcasting: 5
+2026/08/29 09:24:08 (0x347f362fc790) Reply frame received for 5
+2026/08/29 09:24:08 (0x347f362fc790) Data frame received for 3
+2026/08/29 09:24:08 (0x347f36070d20) (3) Data frame handling
+2026/08/29 09:24:08 (0x347f36070d20) (3) Data frame sent
+2026/08/29 09:24:08 (0x347f362fc790) Data frame received for 3
+2026/08/29 09:24:08 (0x347f36070d20) (3) Data frame handling
+2026/08/29 09:24:08 (0x347f36070d20) (3) Data frame sent
+2026/08/29 09:24:08 (0x347f362fc790) Data frame received for 3
+2026/08/29 09:24:08 (0x347f36070d20) (3) Data frame handling
+2026/08/29 09:24:08 (0x347f36070d20) (3) Data frame sent
+2026/08/29 09:24:08 (0x347f362fc790) Data frame received for 3
+2026/08/29 09:24:08 (0x347f36070d20) (3) Data frame handling
+2026/08/29 09:24:08 (0x347f362fc790) Data frame received for 5
+2026/08/29 09:24:08 (0x347f35f285a0) (5) Data frame handling
+2026/08/29 09:24:08 (0x347f362fc790) Data frame received for 1
+2026/08/29 09:24:08 (0x347f35f28500) (1) Data frame handling
+2026/08/29 09:24:08 (0x347f35f28500) (1) Data frame sent
+2026/08/29 09:24:08 (0x347f362fc790) (0x347f35f28500) Stream removed, broadcasting: 1
+2026/08/29 09:24:08 (0x347f362fc790) (0x347f35f28500) Stream removed, broadcasting: 1
+2026/08/29 09:24:08 (0x347f362fc790) (0x347f36070d20) Stream removed, broadcasting: 3
+2026/08/29 09:24:08 (0x347f362fc790) (0x347f35f285a0) Stream removed, broadcasting: 5
+2026/08/29 09:24:08 (0x347f362fc790) Go away received
+[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[33m    /¯¯\
+[36m /¯¯[33m\__/[32m¯¯\[0m    Cilium:             [33m1 warnings[0m
+[36m \__[31m/¯¯\[32m__/[0m    Operator:           [32mOK[0m
+[32m /¯¯[31m\__/[35m¯¯\[0m    Envoy DaemonSet:    [32mOK[0m
+[32m \__[34m/¯¯\[35m__/[0m    Hubble Relay:       [32mOK[0m
+[34m[34m[34m    \__/[0m       ClusterMesh:        [36mdisabled[0m
+
+DaemonSet              cilium                   Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+DaemonSet              cilium-envoy             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             cilium-operator          Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             hubble-relay             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Containers:            cilium                   Running: [32m1[0m
+                       cilium-envoy             Running: [32m1[0m
+                       cilium-operator          Running: [32m1[0m
+                       clustermesh-apiserver    
+                       hubble-relay             Running: [32m1[0m
+Cluster Pods:          10/10 managed by Cilium
+Helm chart version:    1.20.1
+Image versions         cilium             quay.io/cilium/cilium:v1.20.1@sha256:ae9ea21f7427fe24bc6ea7247eb552157a1b0a431744045d3f641545ca71d11b: 1
+                       cilium-envoy       quay.io/cilium/cilium-envoy:v1.37.5-1786810558-766ccfb37260a43e9d228837aa84ce3faf9f64e7@sha256:75b8094c7127736a2ffd2dce3945e0931cb6df21b0372ff661940eca26730b91: 1
+                       cilium-operator    quay.io/cilium/operator-generic:v1.20.1@sha256:6c3885fc7b629099fdbe2a5c87869c86feb825fa18fae299eac0f61918d16ecf: 1
+                       hubble-relay       quay.io/cilium/hubble-relay:v1.20.1@sha256:59be0ae7d475ab9011a5e954618c0f27b5778b17140381425b308b55ba4917f4: 1
+Warnings:              cilium             cilium-nvnv8    1 endpoints are not ready
+2026/08/29 09:24:11 (0x347f362fd760) (0x347f362faaa0) Create stream
+2026/08/29 09:24:11 (0x347f362fd760) (0x347f362faaa0) Stream added, broadcasting: 1
+2026/08/29 09:24:11 (0x347f362fd760) Reply frame received for 1
+2026/08/29 09:24:11 (0x347f362fd760) (0x347f35fd4be0) Create stream
+2026/08/29 09:24:11 (0x347f362fd760) (0x347f35fd4be0) Stream added, broadcasting: 3
+2026/08/29 09:24:11 (0x347f362fd760) Reply frame received for 3
+2026/08/29 09:24:11 (0x347f362fd760) (0x347f362fac80) Create stream
+2026/08/29 09:24:11 (0x347f362fd760) (0x347f362fac80) Stream added, broadcasting: 5
+2026/08/29 09:24:11 (0x347f362fd760) Reply frame received for 5
+2026/08/29 09:24:11 (0x347f362fd760) Data frame received for 3
+2026/08/29 09:24:11 (0x347f35fd4be0) (3) Data frame handling
+2026/08/29 09:24:11 (0x347f35fd4be0) (3) Data frame sent
+2026/08/29 09:24:11 (0x347f362fd760) Data frame received for 3
+2026/08/29 09:24:11 (0x347f35fd4be0) (3) Data frame handling
+2026/08/29 09:24:11 (0x347f362fd760) Data frame received for 5
+2026/08/29 09:24:11 (0x347f362fac80) (5) Data frame handling
+2026/08/29 09:24:11 (0x347f362fd760) Data frame received for 1
+2026/08/29 09:24:11 (0x347f362faaa0) (1) Data frame handling
+2026/08/29 09:24:11 (0x347f362faaa0) (1) Data frame sent
+2026/08/29 09:24:11 (0x347f362fd760) (0x347f362faaa0) Stream removed, broadcasting: 1
+2026/08/29 09:24:11 (0x347f362fd760) (0x347f362faaa0) Stream removed, broadcasting: 1
+2026/08/29 09:24:11 (0x347f362fd760) (0x347f35fd4be0) Stream removed, broadcasting: 3
+2026/08/29 09:24:11 (0x347f362fd760) (0x347f362fac80) Stream removed, broadcasting: 5
+2026/08/29 09:24:11 (0x347f362fd760) Go away received
+2026/08/29 09:24:11 (0x347f363600b0) (0x347f35c80280) Create stream
+2026/08/29 09:24:11 (0x347f363600b0) (0x347f35c80280) Stream added, broadcasting: 1
+2026/08/29 09:24:11 (0x347f363600b0) Reply frame received for 1
+2026/08/29 09:24:11 (0x347f363600b0) (0x347f36070d20) Create stream
+2026/08/29 09:24:11 (0x347f363600b0) (0x347f36070d20) Stream added, broadcasting: 3
+2026/08/29 09:24:11 (0x347f363600b0) Reply frame received for 3
+2026/08/29 09:24:11 (0x347f363600b0) (0x347f35c80320) Create stream
+2026/08/29 09:24:11 (0x347f363600b0) (0x347f35c80320) Stream added, broadcasting: 5
+2026/08/29 09:24:11 (0x347f363600b0) Reply frame received for 5
+2026/08/29 09:24:11 (0x347f363600b0) Data frame received for 3
+2026/08/29 09:24:11 (0x347f36070d20) (3) Data frame handling
+2026/08/29 09:24:11 (0x347f36070d20) (3) Data frame sent
+2026/08/29 09:24:11 (0x347f363600b0) Data frame received for 5
+2026/08/29 09:24:11 (0x347f35c80320) (5) Data frame handling
+2026/08/29 09:24:11 (0x347f363600b0) Data frame received for 3
+2026/08/29 09:24:11 (0x347f36070d20) (3) Data frame handling
+2026/08/29 09:24:11 (0x347f36070d20) (3) Data frame sent
+2026/08/29 09:24:11 (0x347f363600b0) Data frame received for 3
+2026/08/29 09:24:11 (0x347f36070d20) (3) Data frame handling
+2026/08/29 09:24:11 (0x347f36070d20) (3) Data frame sent
+2026/08/29 09:24:11 (0x347f363600b0) Data frame received for 3
+2026/08/29 09:24:11 (0x347f36070d20) (3) Data frame handling
+2026/08/29 09:24:11 (0x347f363600b0) Data frame received for 1
+2026/08/29 09:24:11 (0x347f35c80280) (1) Data frame handling
+2026/08/29 09:24:11 (0x347f35c80280) (1) Data frame sent
+2026/08/29 09:24:11 (0x347f363600b0) (0x347f35c80280) Stream removed, broadcasting: 1
+2026/08/29 09:24:11 (0x347f363600b0) Go away received
+2026/08/29 09:24:11 (0x347f363600b0) (0x347f35c80280) Stream removed, broadcasting: 1
+2026/08/29 09:24:11 (0x347f363600b0) (0x347f36070d20) Stream removed, broadcasting: 3
+2026/08/29 09:24:11 (0x347f363600b0) (0x347f35c80320) Stream removed, broadcasting: 5
+[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[33m    /¯¯\
+[36m /¯¯[33m\__/[32m¯¯\[0m    Cilium:             [32mOK[0m
+[36m \__[31m/¯¯\[32m__/[0m    Operator:           [32mOK[0m
+[32m /¯¯[31m\__/[35m¯¯\[0m    Envoy DaemonSet:    [32mOK[0m
+[32m \__[34m/¯¯\[35m__/[0m    Hubble Relay:       [32mOK[0m
+[34m[34m[34m    \__/[0m       ClusterMesh:        [36mdisabled[0m
+
+DaemonSet              cilium                   Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+DaemonSet              cilium-envoy             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             cilium-operator          Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             hubble-relay             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Containers:            cilium                   Running: [32m1[0m
+                       cilium-envoy             Running: [32m1[0m
+                       cilium-operator          Running: [32m1[0m
+                       clustermesh-apiserver    
+                       hubble-relay             Running: [32m1[0m
+Cluster Pods:          10/10 managed by Cilium
+Helm chart version:    1.20.1
+Image versions         cilium             quay.io/cilium/cilium:v1.20.1@sha256:ae9ea21f7427fe24bc6ea7247eb552157a1b0a431744045d3f641545ca71d11b: 1
+                       cilium-envoy       quay.io/cilium/cilium-envoy:v1.37.5-1786810558-766ccfb37260a43e9d228837aa84ce3faf9f64e7@sha256:75b8094c7127736a2ffd2dce3945e0931cb6df21b0372ff661940eca26730b91: 1
+                       cilium-operator    quay.io/cilium/operator-generic:v1.20.1@sha256:6c3885fc7b629099fdbe2a5c87869c86feb825fa18fae299eac0f61918d16ecf: 1
+                       hubble-relay       quay.io/cilium/hubble-relay:v1.20.1@sha256:59be0ae7d475ab9011a5e954618c0f27b5778b17140381425b308b55ba4917f4: 1
+
+$ kubectl apply -f -
+
+# stdin
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gear-system
+  labels:
+    kubernetes.io/metadata.name: gear-system
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gear-lab
+  labels:
+    kubernetes.io/metadata.name: gear-lab
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gear-pep-mtls
+  namespace: gear-lab
+type: Opaque
+data: {}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gear-connector-credentials
+  namespace: gear-lab
+type: Opaque
+data: {}
+
+# output
+namespace/gear-system configured
+namespace/gear-lab configured
+secret/gear-pep-mtls configured
+secret/gear-connector-credentials configured
+
+$ kubectl -n gear-system delete service a6-gear-policy a6-gear-inference a6-gear-fixture-store --ignore-not-found=true
+
+# output
+service "a6-gear-policy" deleted from gear-system namespace
+service "a6-gear-inference" deleted from gear-system namespace
+service "a6-gear-fixture-store" deleted from gear-system namespace
+
+$ kubectl -n gear-system delete deployment a6-gear-policy a6-gear-inference a6-gear-fixture-store --ignore-not-found=true
+
+# output
+deployment.apps "a6-gear-policy" deleted from gear-system namespace
+deployment.apps "a6-gear-inference" deleted from gear-system namespace
+deployment.apps "a6-gear-fixture-store" deleted from gear-system namespace
+
+$ kubectl apply -f -
+
+# stdin
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: a6-gear-policy
+  namespace: gear-system
+  labels:
+    gear.eu/a6-target: "true"
+    app.kubernetes.io/name: gear-policy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      gear.eu/a6-target: "true"
+      app.kubernetes.io/name: gear-policy
+  template:
+    metadata:
+      labels:
+        gear.eu/a6-target: "true"
+        app.kubernetes.io/name: gear-policy
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: target
+          image: "ghcr.io/ayond-lab/gear-hostile-target:dev"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: A6_TARGET_NAME
+              value: gear-policy
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: mtls
+              containerPort: 443
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: a6-gear-policy
+  namespace: gear-system
+  labels:
+    gear.eu/a6-target: "true"
+spec:
+  clusterIP: None
+  selector:
+    gear.eu/a6-target: "true"
+    app.kubernetes.io/name: gear-policy
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+    - name: mtls
+      port: 443
+      targetPort: 443
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: a6-gear-inference
+  namespace: gear-system
+  labels:
+    gear.eu/a6-target: "true"
+    app.kubernetes.io/name: gear-inference
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      gear.eu/a6-target: "true"
+      app.kubernetes.io/name: gear-inference
+  template:
+    metadata:
+      labels:
+        gear.eu/a6-target: "true"
+        app.kubernetes.io/name: gear-inference
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: target
+          image: "ghcr.io/ayond-lab/gear-hostile-target:dev"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: A6_TARGET_NAME
+              value: gear-inference
+          ports:
+            - name: http
+              containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: a6-gear-inference
+  namespace: gear-system
+  labels:
+    gear.eu/a6-target: "true"
+spec:
+  clusterIP: None
+  selector:
+    gear.eu/a6-target: "true"
+    app.kubernetes.io/name: gear-inference
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: a6-gear-fixture-store
+  namespace: gear-system
+  labels:
+    gear.eu/a6-target: "true"
+    app.kubernetes.io/name: gear-fixture-store
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      gear.eu/a6-target: "true"
+      app.kubernetes.io/name: gear-fixture-store
+  template:
+    metadata:
+      labels:
+        gear.eu/a6-target: "true"
+        app.kubernetes.io/name: gear-fixture-store
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: target
+          image: "ghcr.io/ayond-lab/gear-hostile-target:dev"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: A6_TARGET_NAME
+              value: gear-fixture-store
+          ports:
+            - name: http
+              containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: a6-gear-fixture-store
+  namespace: gear-system
+  labels:
+    gear.eu/a6-target: "true"
+spec:
+  clusterIP: None
+  selector:
+    gear.eu/a6-target: "true"
+    app.kubernetes.io/name: gear-fixture-store
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+
+# output
+deployment.apps/a6-gear-policy created
+service/a6-gear-policy created
+deployment.apps/a6-gear-inference created
+service/a6-gear-inference created
+deployment.apps/a6-gear-fixture-store created
+service/a6-gear-fixture-store created
+
+$ kubectl -n gear-system rollout status deployment/a6-gear-policy --timeout=120s
+
+# output
+Waiting for deployment "a6-gear-policy" rollout to finish: 0 of 1 updated replicas are available...
+deployment "a6-gear-policy" successfully rolled out
+
+$ kubectl -n gear-system rollout status deployment/a6-gear-inference --timeout=120s
+
+# output
+deployment "a6-gear-inference" successfully rolled out
+
+$ kubectl -n gear-system rollout status deployment/a6-gear-fixture-store --timeout=120s
+
+# output
+deployment "a6-gear-fixture-store" successfully rolled out
+
+$ kubectl -n gear-system get pod -l gear.eu/a6-target=true,app.kubernetes.io/name=gear-policy -o jsonpath={.items[0].status.podIP}
+
+# output
+10.42.0.130
+
+$ kubectl -n gear-lab delete pod a6-with-control a6-without-control --ignore-not-found=true
+
+# output
+pod "a6-with-control" deleted from gear-lab namespace
+pod "a6-without-control" deleted from gear-lab namespace
+
+$ kubectl apply -f -
+
+# stdin
+apiVersion: v1
+kind: Pod
+metadata:
+  name: a6-with-control
+  namespace: gear-lab
+  labels:
+    gear.eu/ability: cv-screen
+    gear.eu/a6-control: with
+spec:
+  restartPolicy: Never
+  containers:
+    - name: ability
+      image: "ghcr.io/ayond-lab/gear-hostile-runner:dev"
+      imagePullPolicy: IfNotPresent
+      env:
+        - name: A6_CONTROL
+          value: with-control
+        - name: A6_POLICY_DNS
+          value: a6-gear-policy.gear-system.svc.cluster.local
+        - name: A6_INFERENCE_DNS
+          value: a6-gear-inference.gear-system.svc.cluster.local
+        - name: A6_FIXTURE_DNS
+          value: a6-gear-fixture-store.gear-system.svc.cluster.local
+        - name: A6_POLICY_IP
+          value: "10.42.0.130"
+      securityContext:
+        runAsUser: 1001
+        runAsNonRoot: true
+        allowPrivilegeEscalation: false
+
+# output
+pod/a6-with-control created
+
+$ kubectl -n gear-lab logs a6-with-control -c ability
+
+# output
+Error from server (BadRequest): container "ability" in pod "a6-with-control" is waiting to start: PodInitializing
+
+# error
+exit status 1
+
+$ kubectl -n gear-lab logs a6-with-control -c ability
+
+# output
+Error from server (BadRequest): container "ability" in pod "a6-with-control" is waiting to start: PodInitializing
+
+# error
+exit status 1
+
+$ kubectl -n gear-lab logs a6-with-control -c ability
+
+# output
+A6_RESULT {
+  "control": "with-control",
+  "startedAt": "2026-08-29T08:24:15Z",
+  "attacks": [
+    {
+      "id": "policy-dns-http",
+      "description": "Direct HTTP call to gear-policy by service DNS",
+      "target": "http://a6-gear-policy.gear-system.svc.cluster.local:8080/policy",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-policy.gear-system.svc.cluster.local:8080/policy\": dial tcp: lookup a6-gear-policy.gear-system.svc.cluster.local on 10.43.0.10:53: write udp 10.42.0.155:54169-\u003e10.43.0.10:53: write: operation not permitted",
+      "durationMillis": 1
+    },
+    {
+      "id": "policy-podip-http",
+      "description": "Direct HTTP call to gear-policy by Pod IP",
+      "target": "http://10.42.0.130:8080/policy",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://10.42.0.130:8080/policy\": dial tcp 10.42.0.130:8080: connect: no route to host",
+      "durationMillis": 0
+    },
+    {
+      "id": "inference-dns-http",
+      "description": "Direct HTTP call to gear-inference by service DNS",
+      "target": "http://a6-gear-inference.gear-system.svc.cluster.local:8080/inference",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-inference.gear-system.svc.cluster.local:8080/inference\": dial tcp: lookup a6-gear-inference.gear-system.svc.cluster.local on 10.43.0.10:53: write udp 10.42.0.155:55540-\u003e10.43.0.10:53: write: operation not permitted",
+      "durationMillis": 0
+    },
+    {
+      "id": "fixture-dns-http",
+      "description": "Direct HTTP call to gear-fixture-store by service DNS",
+      "target": "http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/fixture",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/fixture\": dial tcp: lookup a6-gear-fixture-store.gear-system.svc.cluster.local on 10.43.0.10:53: write udp 10.42.0.155:37742-\u003e10.43.0.10:53: write: operation not permitted",
+      "durationMillis": 0
+    },
+    {
+      "id": "connector-write-http",
+      "description": "Direct connector-like write call that should be PEP mediated",
+      "target": "http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/connector/candidate-record",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/connector/candidate-record\": dial tcp: lookup a6-gear-fixture-store.gear-system.svc.cluster.local on 10.43.0.10:53: write udp 10.42.0.155:37727-\u003e10.43.0.10:53: write: operation not permitted",
+      "durationMillis": 0
+    },
+    {
+      "id": "dns-assisted-policy",
+      "description": "DNS lookup for a trusted service before egress",
+      "target": "a6-gear-policy.gear-system.svc.cluster.local",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "lookup a6-gear-policy.gear-system.svc.cluster.local on 10.43.0.10:53: write udp 10.42.0.155:45200-\u003e10.43.0.10:53: write: operation not permitted",
+      "durationMillis": 0
+    },
+    {
+      "id": "raw-tcp-policy",
+      "description": "Raw TCP connection to gear-policy Pod IP",
+      "target": "10.42.0.130:8080",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "dial tcp 10.42.0.130:8080: connect: no route to host",
+      "durationMillis": 1040
+    },
+    {
+      "id": "mtls-policy-443",
+      "description": "mTLS attempt to gear-policy without a client certificate",
+      "target": "10.42.0.130:443",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"https://10.42.0.130:443/policy\": dial tcp 10.42.0.130:443: connect: no route to host",
+      "durationMillis": 0
+    }
+  ]
+}
+
+$ kubectl -n gear-lab get pod a6-with-control -o yaml
+
+# output
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Pod","metadata":{"annotations":{},"labels":{"gear.eu/a6-control":"with","gear.eu/ability":"cv-screen"},"name":"a6-with-control","namespace":"gear-lab"},"spec":{"containers":[{"env":[{"name":"A6_CONTROL","value":"with-control"},{"name":"A6_POLICY_DNS","value":"a6-gear-policy.gear-system.svc.cluster.local"},{"name":"A6_INFERENCE_DNS","value":"a6-gear-inference.gear-system.svc.cluster.local"},{"name":"A6_FIXTURE_DNS","value":"a6-gear-fixture-store.gear-system.svc.cluster.local"},{"name":"A6_POLICY_IP","value":"10.42.0.130"}],"image":"ghcr.io/ayond-lab/gear-hostile-runner:dev","imagePullPolicy":"IfNotPresent","name":"ability","securityContext":{"allowPrivilegeEscalation":false,"runAsNonRoot":true,"runAsUser":1001}}],"restartPolicy":"Never"}}
+  creationTimestamp: "2026-08-29T08:24:14Z"
+  generation: 1
+  labels:
+    gear.eu/a6-control: with
+    gear.eu/ability: cv-screen
+  name: a6-with-control
+  namespace: gear-lab
+  resourceVersion: "2666"
+  uid: 1184f513-3b35-434d-87ce-300449b900e2
+spec:
+  automountServiceAccountToken: false
+  containers:
+  - env:
+    - name: A6_CONTROL
+      value: with-control
+    - name: A6_POLICY_DNS
+      value: a6-gear-policy.gear-system.svc.cluster.local
+    - name: A6_INFERENCE_DNS
+      value: a6-gear-inference.gear-system.svc.cluster.local
+    - name: A6_FIXTURE_DNS
+      value: a6-gear-fixture-store.gear-system.svc.cluster.local
+    - name: A6_POLICY_IP
+      value: 10.42.0.130
+    image: ghcr.io/ayond-lab/gear-hostile-runner:dev
+    imagePullPolicy: IfNotPresent
+    name: ability
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsNonRoot: true
+      runAsUser: 1001
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-h95db
+      readOnly: true
+  - args:
+    - --listen=127.0.0.1:9191
+    env:
+    - name: GEAR_PEP_LISTEN
+      value: 127.0.0.1:9191
+    - name: GEAR_ABILITY_REF
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.labels['gear.eu/ability']
+    image: ghcr.io/ayond-lab/gear-pep:dev
+    imagePullPolicy: IfNotPresent
+    name: gear-pep
+    ports:
+    - containerPort: 9191
+      name: pep-loopback
+      protocol: TCP
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsNonRoot: true
+      runAsUser: 1337
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/gear/mtls
+      name: gear-pep-mtls
+      readOnly: true
+    - mountPath: /var/run/gear/connectors
+      name: gear-connector-credentials
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  initContainers:
+  - args:
+    - |-
+      iptables -A OUTPUT -o lo -j ACCEPT
+      iptables -A OUTPUT -m owner --uid-owner 1337 -j ACCEPT
+      iptables -A OUTPUT -j REJECT --reject-with icmp-admin-prohibited
+    command:
+    - sh
+    - -c
+    image: ghcr.io/ayond-lab/gear-netinit:dev
+    imagePullPolicy: IfNotPresent
+    name: gear-uid-egress
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        add:
+        - NET_ADMIN
+      runAsNonRoot: false
+      runAsUser: 0
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+  nodeName: k3d-gear-lab-server-0
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-h95db
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+  - name: gear-pep-mtls
+    secret:
+      defaultMode: 420
+      secretName: gear-pep-mtls
+  - name: gear-connector-credentials
+    secret:
+      defaultMode: 420
+      secretName: gear-connector-credentials
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2026-08-29T08:24:15Z"
+    observedGeneration: 1
+    status: "True"
+    type: PodReadyToStartContainers
+  - lastProbeTime: null
+    lastTransitionTime: "2026-08-29T08:24:15Z"
+    observedGeneration: 1
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2026-08-29T08:24:17Z"
+    message: 'containers with unready status: [ability]'
+    observedGeneration: 1
+    reason: ContainersNotReady
+    status: "False"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2026-08-29T08:24:17Z"
+    message: 'containers with unready status: [ability]'
+    observedGeneration: 1
+    reason: ContainersNotReady
+    status: "False"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2026-08-29T08:24:14Z"
+    observedGeneration: 1
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://8dac8c68de3527a922e3fffbbe0dddb3cbfbdc84cce095273357c7e3c982a4cd
+    image: ghcr.io/ayond-lab/gear-hostile-runner:dev
+    imageID: sha256:c92011cef384d28b794dab176bcd1a5194667992cb1dda0ad6eafb28c55a68b5
+    lastState: {}
+    name: ability
+    ready: false
+    resources: {}
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: containerd://8dac8c68de3527a922e3fffbbe0dddb3cbfbdc84cce095273357c7e3c982a4cd
+        exitCode: 0
+        finishedAt: "2026-08-29T08:24:16Z"
+        reason: Completed
+        startedAt: "2026-08-29T08:24:15Z"
+    user:
+      linux:
+        gid: 0
+        supplementalGroups:
+        - 0
+        uid: 1001
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-h95db
+      readOnly: true
+      recursiveReadOnly: Disabled
+  - containerID: containerd://42580a3d0449e1286f15f8d54a14526c0071546e4e0d62aaf0b148c41f8c1aeb
+    image: ghcr.io/ayond-lab/gear-pep:dev
+    imageID: sha256:61fb3579b22602a7a4d6559c02259efc70a5c64c661b571fe31282037ef5dfcd
+    lastState: {}
+    name: gear-pep
+    ready: true
+    resources: {}
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2026-08-29T08:24:15Z"
+    user:
+      linux:
+        gid: 0
+        supplementalGroups:
+        - 0
+        uid: 1337
+    volumeMounts:
+    - mountPath: /var/run/gear/mtls
+      name: gear-pep-mtls
+      readOnly: true
+      recursiveReadOnly: Disabled
+    - mountPath: /var/run/gear/connectors
+      name: gear-connector-credentials
+      readOnly: true
+      recursiveReadOnly: Disabled
+  hostIP: 172.20.0.3
+  hostIPs:
+  - ip: 172.20.0.3
+  initContainerStatuses:
+  - containerID: containerd://bbf16a85e30ff3d6187a0417b25eb1ac53832ca46c5529a4e4ec729f33dbbf14
+    image: ghcr.io/ayond-lab/gear-netinit:dev
+    imageID: sha256:3bc5ae1aaf62ea803bd8ace0363705d742efdf425ef13e452f51fe655bb2fbf3
+    lastState: {}
+    name: gear-uid-egress
+    ready: true
+    resources: {}
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: containerd://bbf16a85e30ff3d6187a0417b25eb1ac53832ca46c5529a4e4ec729f33dbbf14
+        exitCode: 0
+        finishedAt: "2026-08-29T08:24:15Z"
+        reason: Completed
+        startedAt: "2026-08-29T08:24:15Z"
+    user:
+      linux:
+        gid: 0
+        supplementalGroups:
+        - 0
+        uid: 0
+  observedGeneration: 1
+  phase: Running
+  podIP: 10.42.0.155
+  podIPs:
+  - ip: 10.42.0.155
+  qosClass: BestEffort
+  startTime: "2026-08-29T08:24:14Z"
+
+$ kubectl -n gear-lab describe pod a6-with-control
+
+# output
+Name:             a6-with-control
+Namespace:        gear-lab
+Priority:         0
+Service Account:  default
+Node:             k3d-gear-lab-server-0/172.20.0.3
+Start Time:       Sat, 29 Aug 2026 09:24:14 +0100
+Labels:           gear.eu/a6-control=with
+                  gear.eu/ability=cv-screen
+Annotations:      <none>
+Status:           Running
+IP:               10.42.0.155
+IPs:
+  IP:  10.42.0.155
+Init Containers:
+  gear-uid-egress:
+    Container ID:  containerd://bbf16a85e30ff3d6187a0417b25eb1ac53832ca46c5529a4e4ec729f33dbbf14
+    Image:         ghcr.io/ayond-lab/gear-netinit:dev
+    Image ID:      sha256:3bc5ae1aaf62ea803bd8ace0363705d742efdf425ef13e452f51fe655bb2fbf3
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      sh
+      -c
+    Args:
+      iptables -A OUTPUT -o lo -j ACCEPT
+      iptables -A OUTPUT -m owner --uid-owner 1337 -j ACCEPT
+      iptables -A OUTPUT -j REJECT --reject-with icmp-admin-prohibited
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sat, 29 Aug 2026 09:24:15 +0100
+      Finished:     Sat, 29 Aug 2026 09:24:15 +0100
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:         <none>
+Containers:
+  ability:
+    Container ID:   containerd://8dac8c68de3527a922e3fffbbe0dddb3cbfbdc84cce095273357c7e3c982a4cd
+    Image:          ghcr.io/ayond-lab/gear-hostile-runner:dev
+    Image ID:       sha256:c92011cef384d28b794dab176bcd1a5194667992cb1dda0ad6eafb28c55a68b5
+    Port:           <none>
+    Host Port:      <none>
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sat, 29 Aug 2026 09:24:15 +0100
+      Finished:     Sat, 29 Aug 2026 09:24:16 +0100
+    Ready:          False
+    Restart Count:  0
+    Environment:
+      A6_CONTROL:        with-control
+      A6_POLICY_DNS:     a6-gear-policy.gear-system.svc.cluster.local
+      A6_INFERENCE_DNS:  a6-gear-inference.gear-system.svc.cluster.local
+      A6_FIXTURE_DNS:    a6-gear-fixture-store.gear-system.svc.cluster.local
+      A6_POLICY_IP:      10.42.0.130
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-h95db (ro)
+  gear-pep:
+    Container ID:  containerd://42580a3d0449e1286f15f8d54a14526c0071546e4e0d62aaf0b148c41f8c1aeb
+    Image:         ghcr.io/ayond-lab/gear-pep:dev
+    Image ID:      sha256:61fb3579b22602a7a4d6559c02259efc70a5c64c661b571fe31282037ef5dfcd
+    Port:          9191/TCP (pep-loopback)
+    Host Port:     0/TCP (pep-loopback)
+    Args:
+      --listen=127.0.0.1:9191
+    State:          Running
+      Started:      Sat, 29 Aug 2026 09:24:15 +0100
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      GEAR_PEP_LISTEN:   127.0.0.1:9191
+      GEAR_ABILITY_REF:   (v1:metadata.labels['gear.eu/ability'])
+    Mounts:
+      /var/run/gear/connectors from gear-connector-credentials (ro)
+      /var/run/gear/mtls from gear-pep-mtls (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       False 
+  ContainersReady             False 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-h95db:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+  gear-pep-mtls:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  gear-pep-mtls
+    Optional:    false
+  gear-connector-credentials:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  gear-connector-credentials
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  4s    default-scheduler  Successfully assigned gear-lab/a6-with-control to k3d-gear-lab-server-0
+  Normal  Pulled     3s    kubelet            Container image "ghcr.io/ayond-lab/gear-netinit:dev" already present on machine and can be accessed by the pod
+  Normal  Created    3s    kubelet            Container created
+  Normal  Started    3s    kubelet            Container started
+  Normal  Pulled     3s    kubelet            Container image "ghcr.io/ayond-lab/gear-hostile-runner:dev" already present on machine and can be accessed by the pod
+  Normal  Created    3s    kubelet            Container created
+  Normal  Started    3s    kubelet            Container started
+  Normal  Pulled     3s    kubelet            Container image "ghcr.io/ayond-lab/gear-pep:dev" already present on machine and can be accessed by the pod
+  Normal  Created    3s    kubelet            Container created
+  Normal  Started    3s    kubelet            Container started
+
+$ kubectl -n gear-lab logs a6-with-control -c ability
+
+# output
+A6_RESULT {
+  "control": "with-control",
+  "startedAt": "2026-08-29T08:24:15Z",
+  "attacks": [
+    {
+      "id": "policy-dns-http",
+      "description": "Direct HTTP call to gear-policy by service DNS",
+      "target": "http://a6-gear-policy.gear-system.svc.cluster.local:8080/policy",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-policy.gear-system.svc.cluster.local:8080/policy\": dial tcp: lookup a6-gear-policy.gear-system.svc.cluster.local on 10.43.0.10:53: write udp 10.42.0.155:54169-\u003e10.43.0.10:53: write: operation not permitted",
+      "durationMillis": 1
+    },
+    {
+      "id": "policy-podip-http",
+      "description": "Direct HTTP call to gear-policy by Pod IP",
+      "target": "http://10.42.0.130:8080/policy",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://10.42.0.130:8080/policy\": dial tcp 10.42.0.130:8080: connect: no route to host",
+      "durationMillis": 0
+    },
+    {
+      "id": "inference-dns-http",
+      "description": "Direct HTTP call to gear-inference by service DNS",
+      "target": "http://a6-gear-inference.gear-system.svc.cluster.local:8080/inference",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-inference.gear-system.svc.cluster.local:8080/inference\": dial tcp: lookup a6-gear-inference.gear-system.svc.cluster.local on 10.43.0.10:53: write udp 10.42.0.155:55540-\u003e10.43.0.10:53: write: operation not permitted",
+      "durationMillis": 0
+    },
+    {
+      "id": "fixture-dns-http",
+      "description": "Direct HTTP call to gear-fixture-store by service DNS",
+      "target": "http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/fixture",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/fixture\": dial tcp: lookup a6-gear-fixture-store.gear-system.svc.cluster.local on 10.43.0.10:53: write udp 10.42.0.155:37742-\u003e10.43.0.10:53: write: operation not permitted",
+      "durationMillis": 0
+    },
+    {
+      "id": "connector-write-http",
+      "description": "Direct connector-like write call that should be PEP mediated",
+      "target": "http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/connector/candidate-record",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/connector/candidate-record\": dial tcp: lookup a6-gear-fixture-store.gear-system.svc.cluster.local on 10.43.0.10:53: write udp 10.42.0.155:37727-\u003e10.43.0.10:53: write: operation not permitted",
+      "durationMillis": 0
+    },
+    {
+      "id": "dns-assisted-policy",
+      "description": "DNS lookup for a trusted service before egress",
+      "target": "a6-gear-policy.gear-system.svc.cluster.local",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "lookup a6-gear-policy.gear-system.svc.cluster.local on 10.43.0.10:53: write udp 10.42.0.155:45200-\u003e10.43.0.10:53: write: operation not permitted",
+      "durationMillis": 0
+    },
+    {
+      "id": "raw-tcp-policy",
+      "description": "Raw TCP connection to gear-policy Pod IP",
+      "target": "10.42.0.130:8080",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "dial tcp 10.42.0.130:8080: connect: no route to host",
+      "durationMillis": 1040
+    },
+    {
+      "id": "mtls-policy-443",
+      "description": "mTLS attempt to gear-policy without a client certificate",
+      "target": "10.42.0.130:443",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"https://10.42.0.130:443/policy\": dial tcp 10.42.0.130:443: connect: no route to host",
+      "durationMillis": 0
+    }
+  ]
+}
+
+$ kubectl -n gear-lab logs a6-with-control -c gear-pep
+
+# output
+2026/08/29 08:24:15 INFO component starting component=gear-pep addr=:8080
+
+$ kubectl -n gear-lab logs a6-with-control -c gear-uid-egress
+
+$ kubectl apply -f -
+
+# stdin
+apiVersion: v1
+kind: Pod
+metadata:
+  name: a6-without-control
+  namespace: gear-lab
+  labels:
+    gear.eu/a6-control: without
+spec:
+  automountServiceAccountToken: false
+  restartPolicy: Never
+  containers:
+    - name: ability
+      image: "ghcr.io/ayond-lab/gear-hostile-runner:dev"
+      imagePullPolicy: IfNotPresent
+      env:
+        - name: A6_CONTROL
+          value: without-control
+        - name: A6_START_DELAY_SECONDS
+          value: "6"
+        - name: A6_POLICY_DNS
+          value: a6-gear-policy.gear-system.svc.cluster.local
+        - name: A6_INFERENCE_DNS
+          value: a6-gear-inference.gear-system.svc.cluster.local
+        - name: A6_FIXTURE_DNS
+          value: a6-gear-fixture-store.gear-system.svc.cluster.local
+        - name: A6_POLICY_IP
+          value: "10.42.0.130"
+      securityContext:
+        runAsUser: 1001
+        runAsNonRoot: true
+        allowPrivilegeEscalation: false
+    - name: gear-pep
+      image: "ghcr.io/ayond-lab/gear-pep:dev"
+      imagePullPolicy: IfNotPresent
+      args:
+        - --listen=127.0.0.1:9191
+      ports:
+        - name: pep-loopback
+          containerPort: 9191
+      env:
+        - name: GEAR_PEP_LISTEN
+          value: 127.0.0.1:9191
+        - name: GEAR_ABILITY_REF
+          value: cv-screen
+      volumeMounts:
+        - name: gear-pep-mtls
+          mountPath: /var/run/gear/mtls
+          readOnly: true
+        - name: gear-connector-credentials
+          mountPath: /var/run/gear/connectors
+          readOnly: true
+      securityContext:
+        runAsUser: 1337
+        runAsNonRoot: true
+        allowPrivilegeEscalation: false
+  volumes:
+    - name: gear-pep-mtls
+      secret:
+        secretName: gear-pep-mtls
+    - name: gear-connector-credentials
+      secret:
+        secretName: gear-connector-credentials
+
+# output
+pod/a6-without-control created
+
+$ kubectl -n gear-lab label pod a6-without-control gear.eu/ability=cv-screen --overwrite
+
+# output
+pod/a6-without-control labeled
+
+$ kubectl -n gear-lab logs a6-without-control -c ability
+
+# output
+Error from server (BadRequest): container "ability" in pod "a6-without-control" is waiting to start: ContainerCreating
+
+# error
+exit status 1
+
+$ kubectl -n gear-lab logs a6-without-control -c ability
+
+$ kubectl -n gear-lab logs a6-without-control -c ability
+
+$ kubectl -n gear-lab logs a6-without-control -c ability
+
+$ kubectl -n gear-lab logs a6-without-control -c ability
+
+$ kubectl -n gear-lab logs a6-without-control -c ability
+
+$ kubectl -n gear-lab logs a6-without-control -c ability
+
+$ kubectl -n gear-lab logs a6-without-control -c ability
+
+$ kubectl -n gear-lab logs a6-without-control -c ability
+
+# output
+A6_RESULT {
+  "control": "without-control",
+  "startedAt": "2026-08-29T08:24:25Z",
+  "attacks": [
+    {
+      "id": "policy-dns-http",
+      "description": "Direct HTTP call to gear-policy by service DNS",
+      "target": "http://a6-gear-policy.gear-system.svc.cluster.local:8080/policy",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-policy.gear-system.svc.cluster.local:8080/policy\": context deadline exceeded",
+      "durationMillis": 2001
+    },
+    {
+      "id": "policy-podip-http",
+      "description": "Direct HTTP call to gear-policy by Pod IP",
+      "target": "http://10.42.0.130:8080/policy",
+      "outcome": "reached",
+      "reached": true,
+      "httpStatus": 200,
+      "durationMillis": 9
+    },
+    {
+      "id": "inference-dns-http",
+      "description": "Direct HTTP call to gear-inference by service DNS",
+      "target": "http://a6-gear-inference.gear-system.svc.cluster.local:8080/inference",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-inference.gear-system.svc.cluster.local:8080/inference\": context deadline exceeded",
+      "durationMillis": 2000
+    },
+    {
+      "id": "fixture-dns-http",
+      "description": "Direct HTTP call to gear-fixture-store by service DNS",
+      "target": "http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/fixture",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/fixture\": dial tcp: lookup a6-gear-fixture-store.gear-system.svc.cluster.local: i/o timeout",
+      "durationMillis": 2001
+    },
+    {
+      "id": "connector-write-http",
+      "description": "Direct connector-like write call that should be PEP mediated",
+      "target": "http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/connector/candidate-record",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/connector/candidate-record\": dial tcp: lookup a6-gear-fixture-store.gear-system.svc.cluster.local: i/o timeout",
+      "durationMillis": 2002
+    },
+    {
+      "id": "dns-assisted-policy",
+      "description": "DNS lookup for a trusted service before egress",
+      "target": "a6-gear-policy.gear-system.svc.cluster.local",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "lookup a6-gear-policy.gear-system.svc.cluster.local on 10.43.0.10:53: dial udp 10.43.0.10:53: i/o timeout",
+      "durationMillis": 2002
+    },
+    {
+      "id": "raw-tcp-policy",
+      "description": "Raw TCP connection to gear-policy Pod IP",
+      "target": "10.42.0.130:8080",
+      "outcome": "reached",
+      "reached": true,
+      "durationMillis": 1
+    },
+    {
+      "id": "mtls-policy-443",
+      "description": "mTLS attempt to gear-policy without a client certificate",
+      "target": "10.42.0.130:443",
+      "outcome": "auth-failed",
+      "reached": true,
+      "error": "Get \"https://10.42.0.130:443/policy\": remote error: tls: certificate required",
+      "durationMillis": 7
+    }
+  ]
+}
+
+$ kubectl -n gear-lab get pod a6-without-control -o yaml
+
+# output
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Pod","metadata":{"annotations":{},"labels":{"gear.eu/a6-control":"without"},"name":"a6-without-control","namespace":"gear-lab"},"spec":{"automountServiceAccountToken":false,"containers":[{"env":[{"name":"A6_CONTROL","value":"without-control"},{"name":"A6_START_DELAY_SECONDS","value":"6"},{"name":"A6_POLICY_DNS","value":"a6-gear-policy.gear-system.svc.cluster.local"},{"name":"A6_INFERENCE_DNS","value":"a6-gear-inference.gear-system.svc.cluster.local"},{"name":"A6_FIXTURE_DNS","value":"a6-gear-fixture-store.gear-system.svc.cluster.local"},{"name":"A6_POLICY_IP","value":"10.42.0.130"}],"image":"ghcr.io/ayond-lab/gear-hostile-runner:dev","imagePullPolicy":"IfNotPresent","name":"ability","securityContext":{"allowPrivilegeEscalation":false,"runAsNonRoot":true,"runAsUser":1001}},{"args":["--listen=127.0.0.1:9191"],"env":[{"name":"GEAR_PEP_LISTEN","value":"127.0.0.1:9191"},{"name":"GEAR_ABILITY_REF","value":"cv-screen"}],"image":"ghcr.io/ayond-lab/gear-pep:dev","imagePullPolicy":"IfNotPresent","name":"gear-pep","ports":[{"containerPort":9191,"name":"pep-loopback"}],"securityContext":{"allowPrivilegeEscalation":false,"runAsNonRoot":true,"runAsUser":1337},"volumeMounts":[{"mountPath":"/var/run/gear/mtls","name":"gear-pep-mtls","readOnly":true},{"mountPath":"/var/run/gear/connectors","name":"gear-connector-credentials","readOnly":true}]}],"restartPolicy":"Never","volumes":[{"name":"gear-pep-mtls","secret":{"secretName":"gear-pep-mtls"}},{"name":"gear-connector-credentials","secret":{"secretName":"gear-connector-credentials"}}]}}
+  creationTimestamp: "2026-08-29T08:24:18Z"
+  generation: 1
+  labels:
+    gear.eu/a6-control: without
+    gear.eu/ability: cv-screen
+  name: a6-without-control
+  namespace: gear-lab
+  resourceVersion: "2682"
+  uid: 0e1d60f5-61ae-439e-b24f-6c380d56d6ef
+spec:
+  automountServiceAccountToken: false
+  containers:
+  - env:
+    - name: A6_CONTROL
+      value: without-control
+    - name: A6_START_DELAY_SECONDS
+      value: "6"
+    - name: A6_POLICY_DNS
+      value: a6-gear-policy.gear-system.svc.cluster.local
+    - name: A6_INFERENCE_DNS
+      value: a6-gear-inference.gear-system.svc.cluster.local
+    - name: A6_FIXTURE_DNS
+      value: a6-gear-fixture-store.gear-system.svc.cluster.local
+    - name: A6_POLICY_IP
+      value: 10.42.0.130
+    image: ghcr.io/ayond-lab/gear-hostile-runner:dev
+    imagePullPolicy: IfNotPresent
+    name: ability
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsNonRoot: true
+      runAsUser: 1001
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+  - args:
+    - --listen=127.0.0.1:9191
+    env:
+    - name: GEAR_PEP_LISTEN
+      value: 127.0.0.1:9191
+    - name: GEAR_ABILITY_REF
+      value: cv-screen
+    image: ghcr.io/ayond-lab/gear-pep:dev
+    imagePullPolicy: IfNotPresent
+    name: gear-pep
+    ports:
+    - containerPort: 9191
+      name: pep-loopback
+      protocol: TCP
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsNonRoot: true
+      runAsUser: 1337
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/gear/mtls
+      name: gear-pep-mtls
+      readOnly: true
+    - mountPath: /var/run/gear/connectors
+      name: gear-connector-credentials
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: k3d-gear-lab-server-0
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: gear-pep-mtls
+    secret:
+      defaultMode: 420
+      secretName: gear-pep-mtls
+  - name: gear-connector-credentials
+    secret:
+      defaultMode: 420
+      secretName: gear-connector-credentials
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2026-08-29T08:24:19Z"
+    observedGeneration: 1
+    status: "True"
+    type: PodReadyToStartContainers
+  - lastProbeTime: null
+    lastTransitionTime: "2026-08-29T08:24:18Z"
+    observedGeneration: 1
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2026-08-29T08:24:19Z"
+    observedGeneration: 1
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2026-08-29T08:24:19Z"
+    observedGeneration: 1
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2026-08-29T08:24:18Z"
+    observedGeneration: 1
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://f41fb678e17342e8a60c576fa2cd18d31b01231681ae6cfe3829c05063bfc135
+    image: ghcr.io/ayond-lab/gear-hostile-runner:dev
+    imageID: sha256:c92011cef384d28b794dab176bcd1a5194667992cb1dda0ad6eafb28c55a68b5
+    lastState: {}
+    name: ability
+    ready: true
+    resources: {}
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2026-08-29T08:24:19Z"
+    user:
+      linux:
+        gid: 0
+        supplementalGroups:
+        - 0
+        uid: 1001
+  - containerID: containerd://505886923dd6a047ff8384627f7f7d1d045bb1993c2a24a31257bafaa737ff9c
+    image: ghcr.io/ayond-lab/gear-pep:dev
+    imageID: sha256:61fb3579b22602a7a4d6559c02259efc70a5c64c661b571fe31282037ef5dfcd
+    lastState: {}
+    name: gear-pep
+    ready: true
+    resources: {}
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2026-08-29T08:24:19Z"
+    user:
+      linux:
+        gid: 0
+        supplementalGroups:
+        - 0
+        uid: 1337
+    volumeMounts:
+    - mountPath: /var/run/gear/mtls
+      name: gear-pep-mtls
+      readOnly: true
+      recursiveReadOnly: Disabled
+    - mountPath: /var/run/gear/connectors
+      name: gear-connector-credentials
+      readOnly: true
+      recursiveReadOnly: Disabled
+  hostIP: 172.20.0.3
+  hostIPs:
+  - ip: 172.20.0.3
+  observedGeneration: 1
+  phase: Running
+  podIP: 10.42.0.22
+  podIPs:
+  - ip: 10.42.0.22
+  qosClass: BestEffort
+  startTime: "2026-08-29T08:24:18Z"
+
+$ kubectl -n gear-lab describe pod a6-without-control
+
+# output
+Name:             a6-without-control
+Namespace:        gear-lab
+Priority:         0
+Service Account:  default
+Node:             k3d-gear-lab-server-0/172.20.0.3
+Start Time:       Sat, 29 Aug 2026 09:24:18 +0100
+Labels:           gear.eu/a6-control=without
+                  gear.eu/ability=cv-screen
+Annotations:      <none>
+Status:           Running
+IP:               10.42.0.22
+IPs:
+  IP:  10.42.0.22
+Containers:
+  ability:
+    Container ID:   containerd://f41fb678e17342e8a60c576fa2cd18d31b01231681ae6cfe3829c05063bfc135
+    Image:          ghcr.io/ayond-lab/gear-hostile-runner:dev
+    Image ID:       sha256:c92011cef384d28b794dab176bcd1a5194667992cb1dda0ad6eafb28c55a68b5
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Sat, 29 Aug 2026 09:24:19 +0100
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      A6_CONTROL:              without-control
+      A6_START_DELAY_SECONDS:  6
+      A6_POLICY_DNS:           a6-gear-policy.gear-system.svc.cluster.local
+      A6_INFERENCE_DNS:        a6-gear-inference.gear-system.svc.cluster.local
+      A6_FIXTURE_DNS:          a6-gear-fixture-store.gear-system.svc.cluster.local
+      A6_POLICY_IP:            10.42.0.130
+    Mounts:                    <none>
+  gear-pep:
+    Container ID:  containerd://505886923dd6a047ff8384627f7f7d1d045bb1993c2a24a31257bafaa737ff9c
+    Image:         ghcr.io/ayond-lab/gear-pep:dev
+    Image ID:      sha256:61fb3579b22602a7a4d6559c02259efc70a5c64c661b571fe31282037ef5dfcd
+    Port:          9191/TCP (pep-loopback)
+    Host Port:     0/TCP (pep-loopback)
+    Args:
+      --listen=127.0.0.1:9191
+    State:          Running
+      Started:      Sat, 29 Aug 2026 09:24:19 +0100
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      GEAR_PEP_LISTEN:   127.0.0.1:9191
+      GEAR_ABILITY_REF:  cv-screen
+    Mounts:
+      /var/run/gear/connectors from gear-connector-credentials (ro)
+      /var/run/gear/mtls from gear-pep-mtls (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  gear-pep-mtls:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  gear-pep-mtls
+    Optional:    false
+  gear-connector-credentials:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  gear-connector-credentials
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  16s   default-scheduler  Successfully assigned gear-lab/a6-without-control to k3d-gear-lab-server-0
+  Normal  Pulled     16s   kubelet            Container image "ghcr.io/ayond-lab/gear-hostile-runner:dev" already present on machine and can be accessed by the pod
+  Normal  Created    16s   kubelet            Container created
+  Normal  Started    16s   kubelet            Container started
+  Normal  Pulled     16s   kubelet            Container image "ghcr.io/ayond-lab/gear-pep:dev" already present on machine and can be accessed by the pod
+  Normal  Created    16s   kubelet            Container created
+  Normal  Started    16s   kubelet            Container started
+
+$ kubectl -n gear-lab logs a6-without-control -c ability
+
+# output
+A6_RESULT {
+  "control": "without-control",
+  "startedAt": "2026-08-29T08:24:25Z",
+  "attacks": [
+    {
+      "id": "policy-dns-http",
+      "description": "Direct HTTP call to gear-policy by service DNS",
+      "target": "http://a6-gear-policy.gear-system.svc.cluster.local:8080/policy",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-policy.gear-system.svc.cluster.local:8080/policy\": context deadline exceeded",
+      "durationMillis": 2001
+    },
+    {
+      "id": "policy-podip-http",
+      "description": "Direct HTTP call to gear-policy by Pod IP",
+      "target": "http://10.42.0.130:8080/policy",
+      "outcome": "reached",
+      "reached": true,
+      "httpStatus": 200,
+      "durationMillis": 9
+    },
+    {
+      "id": "inference-dns-http",
+      "description": "Direct HTTP call to gear-inference by service DNS",
+      "target": "http://a6-gear-inference.gear-system.svc.cluster.local:8080/inference",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-inference.gear-system.svc.cluster.local:8080/inference\": context deadline exceeded",
+      "durationMillis": 2000
+    },
+    {
+      "id": "fixture-dns-http",
+      "description": "Direct HTTP call to gear-fixture-store by service DNS",
+      "target": "http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/fixture",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/fixture\": dial tcp: lookup a6-gear-fixture-store.gear-system.svc.cluster.local: i/o timeout",
+      "durationMillis": 2001
+    },
+    {
+      "id": "connector-write-http",
+      "description": "Direct connector-like write call that should be PEP mediated",
+      "target": "http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/connector/candidate-record",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/connector/candidate-record\": dial tcp: lookup a6-gear-fixture-store.gear-system.svc.cluster.local: i/o timeout",
+      "durationMillis": 2002
+    },
+    {
+      "id": "dns-assisted-policy",
+      "description": "DNS lookup for a trusted service before egress",
+      "target": "a6-gear-policy.gear-system.svc.cluster.local",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "lookup a6-gear-policy.gear-system.svc.cluster.local on 10.43.0.10:53: dial udp 10.43.0.10:53: i/o timeout",
+      "durationMillis": 2002
+    },
+    {
+      "id": "raw-tcp-policy",
+      "description": "Raw TCP connection to gear-policy Pod IP",
+      "target": "10.42.0.130:8080",
+      "outcome": "reached",
+      "reached": true,
+      "durationMillis": 1
+    },
+    {
+      "id": "mtls-policy-443",
+      "description": "mTLS attempt to gear-policy without a client certificate",
+      "target": "10.42.0.130:443",
+      "outcome": "auth-failed",
+      "reached": true,
+      "error": "Get \"https://10.42.0.130:443/policy\": remote error: tls: certificate required",
+      "durationMillis": 7
+    }
+  ]
+}
+
+$ kubectl -n gear-lab logs a6-without-control -c gear-pep
+
+# output
+2026/08/29 08:24:19 INFO component starting component=gear-pep addr=:8080
+
+$ kubectl -n gear-lab logs a6-without-control -c gear-uid-egress
+
+# output
+error: container gear-uid-egress is not valid for pod a6-without-control
+
+# error
+exit status 1
+
+$ kubectl -n gear-lab get networkpolicy gear-ability-egress-baseline -o yaml
+
+# output
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.k8s.io/v1","kind":"NetworkPolicy","metadata":{"annotations":{},"name":"gear-ability-egress-baseline","namespace":"gear-lab"},"spec":{"egress":[{"ports":[{"port":53,"protocol":"UDP"},{"port":53,"protocol":"TCP"}],"to":[{"namespaceSelector":{"matchLabels":{"kubernetes.io/metadata.name":"kube-system"}},"podSelector":{"matchLabels":{"k8s-app":"kube-dns"}}}]},{"ports":[{"port":8080,"protocol":"TCP"},{"port":443,"protocol":"TCP"}],"to":[{"namespaceSelector":{"matchLabels":{"kubernetes.io/metadata.name":"gear-system"}},"podSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["gear-policy","gear-inference","gear-fixture-store"]}]}}]}],"podSelector":{"matchExpressions":[{"key":"gear.eu/ability","operator":"Exists"}]},"policyTypes":["Egress"]}}
+  creationTimestamp: "2026-08-29T07:55:24Z"
+  generation: 1
+  name: gear-ability-egress-baseline
+  namespace: gear-lab
+  resourceVersion: "794"
+  uid: 5b92173e-e0cc-44bb-a550-493c19206378
+spec:
+  egress:
+  - ports:
+    - port: 53
+      protocol: UDP
+    - port: 53
+      protocol: TCP
+    to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+  - ports:
+    - port: 8080
+      protocol: TCP
+    - port: 443
+      protocol: TCP
+    to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: gear-system
+      podSelector:
+        matchExpressions:
+        - key: app.kubernetes.io/name
+          operator: In
+          values:
+          - gear-policy
+          - gear-inference
+          - gear-fixture-store
+  podSelector:
+    matchExpressions:
+    - key: gear.eu/ability
+      operator: Exists
+  policyTypes:
+  - Egress
+
+$ kubectl -n gear-system get pods,services -l gear.eu/a6-target=true -o wide
+
+# output
+NAME                                         READY   STATUS    RESTARTS   AGE   IP            NODE                    NOMINATED NODE   READINESS GATES
+pod/a6-gear-fixture-store-7f887cd785-rh7ks   1/1     Running   0          24s   10.42.0.47    k3d-gear-lab-server-0   <none>           <none>
+pod/a6-gear-inference-6645c4547c-xnt97       1/1     Running   0          24s   10.42.0.204   k3d-gear-lab-server-0   <none>           <none>
+pod/a6-gear-policy-6594cdc9c8-zzpcv          1/1     Running   0          24s   10.42.0.130   k3d-gear-lab-server-0   <none>           <none>
+
+NAME                            TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)            AGE   SELECTOR
+service/a6-gear-fixture-store   ClusterIP   None         <none>        8080/TCP           24s   app.kubernetes.io/name=gear-fixture-store,gear.eu/a6-target=true
+service/a6-gear-inference       ClusterIP   None         <none>        8080/TCP           24s   app.kubernetes.io/name=gear-inference,gear.eu/a6-target=true
+service/a6-gear-policy          ClusterIP   None         <none>        8080/TCP,443/TCP   24s   app.kubernetes.io/name=gear-policy,gear.eu/a6-target=true
+

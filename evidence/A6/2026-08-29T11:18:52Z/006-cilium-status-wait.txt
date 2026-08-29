@@ -1,0 +1,583 @@
+$ cilium status --wait
+
+# output
+2026/08/29 12:18:53 (0x404061ec6c60) (0x404061d27ae0) Create stream
+2026/08/29 12:18:53 (0x404061ec6c60) (0x404061d27ae0) Stream added, broadcasting: 1
+2026/08/29 12:18:53 (0x404061ec6c60) Reply frame received for 1
+2026/08/29 12:18:53 (0x404061ec6c60) (0x404061dd0280) Create stream
+2026/08/29 12:18:53 (0x404061ec6c60) (0x404061dd0280) Stream added, broadcasting: 3
+2026/08/29 12:18:53 (0x404061ec6c60) Reply frame received for 3
+2026/08/29 12:18:53 (0x404061ec6c60) (0x404061d27cc0) Create stream
+2026/08/29 12:18:53 (0x404061ec6c60) (0x404061d27cc0) Stream added, broadcasting: 5
+2026/08/29 12:18:53 (0x404061ec6c60) Reply frame received for 5
+2026/08/29 12:18:53 (0x404061ec6c60) Data frame received for 3
+2026/08/29 12:18:53 (0x404061dd0280) (3) Data frame handling
+2026/08/29 12:18:53 (0x404061dd0280) (3) Data frame sent
+2026/08/29 12:18:53 (0x404061ec6c60) Data frame received for 3
+2026/08/29 12:18:53 (0x404061dd0280) (3) Data frame handling
+2026/08/29 12:18:53 (0x404061dd0280) (3) Data frame sent
+2026/08/29 12:18:53 (0x404061ec6c60) Data frame received for 3
+2026/08/29 12:18:53 (0x404061dd0280) (3) Data frame handling
+2026/08/29 12:18:53 (0x404061ec6c60) Data frame received for 5
+2026/08/29 12:18:53 (0x404061d27cc0) (5) Data frame handling
+2026/08/29 12:18:53 (0x404061ec6c60) Data frame received for 1
+2026/08/29 12:18:53 (0x404061d27ae0) (1) Data frame handling
+2026/08/29 12:18:53 (0x404061d27ae0) (1) Data frame sent
+2026/08/29 12:18:53 (0x404061ec6c60) (0x404061d27ae0) Stream removed, broadcasting: 1
+2026/08/29 12:18:53 (0x404061ec6c60) Go away received
+2026/08/29 12:18:53 (0x404061ec6c60) (0x404061dd0280) Stream removed, broadcasting: 3
+2026/08/29 12:18:53 (0x404061ec6c60) (0x404061d27cc0) Stream removed, broadcasting: 5
+2026/08/29 12:18:53 (0x404061ec6c60) (0x404061d27ae0) Stream removed, broadcasting: 1
+2026/08/29 12:18:53 (0x404062274160) (0x404061ac1360) Create stream
+2026/08/29 12:18:53 (0x404062274160) (0x404061ac1360) Stream added, broadcasting: 1
+2026/08/29 12:18:53 (0x404062274160) Reply frame received for 1
+2026/08/29 12:18:53 (0x404062274160) (0x4040619bc000) Create stream
+2026/08/29 12:18:53 (0x404062274160) (0x4040619bc000) Stream added, broadcasting: 3
+2026/08/29 12:18:53 (0x404062274160) Reply frame received for 3
+2026/08/29 12:18:53 (0x404062274160) (0x404061ac1400) Create stream
+2026/08/29 12:18:53 (0x404062274160) (0x404061ac1400) Stream added, broadcasting: 5
+2026/08/29 12:18:53 (0x404062274160) Reply frame received for 5
+2026/08/29 12:18:53 (0x404062274160) Data frame received for 3
+2026/08/29 12:18:53 (0x4040619bc000) (3) Data frame handling
+2026/08/29 12:18:53 (0x4040619bc000) (3) Data frame sent
+2026/08/29 12:18:53 (0x404062274160) Data frame received for 3
+2026/08/29 12:18:53 (0x4040619bc000) (3) Data frame handling
+2026/08/29 12:18:53 (0x4040619bc000) (3) Data frame sent
+2026/08/29 12:18:53 (0x404062274160) Data frame received for 3
+2026/08/29 12:18:53 (0x4040619bc000) (3) Data frame handling
+2026/08/29 12:18:53 (0x4040619bc000) (3) Data frame sent
+2026/08/29 12:18:53 (0x404062274160) Data frame received for 3
+2026/08/29 12:18:53 (0x4040619bc000) (3) Data frame handling
+2026/08/29 12:18:53 (0x4040619bc000) (3) Data frame sent
+2026/08/29 12:18:53 (0x404062274160) Data frame received for 3
+2026/08/29 12:18:53 (0x4040619bc000) (3) Data frame handling
+2026/08/29 12:18:53 (0x404062274160) Data frame received for 5
+2026/08/29 12:18:53 (0x404061ac1400) (5) Data frame handling
+2026/08/29 12:18:53 (0x404062274160) Data frame received for 1
+2026/08/29 12:18:53 (0x404061ac1360) (1) Data frame handling
+2026/08/29 12:18:53 (0x404061ac1360) (1) Data frame sent
+2026/08/29 12:18:53 (0x404062274160) (0x404061ac1360) Stream removed, broadcasting: 1
+2026/08/29 12:18:53 (0x404062274160) (0x404061ac1360) Stream removed, broadcasting: 1
+2026/08/29 12:18:53 (0x404062274160) (0x4040619bc000) Stream removed, broadcasting: 3
+2026/08/29 12:18:53 (0x404062274160) (0x404061ac1400) Stream removed, broadcasting: 5
+2026/08/29 12:18:53 (0x404062274160) Go away received
+[33m    /¯¯\
+[36m /¯¯[33m\__/[32m¯¯\[0m    Cilium:             [33m1 warnings[0m
+[36m \__[31m/¯¯\[32m__/[0m    Operator:           [32mOK[0m
+[32m /¯¯[31m\__/[35m¯¯\[0m    Envoy DaemonSet:    [32mOK[0m
+[32m \__[34m/¯¯\[35m__/[0m    Hubble Relay:       [32mOK[0m
+[34m[34m[34m    \__/[0m       ClusterMesh:        [36mdisabled[0m
+
+DaemonSet              cilium                   Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+DaemonSet              cilium-envoy             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             cilium-operator          Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             hubble-relay             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Containers:            cilium                   Running: [32m1[0m
+                       cilium-envoy             Running: [32m1[0m
+                       cilium-operator          Running: [32m1[0m
+                       clustermesh-apiserver    
+                       hubble-relay             Running: [32m1[0m
+Cluster Pods:          12/12 managed by Cilium
+Helm chart version:    1.20.1
+Image versions         cilium             quay.io/cilium/cilium:v1.20.1@sha256:ae9ea21f7427fe24bc6ea7247eb552157a1b0a431744045d3f641545ca71d11b: 1
+                       cilium-envoy       quay.io/cilium/cilium-envoy:v1.37.5-1786810558-766ccfb37260a43e9d228837aa84ce3faf9f64e7@sha256:75b8094c7127736a2ffd2dce3945e0931cb6df21b0372ff661940eca26730b91: 1
+                       cilium-operator    quay.io/cilium/operator-generic:v1.20.1@sha256:6c3885fc7b629099fdbe2a5c87869c86feb825fa18fae299eac0f61918d16ecf: 1
+                       hubble-relay       quay.io/cilium/hubble-relay:v1.20.1@sha256:59be0ae7d475ab9011a5e954618c0f27b5778b17140381425b308b55ba4917f4: 1
+Warnings:              cilium             cilium-nvnv8    2 endpoints are not ready
+2026/08/29 12:18:55 (0x4040619149a0) (0x4040619f48c0) Create stream
+2026/08/29 12:18:55 (0x4040619149a0) (0x4040619f48c0) Stream added, broadcasting: 1
+2026/08/29 12:18:55 (0x4040619149a0) Reply frame received for 1
+2026/08/29 12:18:55 (0x4040619149a0) (0x404061e520a0) Create stream
+2026/08/29 12:18:55 (0x4040619149a0) (0x404061e520a0) Stream added, broadcasting: 3
+2026/08/29 12:18:55 (0x4040619149a0) Reply frame received for 3
+2026/08/29 12:18:55 (0x4040619149a0) (0x404061e52140) Create stream
+2026/08/29 12:18:55 (0x4040619149a0) (0x404061e52140) Stream added, broadcasting: 5
+2026/08/29 12:18:55 (0x4040619149a0) Reply frame received for 5
+2026/08/29 12:18:55 (0x4040619149a0) Data frame received for 3
+2026/08/29 12:18:55 (0x404061e520a0) (3) Data frame handling
+2026/08/29 12:18:55 (0x404061e520a0) (3) Data frame sent
+2026/08/29 12:18:55 (0x4040619149a0) Data frame received for 3
+2026/08/29 12:18:55 (0x404061e520a0) (3) Data frame handling
+2026/08/29 12:18:55 (0x404061e520a0) (3) Data frame sent
+2026/08/29 12:18:55 (0x4040619149a0) Data frame received for 1
+2026/08/29 12:18:55 (0x4040619f48c0) (1) Data frame handling
+2026/08/29 12:18:55 (0x4040619f48c0) (1) Data frame sent
+2026/08/29 12:18:55 (0x4040619149a0) Data frame received for 5
+2026/08/29 12:18:55 (0x4040619149a0) Data frame received for 3
+2026/08/29 12:18:55 (0x4040619149a0) (0x4040619f48c0) Stream removed, broadcasting: 1
+2026/08/29 12:18:55 (0x404061e520a0) (3) Data frame handling
+2026/08/29 12:18:55 (0x404061e52140) (5) Data frame handling
+2026/08/29 12:18:55 (0x4040619149a0) Go away received
+2026/08/29 12:18:55 (0x4040619149a0) (0x4040619f48c0) Stream removed, broadcasting: 1
+2026/08/29 12:18:55 (0x4040619149a0) (0x404061e520a0) Stream removed, broadcasting: 3
+2026/08/29 12:18:55 (0x4040619149a0) (0x404061e52140) Stream removed, broadcasting: 5
+2026/08/29 12:18:55 (0x404061ec6000) (0x4040619f40a0) Create stream
+2026/08/29 12:18:55 (0x404061ec6000) (0x4040619f40a0) Stream added, broadcasting: 1
+2026/08/29 12:18:55 (0x404061ec6000) Reply frame received for 1
+2026/08/29 12:18:55 (0x404061ec6000) (0x404061d26a00) Create stream
+2026/08/29 12:18:55 (0x404061ec6000) (0x404061d26a00) Stream added, broadcasting: 3
+2026/08/29 12:18:55 (0x404061ec6000) Reply frame received for 3
+2026/08/29 12:18:55 (0x404061ec6000) (0x404061e52000) Create stream
+2026/08/29 12:18:55 (0x404061ec6000) (0x404061e52000) Stream added, broadcasting: 5
+2026/08/29 12:18:55 (0x404061ec6000) Reply frame received for 5
+2026/08/29 12:18:55 (0x404061ec6000) Data frame received for 3
+2026/08/29 12:18:55 (0x404061d26a00) (3) Data frame handling
+2026/08/29 12:18:55 (0x404061d26a00) (3) Data frame sent
+2026/08/29 12:18:55 (0x404061ec6000) Data frame received for 3
+2026/08/29 12:18:55 (0x404061d26a00) (3) Data frame handling
+2026/08/29 12:18:55 (0x404061d26a00) (3) Data frame sent
+2026/08/29 12:18:55 (0x404061ec6000) Data frame received for 3
+2026/08/29 12:18:55 (0x404061d26a00) (3) Data frame handling
+2026/08/29 12:18:55 (0x404061d26a00) (3) Data frame sent
+2026/08/29 12:18:55 (0x404061ec6000) Data frame received for 3
+2026/08/29 12:18:55 (0x404061d26a00) (3) Data frame handling
+2026/08/29 12:18:55 (0x404061d26a00) (3) Data frame sent
+2026/08/29 12:18:55 (0x404061ec6000) Data frame received for 3
+2026/08/29 12:18:55 (0x404061d26a00) (3) Data frame handling
+2026/08/29 12:18:55 (0x404061ec6000) Data frame received for 5
+2026/08/29 12:18:55 (0x404061e52000) (5) Data frame handling
+2026/08/29 12:18:55 (0x404061ec6000) Data frame received for 1
+2026/08/29 12:18:55 (0x4040619f40a0) (1) Data frame handling
+2026/08/29 12:18:55 (0x4040619f40a0) (1) Data frame sent
+2026/08/29 12:18:55 (0x404061ec6000) (0x4040619f40a0) Stream removed, broadcasting: 1
+2026/08/29 12:18:55 (0x404061ec6000) Go away received
+2026/08/29 12:18:55 (0x404061ec6000) (0x4040619f40a0) Stream removed, broadcasting: 1
+2026/08/29 12:18:55 (0x404061ec6000) (0x404061d26a00) Stream removed, broadcasting: 3
+2026/08/29 12:18:55 (0x404061ec6000) (0x404061e52000) Stream removed, broadcasting: 5
+[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[33m    /¯¯\
+[36m /¯¯[33m\__/[32m¯¯\[0m    Cilium:             [33m1 warnings[0m
+[36m \__[31m/¯¯\[32m__/[0m    Operator:           [32mOK[0m
+[32m /¯¯[31m\__/[35m¯¯\[0m    Envoy DaemonSet:    [32mOK[0m
+[32m \__[34m/¯¯\[35m__/[0m    Hubble Relay:       [32mOK[0m
+[34m[34m[34m    \__/[0m       ClusterMesh:        [36mdisabled[0m
+
+DaemonSet              cilium                   Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+DaemonSet              cilium-envoy             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             cilium-operator          Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             hubble-relay             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Containers:            cilium                   Running: [32m1[0m
+                       cilium-envoy             Running: [32m1[0m
+                       cilium-operator          Running: [32m1[0m
+                       clustermesh-apiserver    
+                       hubble-relay             Running: [32m1[0m
+Cluster Pods:          12/12 managed by Cilium
+Helm chart version:    1.20.1
+Image versions         cilium             quay.io/cilium/cilium:v1.20.1@sha256:ae9ea21f7427fe24bc6ea7247eb552157a1b0a431744045d3f641545ca71d11b: 1
+                       cilium-envoy       quay.io/cilium/cilium-envoy:v1.37.5-1786810558-766ccfb37260a43e9d228837aa84ce3faf9f64e7@sha256:75b8094c7127736a2ffd2dce3945e0931cb6df21b0372ff661940eca26730b91: 1
+                       cilium-operator    quay.io/cilium/operator-generic:v1.20.1@sha256:6c3885fc7b629099fdbe2a5c87869c86feb825fa18fae299eac0f61918d16ecf: 1
+                       hubble-relay       quay.io/cilium/hubble-relay:v1.20.1@sha256:59be0ae7d475ab9011a5e954618c0f27b5778b17140381425b308b55ba4917f4: 1
+Warnings:              cilium             cilium-nvnv8    2 endpoints are not ready
+2026/08/29 12:18:57 (0x40406102b080) (0x4040619bc000) Create stream
+2026/08/29 12:18:57 (0x40406102b080) (0x4040619bc000) Stream added, broadcasting: 1
+2026/08/29 12:18:57 (0x40406102b080) Reply frame received for 1
+2026/08/29 12:18:57 (0x40406102b080) (0x404061ea4000) Create stream
+2026/08/29 12:18:57 (0x40406102b080) (0x404061ea4000) Stream added, broadcasting: 3
+2026/08/29 12:18:57 (0x40406102b080) Reply frame received for 3
+2026/08/29 12:18:57 (0x40406102b080) (0x404061ea4be0) Create stream
+2026/08/29 12:18:57 (0x40406102b080) (0x404061ea4be0) Stream added, broadcasting: 5
+2026/08/29 12:18:57 (0x40406102b080) Reply frame received for 5
+2026/08/29 12:18:57 (0x40406102b080) Data frame received for 3
+2026/08/29 12:18:57 (0x404061ea4000) (3) Data frame handling
+2026/08/29 12:18:57 (0x404061ea4000) (3) Data frame sent
+2026/08/29 12:18:57 (0x40406102b080) Data frame received for 3
+2026/08/29 12:18:57 (0x404061ea4000) (3) Data frame handling
+2026/08/29 12:18:57 (0x404061ea4000) (3) Data frame sent
+2026/08/29 12:18:57 (0x40406102b080) Data frame received for 5
+2026/08/29 12:18:57 (0x404061ea4be0) (5) Data frame handling
+2026/08/29 12:18:57 (0x40406102b080) Data frame received for 3
+2026/08/29 12:18:57 (0x404061ea4000) (3) Data frame handling
+2026/08/29 12:18:57 (0x40406102b080) Data frame received for 1
+2026/08/29 12:18:57 (0x4040619bc000) (1) Data frame handling
+2026/08/29 12:18:57 (0x4040619bc000) (1) Data frame sent
+2026/08/29 12:18:57 (0x40406102b080) (0x4040619bc000) Stream removed, broadcasting: 1
+2026/08/29 12:18:57 (0x40406102b080) Go away received
+2026/08/29 12:18:57 (0x40406102b080) (0x4040619bc000) Stream removed, broadcasting: 1
+2026/08/29 12:18:57 (0x40406102b080) (0x404061ea4000) Stream removed, broadcasting: 3
+2026/08/29 12:18:57 (0x40406102b080) (0x404061ea4be0) Stream removed, broadcasting: 5
+2026/08/29 12:18:57 (0x404062c1c000) (0x404061d26c80) Create stream
+2026/08/29 12:18:57 (0x404062c1c000) (0x404061d26c80) Stream added, broadcasting: 1
+2026/08/29 12:18:57 (0x404062c1c000) Reply frame received for 1
+2026/08/29 12:18:57 (0x404062c1c000) (0x40406252ea00) Create stream
+2026/08/29 12:18:57 (0x404062c1c000) (0x40406252ea00) Stream added, broadcasting: 3
+2026/08/29 12:18:57 (0x404062c1c000) Reply frame received for 3
+2026/08/29 12:18:57 (0x404062c1c000) (0x404061d26d20) Create stream
+2026/08/29 12:18:57 (0x404062c1c000) (0x404061d26d20) Stream added, broadcasting: 5
+2026/08/29 12:18:57 (0x404062c1c000) Reply frame received for 5
+2026/08/29 12:18:57 (0x404062c1c000) Data frame received for 3
+2026/08/29 12:18:57 (0x40406252ea00) (3) Data frame handling
+2026/08/29 12:18:57 (0x40406252ea00) (3) Data frame sent
+2026/08/29 12:18:57 (0x404062c1c000) Data frame received for 3
+2026/08/29 12:18:57 (0x40406252ea00) (3) Data frame handling
+2026/08/29 12:18:57 (0x40406252ea00) (3) Data frame sent
+2026/08/29 12:18:57 (0x404062c1c000) Data frame received for 3
+2026/08/29 12:18:57 (0x40406252ea00) (3) Data frame handling
+2026/08/29 12:18:57 (0x40406252ea00) (3) Data frame sent
+2026/08/29 12:18:57 (0x404062c1c000) Data frame received for 3
+2026/08/29 12:18:57 (0x40406252ea00) (3) Data frame handling
+2026/08/29 12:18:57 (0x40406252ea00) (3) Data frame sent
+2026/08/29 12:18:57 (0x404062c1c000) Data frame received for 5
+2026/08/29 12:18:57 (0x404061d26d20) (5) Data frame handling
+2026/08/29 12:18:57 (0x404062c1c000) Data frame received for 3
+2026/08/29 12:18:57 (0x40406252ea00) (3) Data frame handling
+2026/08/29 12:18:57 (0x404062c1c000) Data frame received for 1
+2026/08/29 12:18:57 (0x404061d26c80) (1) Data frame handling
+2026/08/29 12:18:57 (0x404061d26c80) (1) Data frame sent
+2026/08/29 12:18:57 (0x404062c1c000) (0x404061d26c80) Stream removed, broadcasting: 1
+2026/08/29 12:18:57 (0x404062c1c000) Go away received
+2026/08/29 12:18:57 (0x404062c1c000) (0x40406252ea00) Stream removed, broadcasting: 3
+2026/08/29 12:18:57 (0x404062c1c000) (0x404061d26d20) Stream removed, broadcasting: 5
+2026/08/29 12:18:57 (0x404062c1c000) (0x404061d26c80) Stream removed, broadcasting: 1
+[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[33m    /¯¯\
+[36m /¯¯[33m\__/[32m¯¯\[0m    Cilium:             [33m1 warnings[0m
+[36m \__[31m/¯¯\[32m__/[0m    Operator:           [32mOK[0m
+[32m /¯¯[31m\__/[35m¯¯\[0m    Envoy DaemonSet:    [32mOK[0m
+[32m \__[34m/¯¯\[35m__/[0m    Hubble Relay:       [32mOK[0m
+[34m[34m[34m    \__/[0m       ClusterMesh:        [36mdisabled[0m
+
+DaemonSet              cilium                   Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+DaemonSet              cilium-envoy             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             cilium-operator          Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             hubble-relay             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Containers:            cilium                   Running: [32m1[0m
+                       cilium-envoy             Running: [32m1[0m
+                       cilium-operator          Running: [32m1[0m
+                       clustermesh-apiserver    
+                       hubble-relay             Running: [32m1[0m
+Cluster Pods:          12/12 managed by Cilium
+Helm chart version:    1.20.1
+Image versions         cilium             quay.io/cilium/cilium:v1.20.1@sha256:ae9ea21f7427fe24bc6ea7247eb552157a1b0a431744045d3f641545ca71d11b: 1
+                       cilium-envoy       quay.io/cilium/cilium-envoy:v1.37.5-1786810558-766ccfb37260a43e9d228837aa84ce3faf9f64e7@sha256:75b8094c7127736a2ffd2dce3945e0931cb6df21b0372ff661940eca26730b91: 1
+                       cilium-operator    quay.io/cilium/operator-generic:v1.20.1@sha256:6c3885fc7b629099fdbe2a5c87869c86feb825fa18fae299eac0f61918d16ecf: 1
+                       hubble-relay       quay.io/cilium/hubble-relay:v1.20.1@sha256:59be0ae7d475ab9011a5e954618c0f27b5778b17140381425b308b55ba4917f4: 1
+Warnings:              cilium             cilium-nvnv8    1 endpoints are not ready
+2026/08/29 12:18:59 (0x40406192a8f0) (0x4040625120a0) Create stream
+2026/08/29 12:18:59 (0x40406192a8f0) (0x4040625120a0) Stream added, broadcasting: 1
+2026/08/29 12:18:59 (0x40406192a8f0) Reply frame received for 1
+2026/08/29 12:18:59 (0x40406192a8f0) (0x404062b60000) Create stream
+2026/08/29 12:18:59 (0x40406192a8f0) (0x404062b60000) Stream added, broadcasting: 3
+2026/08/29 12:18:59 (0x40406192a8f0) Reply frame received for 3
+2026/08/29 12:18:59 (0x40406192a8f0) (0x404062b600a0) Create stream
+2026/08/29 12:18:59 (0x40406192a8f0) (0x404062b600a0) Stream added, broadcasting: 5
+2026/08/29 12:18:59 (0x40406192a8f0) Reply frame received for 5
+2026/08/29 12:18:59 (0x40406192a8f0) Data frame received for 3
+2026/08/29 12:18:59 (0x404062b60000) (3) Data frame handling
+2026/08/29 12:18:59 (0x404062b60000) (3) Data frame sent
+2026/08/29 12:18:59 (0x40406192a8f0) Data frame received for 3
+2026/08/29 12:18:59 (0x404062b60000) (3) Data frame handling
+2026/08/29 12:18:59 (0x404062b60000) (3) Data frame sent
+2026/08/29 12:18:59 (0x40406192a8f0) Data frame received for 3
+2026/08/29 12:18:59 (0x404062b60000) (3) Data frame handling
+2026/08/29 12:18:59 (0x40406192a8f0) Data frame received for 5
+2026/08/29 12:18:59 (0x404062b600a0) (5) Data frame handling
+2026/08/29 12:18:59 (0x40406192a8f0) Data frame received for 1
+2026/08/29 12:18:59 (0x4040625120a0) (1) Data frame handling
+2026/08/29 12:18:59 (0x4040625120a0) (1) Data frame sent
+2026/08/29 12:18:59 (0x40406192a8f0) (0x4040625120a0) Stream removed, broadcasting: 1
+2026/08/29 12:18:59 (0x40406192a8f0) Go away received
+2026/08/29 12:18:59 (0x40406192a8f0) (0x4040625120a0) Stream removed, broadcasting: 1
+2026/08/29 12:18:59 (0x40406192a8f0) (0x404062b60000) Stream removed, broadcasting: 3
+2026/08/29 12:18:59 (0x40406192a8f0) (0x404062b600a0) Stream removed, broadcasting: 5
+2026/08/29 12:18:59 (0x40406192a4d0) (0x404061930000) Create stream
+2026/08/29 12:18:59 (0x40406192a4d0) (0x404061930000) Stream added, broadcasting: 1
+2026/08/29 12:18:59 (0x40406192a4d0) Reply frame received for 1
+2026/08/29 12:18:59 (0x40406192a4d0) (0x40406252ea00) Create stream
+2026/08/29 12:18:59 (0x40406192a4d0) (0x40406252ea00) Stream added, broadcasting: 3
+2026/08/29 12:18:59 (0x40406192a4d0) Reply frame received for 3
+2026/08/29 12:18:59 (0x40406192a4d0) (0x40406252eaa0) Create stream
+2026/08/29 12:18:59 (0x40406192a4d0) (0x40406252eaa0) Stream added, broadcasting: 5
+2026/08/29 12:18:59 (0x40406192a4d0) Reply frame received for 5
+2026/08/29 12:18:59 (0x40406192a4d0) Data frame received for 3
+2026/08/29 12:18:59 (0x40406252ea00) (3) Data frame handling
+2026/08/29 12:18:59 (0x40406252ea00) (3) Data frame sent
+2026/08/29 12:19:00 (0x40406192a4d0) Data frame received for 3
+2026/08/29 12:19:00 (0x40406252ea00) (3) Data frame handling
+2026/08/29 12:19:00 (0x40406252ea00) (3) Data frame sent
+2026/08/29 12:19:00 (0x40406192a4d0) Data frame received for 3
+2026/08/29 12:19:00 (0x40406252ea00) (3) Data frame handling
+2026/08/29 12:19:00 (0x40406252ea00) (3) Data frame sent
+2026/08/29 12:19:00 (0x40406192a4d0) Data frame received for 5
+2026/08/29 12:19:00 (0x40406252eaa0) (5) Data frame handling
+2026/08/29 12:19:00 (0x40406192a4d0) Data frame received for 3
+2026/08/29 12:19:00 (0x40406252ea00) (3) Data frame handling
+2026/08/29 12:19:00 (0x40406252ea00) (3) Data frame sent
+2026/08/29 12:19:00 (0x40406192a4d0) Data frame received for 3
+2026/08/29 12:19:00 (0x40406252ea00) (3) Data frame handling
+2026/08/29 12:19:00 (0x40406192a4d0) Data frame received for 1
+2026/08/29 12:19:00 (0x404061930000) (1) Data frame handling
+2026/08/29 12:19:00 (0x404061930000) (1) Data frame sent
+2026/08/29 12:19:00 (0x40406192a4d0) (0x404061930000) Stream removed, broadcasting: 1
+2026/08/29 12:19:00 (0x40406192a4d0) (0x404061930000) Stream removed, broadcasting: 1
+2026/08/29 12:19:00 (0x40406192a4d0) (0x40406252ea00) Stream removed, broadcasting: 3
+2026/08/29 12:19:00 (0x40406192a4d0) (0x40406252eaa0) Stream removed, broadcasting: 5
+2026/08/29 12:19:00 (0x40406192a4d0) Go away received
+[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[33m    /¯¯\
+[36m /¯¯[33m\__/[32m¯¯\[0m    Cilium:             [33m1 warnings[0m
+[36m \__[31m/¯¯\[32m__/[0m    Operator:           [32mOK[0m
+[32m /¯¯[31m\__/[35m¯¯\[0m    Envoy DaemonSet:    [32mOK[0m
+[32m \__[34m/¯¯\[35m__/[0m    Hubble Relay:       [32mOK[0m
+[34m[34m[34m    \__/[0m       ClusterMesh:        [36mdisabled[0m
+
+DaemonSet              cilium                   Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+DaemonSet              cilium-envoy             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             cilium-operator          Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             hubble-relay             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Containers:            cilium                   Running: [32m1[0m
+                       cilium-envoy             Running: [32m1[0m
+                       cilium-operator          Running: [32m1[0m
+                       clustermesh-apiserver    
+                       hubble-relay             Running: [32m1[0m
+Cluster Pods:          12/12 managed by Cilium
+Helm chart version:    1.20.1
+Image versions         cilium             quay.io/cilium/cilium:v1.20.1@sha256:ae9ea21f7427fe24bc6ea7247eb552157a1b0a431744045d3f641545ca71d11b: 1
+                       cilium-envoy       quay.io/cilium/cilium-envoy:v1.37.5-1786810558-766ccfb37260a43e9d228837aa84ce3faf9f64e7@sha256:75b8094c7127736a2ffd2dce3945e0931cb6df21b0372ff661940eca26730b91: 1
+                       cilium-operator    quay.io/cilium/operator-generic:v1.20.1@sha256:6c3885fc7b629099fdbe2a5c87869c86feb825fa18fae299eac0f61918d16ecf: 1
+                       hubble-relay       quay.io/cilium/hubble-relay:v1.20.1@sha256:59be0ae7d475ab9011a5e954618c0f27b5778b17140381425b308b55ba4917f4: 1
+Warnings:              cilium             cilium-nvnv8    1 endpoints are not ready
+2026/08/29 12:19:02 (0x404061d77290) (0x4040619bcd20) Create stream
+2026/08/29 12:19:02 (0x404061d77290) (0x4040619bcd20) Stream added, broadcasting: 1
+2026/08/29 12:19:02 (0x404061d77290) Reply frame received for 1
+2026/08/29 12:19:02 (0x404061d77290) (0x4040619bcfa0) Create stream
+2026/08/29 12:19:02 (0x404061d77290) (0x4040619bcfa0) Stream added, broadcasting: 3
+2026/08/29 12:19:02 (0x404061d77290) Reply frame received for 3
+2026/08/29 12:19:02 (0x404061d77290) (0x40406252f220) Create stream
+2026/08/29 12:19:02 (0x404061d77290) (0x40406252f220) Stream added, broadcasting: 5
+2026/08/29 12:19:02 (0x404061d77290) Reply frame received for 5
+2026/08/29 12:19:02 (0x404061d77290) Data frame received for 3
+2026/08/29 12:19:02 (0x4040619bcfa0) (3) Data frame handling
+2026/08/29 12:19:02 (0x4040619bcfa0) (3) Data frame sent
+2026/08/29 12:19:02 (0x404061d77290) Data frame received for 3
+2026/08/29 12:19:02 (0x4040619bcfa0) (3) Data frame handling
+2026/08/29 12:19:02 (0x4040619bcfa0) (3) Data frame sent
+2026/08/29 12:19:02 (0x404061d77290) Data frame received for 3
+2026/08/29 12:19:02 (0x4040619bcfa0) (3) Data frame handling
+2026/08/29 12:19:02 (0x404061d77290) Data frame received for 5
+2026/08/29 12:19:02 (0x40406252f220) (5) Data frame handling
+2026/08/29 12:19:02 (0x404061d77290) Data frame received for 1
+2026/08/29 12:19:02 (0x4040619bcd20) (1) Data frame handling
+2026/08/29 12:19:02 (0x4040619bcd20) (1) Data frame sent
+2026/08/29 12:19:02 (0x404061d77290) (0x4040619bcd20) Stream removed, broadcasting: 1
+2026/08/29 12:19:02 (0x404061d77290) Go away received
+2026/08/29 12:19:02 (0x404061d77290) (0x4040619bcd20) Stream removed, broadcasting: 1
+2026/08/29 12:19:02 (0x404061d77290) (0x4040619bcfa0) Stream removed, broadcasting: 3
+2026/08/29 12:19:02 (0x404061d77290) (0x40406252f220) Stream removed, broadcasting: 5
+2026/08/29 12:19:02 (0x404061d76160) (0x4040619bca00) Create stream
+2026/08/29 12:19:02 (0x404061d76160) (0x4040619bca00) Stream added, broadcasting: 1
+2026/08/29 12:19:02 (0x404061d76160) Reply frame received for 1
+2026/08/29 12:19:02 (0x404061d76160) (0x40406252ea00) Create stream
+2026/08/29 12:19:02 (0x404061d76160) (0x40406252ea00) Stream added, broadcasting: 3
+2026/08/29 12:19:02 (0x404061d76160) Reply frame received for 3
+2026/08/29 12:19:02 (0x404061d76160) (0x4040619bcb40) Create stream
+2026/08/29 12:19:02 (0x404061d76160) (0x4040619bcb40) Stream added, broadcasting: 5
+2026/08/29 12:19:02 (0x404061d76160) Reply frame received for 5
+2026/08/29 12:19:02 (0x404061d76160) Data frame received for 3
+2026/08/29 12:19:02 (0x40406252ea00) (3) Data frame handling
+2026/08/29 12:19:02 (0x40406252ea00) (3) Data frame sent
+2026/08/29 12:19:02 (0x404061d76160) Data frame received for 3
+2026/08/29 12:19:02 (0x40406252ea00) (3) Data frame handling
+2026/08/29 12:19:02 (0x40406252ea00) (3) Data frame sent
+2026/08/29 12:19:02 (0x404061d76160) Data frame received for 3
+2026/08/29 12:19:02 (0x40406252ea00) (3) Data frame handling
+2026/08/29 12:19:02 (0x40406252ea00) (3) Data frame sent
+2026/08/29 12:19:02 (0x404061d76160) Data frame received for 3
+2026/08/29 12:19:02 (0x40406252ea00) (3) Data frame handling
+2026/08/29 12:19:02 (0x40406252ea00) (3) Data frame sent
+2026/08/29 12:19:02 (0x404061d76160) Data frame received for 3
+2026/08/29 12:19:02 (0x40406252ea00) (3) Data frame handling
+2026/08/29 12:19:02 (0x404061d76160) Data frame received for 5
+2026/08/29 12:19:02 (0x4040619bcb40) (5) Data frame handling
+2026/08/29 12:19:02 (0x404061d76160) Data frame received for 1
+2026/08/29 12:19:02 (0x4040619bca00) (1) Data frame handling
+2026/08/29 12:19:02 (0x4040619bca00) (1) Data frame sent
+2026/08/29 12:19:02 (0x404061d76160) (0x4040619bca00) Stream removed, broadcasting: 1
+2026/08/29 12:19:02 (0x404061d76160) Go away received
+2026/08/29 12:19:02 (0x404061d76160) (0x4040619bca00) Stream removed, broadcasting: 1
+2026/08/29 12:19:02 (0x404061d76160) (0x40406252ea00) Stream removed, broadcasting: 3
+2026/08/29 12:19:02 (0x404061d76160) (0x4040619bcb40) Stream removed, broadcasting: 5
+[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[33m    /¯¯\
+[36m /¯¯[33m\__/[32m¯¯\[0m    Cilium:             [33m1 warnings[0m
+[36m \__[31m/¯¯\[32m__/[0m    Operator:           [32mOK[0m
+[32m /¯¯[31m\__/[35m¯¯\[0m    Envoy DaemonSet:    [32mOK[0m
+[32m \__[34m/¯¯\[35m__/[0m    Hubble Relay:       [32mOK[0m
+[34m[34m[34m    \__/[0m       ClusterMesh:        [36mdisabled[0m
+
+DaemonSet              cilium                   Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+DaemonSet              cilium-envoy             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             cilium-operator          Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             hubble-relay             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Containers:            cilium                   Running: [32m1[0m
+                       cilium-envoy             Running: [32m1[0m
+                       cilium-operator          Running: [32m1[0m
+                       clustermesh-apiserver    
+                       hubble-relay             Running: [32m1[0m
+Cluster Pods:          12/12 managed by Cilium
+Helm chart version:    1.20.1
+Image versions         cilium             quay.io/cilium/cilium:v1.20.1@sha256:ae9ea21f7427fe24bc6ea7247eb552157a1b0a431744045d3f641545ca71d11b: 1
+                       cilium-envoy       quay.io/cilium/cilium-envoy:v1.37.5-1786810558-766ccfb37260a43e9d228837aa84ce3faf9f64e7@sha256:75b8094c7127736a2ffd2dce3945e0931cb6df21b0372ff661940eca26730b91: 1
+                       cilium-operator    quay.io/cilium/operator-generic:v1.20.1@sha256:6c3885fc7b629099fdbe2a5c87869c86feb825fa18fae299eac0f61918d16ecf: 1
+                       hubble-relay       quay.io/cilium/hubble-relay:v1.20.1@sha256:59be0ae7d475ab9011a5e954618c0f27b5778b17140381425b308b55ba4917f4: 1
+Warnings:              cilium             cilium-nvnv8    1 endpoints are not ready
+2026/08/29 12:19:04 (0x4040619151e0) (0x404061ac1720) Create stream
+2026/08/29 12:19:04 (0x4040619151e0) (0x404061ac1720) Stream added, broadcasting: 1
+2026/08/29 12:19:04 (0x4040619151e0) Reply frame received for 1
+2026/08/29 12:19:04 (0x4040619151e0) (0x404061e157c0) Create stream
+2026/08/29 12:19:04 (0x4040619151e0) (0x404061e157c0) Stream added, broadcasting: 3
+2026/08/29 12:19:04 (0x4040619151e0) Reply frame received for 3
+2026/08/29 12:19:04 (0x4040619151e0) (0x404061d26e60) Create stream
+2026/08/29 12:19:04 (0x4040619151e0) (0x404061d26e60) Stream added, broadcasting: 5
+2026/08/29 12:19:04 (0x4040619151e0) Reply frame received for 5
+2026/08/29 12:19:04 (0x4040619151e0) Data frame received for 3
+2026/08/29 12:19:04 (0x404061e157c0) (3) Data frame handling
+2026/08/29 12:19:04 (0x404061e157c0) (3) Data frame sent
+2026/08/29 12:19:04 (0x4040619151e0) Data frame received for 3
+2026/08/29 12:19:04 (0x404061e157c0) (3) Data frame handling
+2026/08/29 12:19:04 (0x404061e157c0) (3) Data frame sent
+2026/08/29 12:19:04 (0x4040619151e0) Data frame received for 3
+2026/08/29 12:19:04 (0x404061e157c0) (3) Data frame handling
+2026/08/29 12:19:04 (0x4040619151e0) Data frame received for 5
+2026/08/29 12:19:04 (0x404061d26e60) (5) Data frame handling
+2026/08/29 12:19:04 (0x4040619151e0) Data frame received for 1
+2026/08/29 12:19:04 (0x404061ac1720) (1) Data frame handling
+2026/08/29 12:19:04 (0x404061ac1720) (1) Data frame sent
+2026/08/29 12:19:04 (0x4040619151e0) (0x404061ac1720) Stream removed, broadcasting: 1
+2026/08/29 12:19:04 (0x4040619151e0) (0x404061ac1720) Stream removed, broadcasting: 1
+2026/08/29 12:19:04 (0x4040619151e0) (0x404061e157c0) Stream removed, broadcasting: 3
+2026/08/29 12:19:04 (0x4040619151e0) (0x404061d26e60) Stream removed, broadcasting: 5
+2026/08/29 12:19:04 (0x4040619151e0) Go away received
+2026/08/29 12:19:04 (0x404062c1c160) (0x40406252ea00) Create stream
+2026/08/29 12:19:04 (0x404062c1c160) (0x40406252ea00) Stream added, broadcasting: 1
+2026/08/29 12:19:04 (0x404062c1c160) Reply frame received for 1
+2026/08/29 12:19:04 (0x404062c1c160) (0x404061ac1360) Create stream
+2026/08/29 12:19:04 (0x404062c1c160) (0x404061ac1360) Stream added, broadcasting: 3
+2026/08/29 12:19:04 (0x404062c1c160) Reply frame received for 3
+2026/08/29 12:19:04 (0x404062c1c160) (0x40406252eaa0) Create stream
+2026/08/29 12:19:04 (0x404062c1c160) (0x40406252eaa0) Stream added, broadcasting: 5
+2026/08/29 12:19:04 (0x404062c1c160) Reply frame received for 5
+2026/08/29 12:19:04 (0x404062c1c160) Data frame received for 3
+2026/08/29 12:19:04 (0x404061ac1360) (3) Data frame handling
+2026/08/29 12:19:04 (0x404061ac1360) (3) Data frame sent
+2026/08/29 12:19:04 (0x404062c1c160) Data frame received for 3
+2026/08/29 12:19:04 (0x404061ac1360) (3) Data frame handling
+2026/08/29 12:19:04 (0x404061ac1360) (3) Data frame sent
+2026/08/29 12:19:04 (0x404062c1c160) Data frame received for 5
+2026/08/29 12:19:04 (0x40406252eaa0) (5) Data frame handling
+2026/08/29 12:19:04 (0x404062c1c160) Data frame received for 3
+2026/08/29 12:19:04 (0x404061ac1360) (3) Data frame handling
+2026/08/29 12:19:04 (0x404061ac1360) (3) Data frame sent
+2026/08/29 12:19:04 (0x404062c1c160) Data frame received for 3
+2026/08/29 12:19:04 (0x404061ac1360) (3) Data frame handling
+2026/08/29 12:19:04 (0x404061ac1360) (3) Data frame sent
+2026/08/29 12:19:04 (0x404062c1c160) Data frame received for 3
+2026/08/29 12:19:04 (0x404061ac1360) (3) Data frame handling
+2026/08/29 12:19:04 (0x404062c1c160) Data frame received for 1
+2026/08/29 12:19:04 (0x40406252ea00) (1) Data frame handling
+2026/08/29 12:19:04 (0x40406252ea00) (1) Data frame sent
+2026/08/29 12:19:04 (0x404062c1c160) (0x40406252ea00) Stream removed, broadcasting: 1
+2026/08/29 12:19:04 (0x404062c1c160) Go away received
+2026/08/29 12:19:04 (0x404062c1c160) (0x40406252ea00) Stream removed, broadcasting: 1
+2026/08/29 12:19:04 (0x404062c1c160) (0x404061ac1360) Stream removed, broadcasting: 3
+2026/08/29 12:19:04 (0x404062c1c160) (0x40406252eaa0) Stream removed, broadcasting: 5
+[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[33m    /¯¯\
+[36m /¯¯[33m\__/[32m¯¯\[0m    Cilium:             [33m1 warnings[0m
+[36m \__[31m/¯¯\[32m__/[0m    Operator:           [32mOK[0m
+[32m /¯¯[31m\__/[35m¯¯\[0m    Envoy DaemonSet:    [32mOK[0m
+[32m \__[34m/¯¯\[35m__/[0m    Hubble Relay:       [32mOK[0m
+[34m[34m[34m    \__/[0m       ClusterMesh:        [36mdisabled[0m
+
+DaemonSet              cilium                   Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+DaemonSet              cilium-envoy             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             cilium-operator          Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             hubble-relay             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Containers:            cilium                   Running: [32m1[0m
+                       cilium-envoy             Running: [32m1[0m
+                       cilium-operator          Running: [32m1[0m
+                       clustermesh-apiserver    
+                       hubble-relay             Running: [32m1[0m
+Cluster Pods:          12/12 managed by Cilium
+Helm chart version:    1.20.1
+Image versions         cilium             quay.io/cilium/cilium:v1.20.1@sha256:ae9ea21f7427fe24bc6ea7247eb552157a1b0a431744045d3f641545ca71d11b: 1
+                       cilium-envoy       quay.io/cilium/cilium-envoy:v1.37.5-1786810558-766ccfb37260a43e9d228837aa84ce3faf9f64e7@sha256:75b8094c7127736a2ffd2dce3945e0931cb6df21b0372ff661940eca26730b91: 1
+                       cilium-operator    quay.io/cilium/operator-generic:v1.20.1@sha256:6c3885fc7b629099fdbe2a5c87869c86feb825fa18fae299eac0f61918d16ecf: 1
+                       hubble-relay       quay.io/cilium/hubble-relay:v1.20.1@sha256:59be0ae7d475ab9011a5e954618c0f27b5778b17140381425b308b55ba4917f4: 1
+Warnings:              cilium             cilium-nvnv8    1 endpoints are not ready
+2026/08/29 12:19:07 (0x404061914420) (0x4040617d9a40) Create stream
+2026/08/29 12:19:07 (0x404061914420) (0x4040617d9a40) Stream added, broadcasting: 1
+2026/08/29 12:19:07 (0x404061914420) Reply frame received for 1
+2026/08/29 12:19:07 (0x404061914420) (0x404062260500) Create stream
+2026/08/29 12:19:07 (0x404061914420) (0x404062260500) Stream added, broadcasting: 3
+2026/08/29 12:19:07 (0x404061914420) Reply frame received for 3
+2026/08/29 12:19:07 (0x404061914420) (0x4040617d9cc0) Create stream
+2026/08/29 12:19:07 (0x404061914420) (0x4040617d9cc0) Stream added, broadcasting: 5
+2026/08/29 12:19:07 (0x404061914420) Reply frame received for 5
+2026/08/29 12:19:07 (0x404061914420) Data frame received for 3
+2026/08/29 12:19:07 (0x404062260500) (3) Data frame handling
+2026/08/29 12:19:07 (0x404062260500) (3) Data frame sent
+2026/08/29 12:19:07 (0x404061914420) Data frame received for 3
+2026/08/29 12:19:07 (0x404062260500) (3) Data frame handling
+2026/08/29 12:19:07 (0x404062260500) (3) Data frame sent
+2026/08/29 12:19:07 (0x404061914420) Data frame received for 5
+2026/08/29 12:19:07 (0x4040617d9cc0) (5) Data frame handling
+2026/08/29 12:19:07 (0x404061914420) Data frame received for 3
+2026/08/29 12:19:07 (0x404062260500) (3) Data frame handling
+2026/08/29 12:19:07 (0x404061914420) Data frame received for 1
+2026/08/29 12:19:07 (0x4040617d9a40) (1) Data frame handling
+2026/08/29 12:19:07 (0x4040617d9a40) (1) Data frame sent
+2026/08/29 12:19:07 (0x404061914420) (0x4040617d9a40) Stream removed, broadcasting: 1
+2026/08/29 12:19:07 (0x404061914420) Go away received
+2026/08/29 12:19:07 (0x404061914420) (0x4040617d9a40) Stream removed, broadcasting: 1
+2026/08/29 12:19:07 (0x404061914420) (0x404062260500) Stream removed, broadcasting: 3
+2026/08/29 12:19:07 (0x404061914420) (0x4040617d9cc0) Stream removed, broadcasting: 5
+2026/08/29 12:19:07 (0x40406192b130) (0x4040622608c0) Create stream
+2026/08/29 12:19:07 (0x40406192b130) (0x4040622608c0) Stream added, broadcasting: 1
+2026/08/29 12:19:07 (0x40406192b130) Reply frame received for 1
+2026/08/29 12:19:07 (0x40406192b130) (0x404062260960) Create stream
+2026/08/29 12:19:07 (0x40406192b130) (0x404062260960) Stream added, broadcasting: 3
+2026/08/29 12:19:07 (0x40406192b130) Reply frame received for 3
+2026/08/29 12:19:07 (0x40406192b130) (0x404062260a00) Create stream
+2026/08/29 12:19:07 (0x40406192b130) (0x404062260a00) Stream added, broadcasting: 5
+2026/08/29 12:19:07 (0x40406192b130) Reply frame received for 5
+2026/08/29 12:19:07 (0x40406192b130) Data frame received for 3
+2026/08/29 12:19:07 (0x404062260960) (3) Data frame handling
+2026/08/29 12:19:07 (0x404062260960) (3) Data frame sent
+2026/08/29 12:19:07 (0x40406192b130) Data frame received for 3
+2026/08/29 12:19:07 (0x404062260960) (3) Data frame handling
+2026/08/29 12:19:07 (0x404062260960) (3) Data frame sent
+2026/08/29 12:19:07 (0x40406192b130) Data frame received for 3
+2026/08/29 12:19:07 (0x404062260960) (3) Data frame handling
+2026/08/29 12:19:07 (0x404062260960) (3) Data frame sent
+2026/08/29 12:19:07 (0x40406192b130) Data frame received for 3
+2026/08/29 12:19:07 (0x404062260960) (3) Data frame handling
+2026/08/29 12:19:07 (0x404062260960) (3) Data frame sent
+2026/08/29 12:19:07 (0x40406192b130) Data frame received for 3
+2026/08/29 12:19:07 (0x404062260960) (3) Data frame handling
+2026/08/29 12:19:07 (0x40406192b130) Data frame received for 5
+2026/08/29 12:19:07 (0x404062260a00) (5) Data frame handling
+2026/08/29 12:19:07 (0x40406192b130) Data frame received for 1
+2026/08/29 12:19:07 (0x4040622608c0) (1) Data frame handling
+2026/08/29 12:19:07 (0x4040622608c0) (1) Data frame sent
+2026/08/29 12:19:07 (0x40406192b130) (0x4040622608c0) Stream removed, broadcasting: 1
+2026/08/29 12:19:07 (0x40406192b130) Go away received
+2026/08/29 12:19:07 (0x40406192b130) (0x4040622608c0) Stream removed, broadcasting: 1
+2026/08/29 12:19:07 (0x40406192b130) (0x404062260960) Stream removed, broadcasting: 3
+2026/08/29 12:19:07 (0x40406192b130) (0x404062260a00) Stream removed, broadcasting: 5
+[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[A[2K[33m    /¯¯\
+[36m /¯¯[33m\__/[32m¯¯\[0m    Cilium:             [32mOK[0m
+[36m \__[31m/¯¯\[32m__/[0m    Operator:           [32mOK[0m
+[32m /¯¯[31m\__/[35m¯¯\[0m    Envoy DaemonSet:    [32mOK[0m
+[32m \__[34m/¯¯\[35m__/[0m    Hubble Relay:       [32mOK[0m
+[34m[34m[34m    \__/[0m       ClusterMesh:        [36mdisabled[0m
+
+DaemonSet              cilium                   Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+DaemonSet              cilium-envoy             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             cilium-operator          Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Deployment             hubble-relay             Desired: 1, Ready: [32m1/1[0m, Available: [32m1/1[0m
+Containers:            cilium                   Running: [32m1[0m
+                       cilium-envoy             Running: [32m1[0m
+                       cilium-operator          Running: [32m1[0m
+                       clustermesh-apiserver    
+                       hubble-relay             Running: [32m1[0m
+Cluster Pods:          12/12 managed by Cilium
+Helm chart version:    1.20.1
+Image versions         cilium             quay.io/cilium/cilium:v1.20.1@sha256:ae9ea21f7427fe24bc6ea7247eb552157a1b0a431744045d3f641545ca71d11b: 1
+                       cilium-envoy       quay.io/cilium/cilium-envoy:v1.37.5-1786810558-766ccfb37260a43e9d228837aa84ce3faf9f64e7@sha256:75b8094c7127736a2ffd2dce3945e0931cb6df21b0372ff661940eca26730b91: 1
+                       cilium-operator    quay.io/cilium/operator-generic:v1.20.1@sha256:6c3885fc7b629099fdbe2a5c87869c86feb825fa18fae299eac0f61918d16ecf: 1
+                       hubble-relay       quay.io/cilium/hubble-relay:v1.20.1@sha256:59be0ae7d475ab9011a5e954618c0f27b5778b17140381425b308b55ba4917f4: 1

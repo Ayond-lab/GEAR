@@ -1,0 +1,35 @@
+$ kubectl apply -f -
+
+# stdin
+apiVersion: v1
+kind: Pod
+metadata:
+  name: a6-with-control
+  namespace: gear-lab
+  labels:
+    gear.eu/ability: cv-screen
+    gear.eu/a6-control: with
+spec:
+  restartPolicy: Never
+  containers:
+    - name: ability
+      image: "ghcr.io/ayond-lab/gear-hostile-runner:dev"
+      imagePullPolicy: IfNotPresent
+      env:
+        - name: A6_CONTROL
+          value: with-control
+        - name: A6_POLICY_DNS
+          value: a6-gear-policy.gear-system.svc.cluster.local
+        - name: A6_INFERENCE_DNS
+          value: a6-gear-inference.gear-system.svc.cluster.local
+        - name: A6_FIXTURE_DNS
+          value: a6-gear-fixture-store.gear-system.svc.cluster.local
+        - name: A6_POLICY_IP
+          value: "10.42.0.252"
+      securityContext:
+        runAsUser: 1001
+        runAsNonRoot: true
+        allowPrivilegeEscalation: false
+
+# output
+pod/a6-with-control created

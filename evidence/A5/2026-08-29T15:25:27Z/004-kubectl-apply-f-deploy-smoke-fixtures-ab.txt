@@ -1,0 +1,4 @@
+$ kubectl apply -f deploy/smoke/fixtures/ability.yaml
+
+# output
+ability.gear.eu/cv-screen unchanged

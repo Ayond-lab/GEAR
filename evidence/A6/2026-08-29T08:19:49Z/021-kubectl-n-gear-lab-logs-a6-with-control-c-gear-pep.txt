@@ -1,0 +1,4 @@
+$ kubectl -n gear-lab logs a6-with-control -c gear-pep
+
+# output
+2026/08/29 08:19:55 INFO component starting component=gear-pep addr=:8080

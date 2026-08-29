@@ -1,0 +1,4 @@
+$ kubectl config use-context k3d-gear-lab
+
+# output
+Switched to context "k3d-gear-lab".

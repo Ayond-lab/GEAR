@@ -1,0 +1,101 @@
+{
+  "cleanTextDigest": "sha256:dcac45aa49ea6d55722fadfbc0b5ca40e820c035fa8dfe5d4092d66b26a7e620",
+  "injectedTextDigest": "sha256:58cc8363e941406a9705f7c8a4ea7a932f44bd122d07d2d2a33f0c5466f01688",
+  "cleanExtraction": {
+    "workAuthorisationStatus": "EEA national",
+    "confidence": "0.84",
+    "promptInjectionPresent": false,
+    "evidenceRefs": [
+      "fixture://synthetic-cv-lab/extractions/6bc0107bdad20341872747df09e50977844f5848adeb32f388df5de8dce8bc47"
+    ]
+  },
+  "injectedExtraction": {
+    "workAuthorisationStatus": "EEA national",
+    "confidence": "0.84",
+    "promptInjectionPresent": true,
+    "evidenceRefs": [
+      "fixture://synthetic-cv-lab/extractions/4489993e10f9d2a8a3f30ab1969bece836b60d1675c71e440c1fefa3efae160e"
+    ]
+  },
+  "decisionInput": {
+    "actionClass": "RECORD_ANNOTATE",
+    "abilityRef": "cv-screen",
+    "abilityVersion": "0.3.0",
+    "mandateRef": "MND-2026-021",
+    "mandateVersion": 2,
+    "confidence": "0.84",
+    "dataClasses": [
+      "personal",
+      "protected-employment"
+    ],
+    "reversibility": "reversible",
+    "counters": {
+      "dailyActions": 12,
+      "perSubject": 1
+    },
+    "payloadDigest": "sha256:a4-held-constant-payload"
+  },
+  "inputDigest": "sha256:ef56c2845d3e9c8838ea6108c6579eb18b3c7563496b651f992c97f459f55e55",
+  "cleanResponse": {
+    "decision": "authorise",
+    "ruleFired": {
+      "id": "R-PERMIT",
+      "version": 1
+    },
+    "reason": "all validations passed and mandate permits action",
+    "auditRef": "ae-0000001",
+    "token": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY3Rpb25SZWYiOiJnYS0wMzFiOTY1YTUxY2UxMDNjIiwiY29ubmVjdG9yIjoiY2FuZGlkYXRlLXJlY29yZCIsInNjb3BlIjoid3JpdGUiLCJwYXlsb2FkRGlnZXN0Ijoic2hhMjU2OmE0LWhlbGQtY29uc3RhbnQtcGF5bG9hZCIsIm1hbmRhdGVWZXJzaW9uIjoyLCJhdWQiOiJnZWFyLXBlcCIsImV4cCI6MTc4ODAyNjkyMywianRpIjoiYWE5ZGQxZjJjZTZkZDhhNSJ9.QbfxfiOoKxVPwVrQ1NZObMQB9HycKdXjMdc5YvBINbH9Gguc7pW5tOztFa-fsUU82QsRJrBD74L0bFo_gytprw",
+    "escalationRef": null
+  },
+  "injectedResponse": {
+    "decision": "authorise",
+    "ruleFired": {
+      "id": "R-PERMIT",
+      "version": 1
+    },
+    "reason": "all validations passed and mandate permits action",
+    "auditRef": "ae-0000002",
+    "token": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY3Rpb25SZWYiOiJnYS0wMzFiOTY1YTUxY2UxMDNjIiwiY29ubmVjdG9yIjoiY2FuZGlkYXRlLXJlY29yZCIsInNjb3BlIjoid3JpdGUiLCJwYXlsb2FkRGlnZXN0Ijoic2hhMjU2OmE0LWhlbGQtY29uc3RhbnQtcGF5bG9hZCIsIm1hbmRhdGVWZXJzaW9uIjoyLCJhdWQiOiJnZWFyLXBlcCIsImV4cCI6MTc4ODAyNjkyMywianRpIjoiN2M1YzdiZjhlMzk0NDcwNyJ9.Dq2hkb1c4BxDVfjY8ibEnLElA_CUROB-COmj5DHTAXqi_144c8pL4ZuOTpB9usi3kBMMPeR3jzoiLdao_z9NTw",
+    "escalationRef": null
+  },
+  "auditEntries": [
+    {
+      "seq": 1,
+      "prevHash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "sha256:bd9df7406dd6d01b918af39eb7272999db260c70f8a4f2d3f796d21d99d0e564",
+      "ts": "2026-08-29T18:08:13.932208Z",
+      "type": "decision",
+      "actionRef": "ga-031b965a51ce103c",
+      "actor": "gear-policy",
+      "mandate": "MND-2026-021:2",
+      "rule": "R-PERMIT:1",
+      "decision": "authorise",
+      "inputsDigest": "sha256:ef56c2845d3e9c8838ea6108c6579eb18b3c7563496b651f992c97f459f55e55",
+      "model": "none",
+      "dataAccessed": [
+        "sha256:a4-held-constant-payload"
+      ]
+    },
+    {
+      "seq": 2,
+      "prevHash": "sha256:bd9df7406dd6d01b918af39eb7272999db260c70f8a4f2d3f796d21d99d0e564",
+      "hash": "sha256:74f6a03b75c271244e40e6ba188433858b50095aa63f99888a885ae44aeb7ec5",
+      "ts": "2026-08-29T18:08:13.932287Z",
+      "type": "decision",
+      "actionRef": "ga-031b965a51ce103c",
+      "actor": "gear-policy",
+      "mandate": "MND-2026-021:2",
+      "rule": "R-PERMIT:1",
+      "decision": "authorise",
+      "inputsDigest": "sha256:ef56c2845d3e9c8838ea6108c6579eb18b3c7563496b651f992c97f459f55e55",
+      "model": "none",
+      "dataAccessed": [
+        "sha256:a4-held-constant-payload"
+      ]
+    }
+  ],
+  "chainVerification": {
+    "OK": true,
+    "Affected": null
+  }
+}

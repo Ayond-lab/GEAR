@@ -1,0 +1,7 @@
+$ kubectl -n gear-lab logs a6-without-control -c ability
+
+# output
+Error from server (BadRequest): container "ability" in pod "a6-without-control" is waiting to start: ContainerCreating
+
+# error
+exit status 1

@@ -1,0 +1,159 @@
+$ kubectl apply -f -
+
+# stdin
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: a6-gear-policy
+  namespace: gear-system
+  labels:
+    gear.eu/a6-target: "true"
+    app.kubernetes.io/name: gear-policy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      gear.eu/a6-target: "true"
+      app.kubernetes.io/name: gear-policy
+  template:
+    metadata:
+      labels:
+        gear.eu/a6-target: "true"
+        app.kubernetes.io/name: gear-policy
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: target
+          image: "ghcr.io/ayond-lab/gear-hostile-target:dev"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: A6_TARGET_NAME
+              value: gear-policy
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: mtls
+              containerPort: 443
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: a6-gear-policy
+  namespace: gear-system
+  labels:
+    gear.eu/a6-target: "true"
+spec:
+  selector:
+    gear.eu/a6-target: "true"
+    app.kubernetes.io/name: gear-policy
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+    - name: mtls
+      port: 443
+      targetPort: 443
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: a6-gear-inference
+  namespace: gear-system
+  labels:
+    gear.eu/a6-target: "true"
+    app.kubernetes.io/name: gear-inference
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      gear.eu/a6-target: "true"
+      app.kubernetes.io/name: gear-inference
+  template:
+    metadata:
+      labels:
+        gear.eu/a6-target: "true"
+        app.kubernetes.io/name: gear-inference
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: target
+          image: "ghcr.io/ayond-lab/gear-hostile-target:dev"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: A6_TARGET_NAME
+              value: gear-inference
+          ports:
+            - name: http
+              containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: a6-gear-inference
+  namespace: gear-system
+  labels:
+    gear.eu/a6-target: "true"
+spec:
+  selector:
+    gear.eu/a6-target: "true"
+    app.kubernetes.io/name: gear-inference
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: a6-gear-fixture-store
+  namespace: gear-system
+  labels:
+    gear.eu/a6-target: "true"
+    app.kubernetes.io/name: gear-fixture-store
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      gear.eu/a6-target: "true"
+      app.kubernetes.io/name: gear-fixture-store
+  template:
+    metadata:
+      labels:
+        gear.eu/a6-target: "true"
+        app.kubernetes.io/name: gear-fixture-store
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: target
+          image: "ghcr.io/ayond-lab/gear-hostile-target:dev"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: A6_TARGET_NAME
+              value: gear-fixture-store
+          ports:
+            - name: http
+              containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: a6-gear-fixture-store
+  namespace: gear-system
+  labels:
+    gear.eu/a6-target: "true"
+spec:
+  selector:
+    gear.eu/a6-target: "true"
+    app.kubernetes.io/name: gear-fixture-store
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+
+# output
+deployment.apps/a6-gear-policy created
+service/a6-gear-policy created
+deployment.apps/a6-gear-inference created
+service/a6-gear-inference created
+deployment.apps/a6-gear-fixture-store created
+service/a6-gear-fixture-store created

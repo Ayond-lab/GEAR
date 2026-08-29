@@ -1,0 +1,79 @@
+{
+  "control": "without-control",
+  "startedAt": "2026-08-29T11:03:56Z",
+  "attacks": [
+    {
+      "id": "policy-dns-http",
+      "description": "Direct HTTP call to gear-policy by service DNS",
+      "target": "http://a6-gear-policy.gear-system.svc.cluster.local:8080/policy",
+      "outcome": "reached",
+      "reached": true,
+      "httpStatus": 200,
+      "durationMillis": 16
+    },
+    {
+      "id": "policy-podip-http",
+      "description": "Direct HTTP call to gear-policy by Pod IP",
+      "target": "http://10.42.0.252:8080/policy",
+      "outcome": "reached",
+      "reached": true,
+      "httpStatus": 200,
+      "durationMillis": 0
+    },
+    {
+      "id": "inference-dns-http",
+      "description": "Direct HTTP call to gear-inference by service DNS",
+      "target": "http://a6-gear-inference.gear-system.svc.cluster.local:8080/inference",
+      "outcome": "reached",
+      "reached": true,
+      "httpStatus": 200,
+      "durationMillis": 3
+    },
+    {
+      "id": "fixture-dns-http",
+      "description": "Direct HTTP call to gear-fixture-store by service DNS",
+      "target": "http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/fixture",
+      "outcome": "reached",
+      "reached": true,
+      "httpStatus": 200,
+      "durationMillis": 3
+    },
+    {
+      "id": "connector-write-http",
+      "description": "Direct connector-like write call that should be PEP mediated",
+      "target": "http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/connector/candidate-record",
+      "outcome": "reached",
+      "reached": true,
+      "httpStatus": 200,
+      "durationMillis": 2
+    },
+    {
+      "id": "dns-assisted-policy",
+      "description": "DNS lookup for a trusted service before egress",
+      "target": "a6-gear-policy.gear-system.svc.cluster.local",
+      "outcome": "resolved",
+      "reached": true,
+      "resolved": [
+        "10.42.0.252"
+      ],
+      "durationMillis": 1
+    },
+    {
+      "id": "raw-tcp-policy",
+      "description": "Raw TCP connection to gear-policy Pod IP",
+      "target": "10.42.0.252:8080",
+      "outcome": "reached",
+      "reached": true,
+      "durationMillis": 0
+    },
+    {
+      "id": "mtls-policy-443",
+      "description": "mTLS attempt to gear-policy without a client certificate",
+      "target": "10.42.0.252:443",
+      "outcome": "auth-failed",
+      "reached": true,
+      "error": "Get \"https://10.42.0.252:443/policy\": remote error: tls: certificate required",
+      "durationMillis": 4
+    }
+  ]
+}

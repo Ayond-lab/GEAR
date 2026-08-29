@@ -1,0 +1,13 @@
+{
+  "applications": 60,
+  "triggeredActions": 48,
+  "nonMatches": 12,
+  "authorised": 45,
+  "denied": 0,
+  "escalated": 3,
+  "effects": 45,
+  "pendingEscalations": 3,
+  "decisionEntries": 48,
+  "effectEntries": 45,
+  "nonMatchEntries": 12
+}

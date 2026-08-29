@@ -1,0 +1,6 @@
+$ kubectl -n gear-system delete service a6-gear-policy a6-gear-inference a6-gear-fixture-store --ignore-not-found=true
+
+# output
+service "a6-gear-policy" deleted from gear-system namespace
+service "a6-gear-inference" deleted from gear-system namespace
+service "a6-gear-fixture-store" deleted from gear-system namespace

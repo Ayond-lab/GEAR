@@ -1,0 +1,4 @@
+$ git rev-parse HEAD
+
+# output
+9a59832260627867b3152bdb06c25feabf30a8b8

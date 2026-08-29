@@ -1,0 +1,81 @@
+$ kubectl -n gear-lab logs a6-with-control -c ability
+
+# output
+A6_RESULT {
+  "control": "with-control",
+  "startedAt": "2026-08-29T08:19:55Z",
+  "attacks": [
+    {
+      "id": "policy-dns-http",
+      "description": "Direct HTTP call to gear-policy by service DNS",
+      "target": "http://a6-gear-policy.gear-system.svc.cluster.local:8080/policy",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-policy.gear-system.svc.cluster.local:8080/policy\": dial tcp: lookup a6-gear-policy.gear-system.svc.cluster.local on 10.43.0.10:53: write udp 10.42.0.181:44674-\u003e10.43.0.10:53: write: operation not permitted",
+      "durationMillis": 1
+    },
+    {
+      "id": "policy-clusterip-http",
+      "description": "Direct HTTP call to gear-policy by ClusterIP",
+      "target": "http://10.43.62.235:8080/policy",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://10.43.62.235:8080/policy\": dial tcp 10.43.62.235:8080: connect: no route to host",
+      "durationMillis": 0
+    },
+    {
+      "id": "inference-dns-http",
+      "description": "Direct HTTP call to gear-inference by service DNS",
+      "target": "http://a6-gear-inference.gear-system.svc.cluster.local:8080/inference",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-inference.gear-system.svc.cluster.local:8080/inference\": dial tcp: lookup a6-gear-inference.gear-system.svc.cluster.local on 10.43.0.10:53: write udp 10.42.0.181:50262-\u003e10.43.0.10:53: write: operation not permitted",
+      "durationMillis": 0
+    },
+    {
+      "id": "fixture-dns-http",
+      "description": "Direct HTTP call to gear-fixture-store by service DNS",
+      "target": "http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/fixture",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/fixture\": dial tcp: lookup a6-gear-fixture-store.gear-system.svc.cluster.local on 10.43.0.10:53: write udp 10.42.0.181:41493-\u003e10.43.0.10:53: write: operation not permitted",
+      "durationMillis": 0
+    },
+    {
+      "id": "connector-write-http",
+      "description": "Direct connector-like write call that should be PEP mediated",
+      "target": "http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/connector/candidate-record",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/connector/candidate-record\": dial tcp: lookup a6-gear-fixture-store.gear-system.svc.cluster.local on 10.43.0.10:53: write udp 10.42.0.181:59670-\u003e10.43.0.10:53: write: operation not permitted",
+      "durationMillis": 0
+    },
+    {
+      "id": "dns-assisted-policy",
+      "description": "DNS lookup for a trusted service before egress",
+      "target": "a6-gear-policy.gear-system.svc.cluster.local",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "lookup a6-gear-policy.gear-system.svc.cluster.local on 10.43.0.10:53: write udp 10.42.0.181:34526-\u003e10.43.0.10:53: write: operation not permitted",
+      "durationMillis": 0
+    },
+    {
+      "id": "raw-tcp-policy",
+      "description": "Raw TCP connection to gear-policy ClusterIP",
+      "target": "10.43.62.235:8080",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "dial tcp 10.43.62.235:8080: connect: no route to host",
+      "durationMillis": 0
+    },
+    {
+      "id": "mtls-policy-443",
+      "description": "mTLS attempt to gear-policy without a client certificate",
+      "target": "10.43.62.235:443",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "dial tcp 10.43.62.235:443: connect: no route to host",
+      "durationMillis": 0
+    }
+  ]
+}

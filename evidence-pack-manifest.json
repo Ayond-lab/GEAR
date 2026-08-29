@@ -1,0 +1,606 @@
+{
+  "createdAt": "2026-08-29T18:58:12Z",
+  "gitSha": "993579ab2086f11b7e99b11af84165f4c626968f",
+  "criteria": [
+    {
+      "id": "A1",
+      "latestRun": "2026-08-29T14:08:08Z",
+      "verdict": "PASS",
+      "files": [
+        {
+          "path": "A1/2026-08-29T14:08:08Z/ENV.md",
+          "bytes": 111,
+          "sha256": "sha256:fc7888e794d1db359f29ac2db1cd2f6d444ef63a95239659a33cc0630853ebb2"
+        },
+        {
+          "path": "A1/2026-08-29T14:08:08Z/RESULT.md",
+          "bytes": 641,
+          "sha256": "sha256:38e8cd3fad6d3511a592a43899ef16394a568a4ba66285289147d4376b74ef87"
+        },
+        {
+          "path": "A1/2026-08-29T14:08:08Z/audit-entries.json",
+          "bytes": 713,
+          "sha256": "sha256:4b33142476010b0ade16416e1ede54c935a9ee20d85ed4690f880283834db2a2"
+        },
+        {
+          "path": "A1/2026-08-29T14:08:08Z/chain-verification.json",
+          "bytes": 37,
+          "sha256": "sha256:0ab4b259a5c8a7bf9b7fd6317047eb8c48bef0c73a6edc0f26d4a3e77b8cf9c5"
+        },
+        {
+          "path": "A1/2026-08-29T14:08:08Z/refusal-transcript.json",
+          "bytes": 1554,
+          "sha256": "sha256:69a7dea228a9e1aed15e2d861190daa5bd2075dc79ae4afe4e8ac40135ca67c0"
+        }
+      ]
+    },
+    {
+      "id": "A2",
+      "latestRun": "2026-08-29T18:11:12Z",
+      "verdict": "PASS",
+      "files": [
+        {
+          "path": "A2/2026-08-29T18:11:12Z/ENV.md",
+          "bytes": 197,
+          "sha256": "sha256:b40fd7d97fad6a8689e431c5c3289e838e186a3db541e8bed12c6892023aef74"
+        },
+        {
+          "path": "A2/2026-08-29T18:11:12Z/RESULT.md",
+          "bytes": 442,
+          "sha256": "sha256:e8c05030f936987d60b6d9d56254f44995199998dc2cace6daacb3dcdbee19af"
+        },
+        {
+          "path": "A2/2026-08-29T18:11:12Z/audit-entries.json",
+          "bytes": 638,
+          "sha256": "sha256:4dcc9342981f5ac3b196b8ac3baae41a17f3efb79f0a0d01b90ab4af036ca87b"
+        },
+        {
+          "path": "A2/2026-08-29T18:11:12Z/chain-verification.json",
+          "bytes": 37,
+          "sha256": "sha256:0ab4b259a5c8a7bf9b7fd6317047eb8c48bef0c73a6edc0f26d4a3e77b8cf9c5"
+        },
+        {
+          "path": "A2/2026-08-29T18:11:12Z/governedaction-status.json",
+          "bytes": 139,
+          "sha256": "sha256:a4c7534bab3a2be6af05121bb169045c13ac7ff006852c3b783f2705f2f44c47"
+        },
+        {
+          "path": "A2/2026-08-29T18:11:12Z/policy-response.json",
+          "bytes": 205,
+          "sha256": "sha256:d46433b9be916bc55a1e57cf0842d2fba665fb3003b31f78d49d0d64af10112a"
+        },
+        {
+          "path": "A2/2026-08-29T18:11:12Z/reconciliation.json",
+          "bytes": 37,
+          "sha256": "sha256:9794ad200ff8fa294b66a155ee3ee5da6c8c99a3e49897882829dfd03e79017a"
+        }
+      ]
+    },
+    {
+      "id": "A3",
+      "latestRun": "2026-08-29T18:11:14Z",
+      "verdict": "PASS",
+      "files": [
+        {
+          "path": "A3/2026-08-29T18:11:14Z/ENV.md",
+          "bytes": 197,
+          "sha256": "sha256:0809f83274726834c7e0603cb062f69ebe1a909b6a603efbb54aa86e7a8f98ae"
+        },
+        {
+          "path": "A3/2026-08-29T18:11:14Z/RESULT.md",
+          "bytes": 670,
+          "sha256": "sha256:1751c9c850e322f2c3f9392510d62c7cb5605bce3ed75081aea21ca7d8dcb7bc"
+        },
+        {
+          "path": "A3/2026-08-29T18:11:14Z/action-results.json",
+          "bytes": 57185,
+          "sha256": "sha256:9b663b5a508bb6b25518014a3c3cf9987f720fbd5b98aa23a1d07f11bfa578b8"
+        },
+        {
+          "path": "A3/2026-08-29T18:11:14Z/audit-entries.json",
+          "bytes": 71589,
+          "sha256": "sha256:92b45d19cf0825127e60a6e65a92ac174013a7e4ecea1b9618f687a7b1967bec"
+        },
+        {
+          "path": "A3/2026-08-29T18:11:14Z/chain-verification.json",
+          "bytes": 37,
+          "sha256": "sha256:0ab4b259a5c8a7bf9b7fd6317047eb8c48bef0c73a6edc0f26d4a3e77b8cf9c5"
+        },
+        {
+          "path": "A3/2026-08-29T18:11:14Z/escalation-resources.json",
+          "bytes": 1905,
+          "sha256": "sha256:4cb2421389100d3234035d1ac47679babf8ce2c3a516a1ec214596e964142ae6"
+        },
+        {
+          "path": "A3/2026-08-29T18:11:14Z/non-match-records.json",
+          "bytes": 6207,
+          "sha256": "sha256:a26a7f4b211c19afefd610a159c4892a15c70b5e76a4a09a506ca7714f05e274"
+        },
+        {
+          "path": "A3/2026-08-29T18:11:14Z/reconciliation.json",
+          "bytes": 37,
+          "sha256": "sha256:9794ad200ff8fa294b66a155ee3ee5da6c8c99a3e49897882829dfd03e79017a"
+        },
+        {
+          "path": "A3/2026-08-29T18:11:14Z/run-summary.json",
+          "bytes": 241,
+          "sha256": "sha256:e2e70441b4883344fd593e8224f73f054fbc7d2aedfcbd5055a8cbf2df937670"
+        }
+      ]
+    },
+    {
+      "id": "A4",
+      "latestRun": "2026-08-29T18:11:11Z",
+      "verdict": "PASS",
+      "files": [
+        {
+          "path": "A4/2026-08-29T18:11:11Z/ENV.md",
+          "bytes": 197,
+          "sha256": "sha256:34c6350605549832905078e29ce7d9c03dd0d69e61305aad64ceb8b5d731dea5"
+        },
+        {
+          "path": "A4/2026-08-29T18:11:11Z/RESULT.md",
+          "bytes": 507,
+          "sha256": "sha256:092bd08b5dfb77d2c72deb0e9ac776d1b3454ed4d0ed6101fd12a7e7f9b87682"
+        },
+        {
+          "path": "A4/2026-08-29T18:11:11Z/audit-entries.json",
+          "bytes": 1215,
+          "sha256": "sha256:d83d95eca25844989e31a50ac9eafbccc240d9144a774e7f8c7a38e68087ca85"
+        },
+        {
+          "path": "A4/2026-08-29T18:11:11Z/chain-verification.json",
+          "bytes": 37,
+          "sha256": "sha256:0ab4b259a5c8a7bf9b7fd6317047eb8c48bef0c73a6edc0f26d4a3e77b8cf9c5"
+        },
+        {
+          "path": "A4/2026-08-29T18:11:11Z/input-digests.json",
+          "bytes": 178,
+          "sha256": "sha256:21f7d409b24fa8baf7f24561679ed6317e2091052ad229f2e00c259ed89a6de3"
+        },
+        {
+          "path": "A4/2026-08-29T18:11:11Z/paired-test-cases.json",
+          "bytes": 4007,
+          "sha256": "sha256:9c31bedd998493538065b555f5730c4c8a507b35f49e867ffe83a718c8ab5554"
+        },
+        {
+          "path": "A4/2026-08-29T18:11:11Z/policy-responses.json",
+          "bytes": 1326,
+          "sha256": "sha256:ea2a71cf96f8d7a6de03ff436dced26d2def4691fde8b9d51ae284dfe581f034"
+        }
+      ]
+    },
+    {
+      "id": "A5",
+      "latestRun": "2026-08-29T15:25:27Z",
+      "verdict": "PASS",
+      "files": [
+        {
+          "path": "A5/2026-08-29T15:25:27Z/001-kubectl-config-use-context-k3d-gear-lab.txt",
+          "bytes": 88,
+          "sha256": "sha256:1cbf52792f760207c171fdccfe8c6b3f267bdc080ca125380382564865170b95"
+        },
+        {
+          "path": "A5/2026-08-29T15:25:27Z/002-git-rev-parse-HEAD.txt",
+          "bytes": 72,
+          "sha256": "sha256:a52bd51cce86a35b97f22241fe119adf28227c23c5eb752a59a1d97f09697cdc"
+        },
+        {
+          "path": "A5/2026-08-29T15:25:27Z/003-kubectl-config-current-context.txt",
+          "bytes": 56,
+          "sha256": "sha256:991a64ef98dbca91464dde85ba9585789591d5bfa118827efab9e6d721c3d0f0"
+        },
+        {
+          "path": "A5/2026-08-29T15:25:27Z/004-kubectl-apply-f-deploy-smoke-fixtures-ab.txt",
+          "bytes": 100,
+          "sha256": "sha256:fa78aea8cd1413bd3a79392ee07f0844b6d8b46d402106060f12ebcfe49f7249"
+        },
+        {
+          "path": "A5/2026-08-29T15:25:27Z/005-kubectl-apply-f-deploy-smoke-fixtures-ma.txt",
+          "bytes": 468,
+          "sha256": "sha256:de503df9d4f3ac687c0bd43dbe5b78b64d140ffe31b1d860e5af296c49f0fc63"
+        },
+        {
+          "path": "A5/2026-08-29T15:25:27Z/006-kubectl-n-gear-system-logs-deployment-gear-webhooks-tail-200.txt",
+          "bytes": 66,
+          "sha256": "sha256:4473cd9638c7609a697e9e81f72dbf38c7d0d42a497ed08c4e9817be0a8749b2"
+        },
+        {
+          "path": "A5/2026-08-29T15:25:27Z/ENV.md",
+          "bytes": 148,
+          "sha256": "sha256:2eda380570fd1f38995c2456f524b57f77a2c8e2bdcbfa483f5ce517b9fe07eb"
+        },
+        {
+          "path": "A5/2026-08-29T15:25:27Z/RESULT.md",
+          "bytes": 911,
+          "sha256": "sha256:c7c8f4db443d47894a87d1ebf4509f8354cd624e4fcce8926b93c1482bd27bf0"
+        },
+        {
+          "path": "A5/2026-08-29T15:25:27Z/commands.txt",
+          "bytes": 856,
+          "sha256": "sha256:6e1b04073b98226d8253dd9cd0aeb62dea05cd867a33b3fc5b6e4ca90f1cc00e"
+        }
+      ]
+    },
+    {
+      "id": "A6",
+      "latestRun": "2026-08-29T11:44:20Z",
+      "verdict": "PASS",
+      "files": [
+        {
+          "path": "A6/2026-08-29T11:44:20Z/001-kubectl-config-use-context-k3d-gear-lab.txt",
+          "bytes": 88,
+          "sha256": "sha256:1cbf52792f760207c171fdccfe8c6b3f267bdc080ca125380382564865170b95"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/002-git-rev-parse-HEAD.txt",
+          "bytes": 72,
+          "sha256": "sha256:cac0b4119fa67d4a60f6f3c1f51069c353bcbbae7aee90b95b6a5194e2be97ff"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/003-kubectl-config-current-context.txt",
+          "bytes": 56,
+          "sha256": "sha256:991a64ef98dbca91464dde85ba9585789591d5bfa118827efab9e6d721c3d0f0"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/004-kubectl-get-nodes-o-wide.txt",
+          "bytes": 356,
+          "sha256": "sha256:06270a226aa0323e0792442374efec8a9599f7fe7017ec5bcfbef4c540a88b45"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/005-kubectl-n-kube-system-get-daemonset-cilium-o-wide.txt",
+          "bytes": 516,
+          "sha256": "sha256:4c0427463c2f9cdb7f9e420931b6e3d1e7508cdf27fcb9ef12a6e70f3ba7907c"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/006-cilium-status-wait.txt",
+          "bytes": 43138,
+          "sha256": "sha256:902f3286058e4859c612c7db127ad37407ffec624052138ac8bfcb8c6e0c14f1"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/007-kubectl-apply-f-arg.txt",
+          "bytes": 499,
+          "sha256": "sha256:99d43dc4086297d56994504def6e962e9274b18856a237aba004b5d1cd4da1c6"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/008-kubectl-n-gear-system-delete-service-a6-gear-policy-a6-gear-inference-a6-gear-fixture-store-ignore-not-found-true.txt",
+          "bytes": 319,
+          "sha256": "sha256:37ab3600c3612ba08a88a49d1c75ae1480c56907c9bfd6171e560151ae76437b"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/009-kubectl-n-gear-system-delete-deployment-a6-gear-policy-a6-gear-inference-a6-gear-fixture-store-ignore-not-found-true.txt",
+          "bytes": 346,
+          "sha256": "sha256:d139fc721e13155b8e450dfad6a0ab8dd03eb295a80ac7446fc061b9b89247d3"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/010-kubectl-apply-f-arg.txt",
+          "bytes": 3677,
+          "sha256": "sha256:aaac456c66941122d090d3f9cf5832ca90ec8f5c545cb04a3d9b4ad923757e9e"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/011-kubectl-n-gear-system-rollout-status-deployment-a6-gear-polic-timeout-120s.txt",
+          "bytes": 243,
+          "sha256": "sha256:fa060d7eb5f2acbd8dac0770a4a6608a840a0dfa8e44878ac23d968e6de9fef0"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/012-kubectl-n-gear-system-rollout-status-deployment-a6-gear-infer-timeout-120s.txt",
+          "bytes": 149,
+          "sha256": "sha256:502070a571b75098d3460f582cbd5de0532c2e4f9cbc3a10f36092f68d95d3b1"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/013-kubectl-n-gear-system-rollout-status-deployment-a6-gear-fixtu-timeout-120s.txt",
+          "bytes": 157,
+          "sha256": "sha256:53be8d67d9c9feefaa39098c5f7bd534b9d262260acbd08eec7290a8c8732106"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/014-kubectl-n-gear-system-get-pod-l-gear-eu-a6-target-true,a-o-jsonpath--items[0]-statu.txt",
+          "bytes": 152,
+          "sha256": "sha256:fe9118df6e62e1892d7b294d01db29dfdb7284b760d968bef5b9db473e69a243"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/015-kubectl-n-gear-lab-delete-pod-a6-with-control-a6-without-control-ignore-not-found-true.txt",
+          "bytes": 213,
+          "sha256": "sha256:519ce12f0c98f05fb45855438032699ac195b5e58150b56d5d9b8e8048e13447"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/016-kubectl-apply-f-arg.txt",
+          "bytes": 906,
+          "sha256": "sha256:6a4e3f604e0879f185b6ac1318f0d2fb8d535779fa775a2cd43395c237ffb834"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/017-kubectl-n-gear-lab-logs-a6-with-control-c-ability.txt",
+          "bytes": 201,
+          "sha256": "sha256:caa23403a8d56122702987e6924438462c25c5250f608b47498a7bfe76343c80"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/018-kubectl-n-gear-lab-logs-a6-with-control-c-ability.txt",
+          "bytes": 3812,
+          "sha256": "sha256:a552e4a06332329ccf5adb5bec7123167bd4611e1f9994b6a9e08e50ff4c6694"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/019-kubectl-n-gear-lab-get-pod-a6-with-control-o-yaml.txt",
+          "bytes": 8687,
+          "sha256": "sha256:676de6fa804ade1c7d84662beb991a09d8dadd83c53c9d99365935b7415c67d5"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/020-kubectl-n-gear-lab-describe-pod-a6-with-control.txt",
+          "bytes": 5521,
+          "sha256": "sha256:cca751b9295650948a2ef67d6bedb1b78918ea8ec6c53ec888d76fc82c7ebcbf"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/021-kubectl-n-gear-lab-logs-a6-with-control-c-ability.txt",
+          "bytes": 3812,
+          "sha256": "sha256:a552e4a06332329ccf5adb5bec7123167bd4611e1f9994b6a9e08e50ff4c6694"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/022-kubectl-n-gear-lab-logs-a6-with-control-c-gear-pep.txt",
+          "bytes": 366,
+          "sha256": "sha256:a989137f0969441a5b5dd90404b0de55e0d06c819314b6fb286f57944ff218d8"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/023-kubectl-n-gear-lab-logs-a6-with-control-c-gear-uid-egress.txt",
+          "bytes": 62,
+          "sha256": "sha256:d522ff79a4a5a2bc745a0c1630761514310d50657d101a0c3eb826e9d47d5438"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/024-kubectl-apply-f-arg.txt",
+          "bytes": 1869,
+          "sha256": "sha256:915fc5efa98d9d2064146a275c1451c9b7916de86f18349a7ed2fc7328da8b4e"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/025-kubectl-n-gear-lab-label-pod-a6-without-control-gear-eu-ability-cv-scree-overwrite.txt",
+          "bytes": 130,
+          "sha256": "sha256:8b80a358b76a4c241b548e1c8b172da21bb783faa26e101fb8d1ce97bde253f2"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/026-kubectl-n-gear-lab-logs-a6-without-control-c-ability.txt",
+          "bytes": 209,
+          "sha256": "sha256:da28c619d757b48536ba9deefa2c0a8dc1877471cd496d1a28d49692cabd53d2"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/027-kubectl-n-gear-lab-logs-a6-without-control-c-ability.txt",
+          "bytes": 57,
+          "sha256": "sha256:968ae4092c51a3497ddd419d224a12152d4061bdb6b1be5bc38398a0f18d5747"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/028-kubectl-n-gear-lab-logs-a6-without-control-c-ability.txt",
+          "bytes": 57,
+          "sha256": "sha256:968ae4092c51a3497ddd419d224a12152d4061bdb6b1be5bc38398a0f18d5747"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/029-kubectl-n-gear-lab-logs-a6-without-control-c-ability.txt",
+          "bytes": 57,
+          "sha256": "sha256:968ae4092c51a3497ddd419d224a12152d4061bdb6b1be5bc38398a0f18d5747"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/030-kubectl-n-gear-lab-logs-a6-without-control-c-ability.txt",
+          "bytes": 2576,
+          "sha256": "sha256:2062f2c5e089d1c37dfff760fb49584f9403213673b51c3944142896d04c83e3"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/031-kubectl-n-gear-lab-get-pod-a6-without-control-o-yaml.txt",
+          "bytes": 6902,
+          "sha256": "sha256:f2e9a08ce8cc222a9d2331ae65d2d065bfde36bb006f5a03366c21519fb30e67"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/032-kubectl-n-gear-lab-describe-pod-a6-without-control.txt",
+          "bytes": 3705,
+          "sha256": "sha256:4631d306a38fdcf8ef5f3c381fdf5795d0e5155efa5cec0cbb6eec00dd3b413b"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/033-kubectl-n-gear-lab-logs-a6-without-control-c-ability.txt",
+          "bytes": 2576,
+          "sha256": "sha256:2062f2c5e089d1c37dfff760fb49584f9403213673b51c3944142896d04c83e3"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/034-kubectl-n-gear-lab-logs-a6-without-control-c-gear-pep.txt",
+          "bytes": 369,
+          "sha256": "sha256:e0e8c4208c0204fbf42682d56548e0602dbc209e677d043e5866f9357fca1ebf"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/035-kubectl-n-gear-lab-logs-a6-without-control-c-gear-uid-egress.txt",
+          "bytes": 171,
+          "sha256": "sha256:93566f2f798c59e797991eb318ccdc3d3a504d9df3774dd6865926d7279eec5b"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/036-kubectl-n-gear-lab-get-networkpolicy-gear-ability-egress-base-o-yaml.txt",
+          "bytes": 2081,
+          "sha256": "sha256:d3a0cf8cd468a99711c85b4027ee0c1ffff5cf0e1722cfb8d13ddc241ce2f196"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/037-kubectl-n-gear-system-get-pods,services-l-gear-eu-a6-target-true-o-wide.txt",
+          "bytes": 1242,
+          "sha256": "sha256:1bef4952caf996f9bcc6e95185136db65f24d3f20c394abba24b5a3d25674aa2"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/ENV.md",
+          "bytes": 355,
+          "sha256": "sha256:86760266532541abe9a04e104fa80227e6e06b5fa8f43e87e27c23fbc87fccce"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/RESULT.md",
+          "bytes": 1806,
+          "sha256": "sha256:24b20156e01e7ed47011c6505ae17281614a8026e1b12bbe9693a9bb58a9f912"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/a6-with-control-ability.log",
+          "bytes": 3748,
+          "sha256": "sha256:d94efedc84d2cd02447e63dc3e34e00a1367e3e04f5ed15f99497f6911e8b4be"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/a6-without-control-ability.log",
+          "bytes": 2509,
+          "sha256": "sha256:738f5676a2e61960719aa957f51cfba5ab898ac0c551de2174f4fcdc502b9180"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/commands.txt",
+          "bytes": 95386,
+          "sha256": "sha256:2ac4f1d36cb900fd93b76d03540261af30b2a816f5dd097b26bb2f0c8d678418"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/hubble-observe.txt",
+          "bytes": 45,
+          "sha256": "sha256:a58a47e5269f373f997a8ba0fa19ef4f5babc9a8b5096fbcbb5e83ebb0c25247"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/with-control-results.json",
+          "bytes": 3738,
+          "sha256": "sha256:84bbb4a6e587263f8cdb6a2d8c683f070cf322516ea4ab5608d6b41e926373bc"
+        },
+        {
+          "path": "A6/2026-08-29T11:44:20Z/without-control-results.json",
+          "bytes": 2499,
+          "sha256": "sha256:14ed5ae56144682681b6b7c390c7fd65d1711e2bb33a5e38fc3db982a192060d"
+        }
+      ]
+    },
+    {
+      "id": "A7",
+      "latestRun": "2026-08-29T09:10:17Z",
+      "verdict": "PASS",
+      "files": [
+        {
+          "path": "A7/2026-08-29T09:10:17Z/ENV.md",
+          "bytes": 206,
+          "sha256": "sha256:d23260b590c394de4ccc6522f33efa9824545c28d9fca93af7be4b77d8c73be6"
+        },
+        {
+          "path": "A7/2026-08-29T09:10:17Z/RESULT.md",
+          "bytes": 597,
+          "sha256": "sha256:2e7ede4aba931d9a8854bc5a007bb043ea43d918a81d7d18cd105ce45c1a9923"
+        },
+        {
+          "path": "A7/2026-08-29T09:10:17Z/audit-sample.json",
+          "bytes": 2085,
+          "sha256": "sha256:d1b1ae2e74b19aa5df0a687323e9fb698cb8e994a57a7f2d0b182d91e7f4d4cd"
+        },
+        {
+          "path": "A7/2026-08-29T09:10:17Z/audit.db",
+          "bytes": 1048576,
+          "sha256": "sha256:4bb4d191021a88efac017519a1b555413653d04608954f45b9c73cf139449c2c"
+        },
+        {
+          "path": "A7/2026-08-29T09:10:17Z/tamper-deletion.json",
+          "bytes": 142,
+          "sha256": "sha256:4f883cc381e644c34c512afa2192d9578ec534c13dd95989e5185b9f001e5d69"
+        },
+        {
+          "path": "A7/2026-08-29T09:10:17Z/tamper-modification.json",
+          "bytes": 152,
+          "sha256": "sha256:5335580b1bba6a118ab7f8a7cd73ac79762f4aba27c94a9d830a67944ddff5fb"
+        },
+        {
+          "path": "A7/2026-08-29T09:10:17Z/tamper-reordering.json",
+          "bytes": 152,
+          "sha256": "sha256:42b7d60b0cffa6d87aa8e02f6951a4a7dfb06525fe7f452fcabd6ced25ab0754"
+        },
+        {
+          "path": "A7/2026-08-29T09:10:17Z/verification-valid.json",
+          "bytes": 99,
+          "sha256": "sha256:696326f5e674dcbb4af0d0dcece0c1b4fb20e619236c1f3c7cae9006035f6518"
+        }
+      ]
+    },
+    {
+      "id": "A8",
+      "latestRun": "2026-08-29T18:58:07Z",
+      "verdict": "PASS",
+      "files": [
+        {
+          "path": "A8/2026-08-29T18:58:07Z/ENV.md",
+          "bytes": 246,
+          "sha256": "sha256:9d4b477c1f1597c0e9464ed20170afebbab8a9897c74fcc7dfa1744b7fd3a3e1"
+        },
+        {
+          "path": "A8/2026-08-29T18:58:07Z/RESULT.md",
+          "bytes": 547,
+          "sha256": "sha256:3fc643e4371944914673eeac480e81b91dcd32cb5cc1f1ccd43ba1d6b1bc5dcc"
+        },
+        {
+          "path": "A8/2026-08-29T18:58:07Z/inference-load.json",
+          "bytes": 123,
+          "sha256": "sha256:cfb02513ad92670d9df189d9ebfb23f3bde17589bc7e44bcc8d70ceb164358b7"
+        },
+        {
+          "path": "A8/2026-08-29T18:58:07Z/latency-histogram.json",
+          "bytes": 545,
+          "sha256": "sha256:ba36ac57c1b77c627f85edcc46e18ed6c477939e8f0d09aacf5b6d0a53ee7e64"
+        },
+        {
+          "path": "A8/2026-08-29T18:58:07Z/latency-summary.json",
+          "bytes": 1083,
+          "sha256": "sha256:2af14acffcc01059c579e345ac019495b8581fb5c2a23af79aca4ef100494ae8"
+        }
+      ]
+    },
+    {
+      "id": "A9",
+      "latestRun": "2026-08-29T09:10:17Z",
+      "verdict": "PASS",
+      "files": [
+        {
+          "path": "A9/2026-08-29T09:10:17Z/ENV.md",
+          "bytes": 232,
+          "sha256": "sha256:ccc9805560a76070507945fd0f2db1ae9cb57a1d58112342a6fc2b82c11b97aa"
+        },
+        {
+          "path": "A9/2026-08-29T09:10:17Z/RESULT.md",
+          "bytes": 636,
+          "sha256": "sha256:be0fc4ecc93af5820ef62634110d34a4c9e752fc84b82fc6ebaf81436be840ba"
+        },
+        {
+          "path": "A9/2026-08-29T09:10:17Z/audit-outage-transcript.txt",
+          "bytes": 320,
+          "sha256": "sha256:e0f51307acfca2de0d890fd3dafda96fb459bbfd5ac415e49a8aff13c39772aa"
+        },
+        {
+          "path": "A9/2026-08-29T09:10:17Z/policy-responses.json",
+          "bytes": 1182,
+          "sha256": "sha256:ceac6cb8eaf47bb019b70af886c2d05fdc165b80e1ef049cf760933e974a1202"
+        }
+      ]
+    },
+    {
+      "id": "A10",
+      "latestRun": "2026-08-29T18:58:06Z",
+      "verdict": "PASS",
+      "files": [
+        {
+          "path": "A10/2026-08-29T18:58:06Z/ENV.md",
+          "bytes": 198,
+          "sha256": "sha256:34f78d53cab3cc1f86b923ee2e105f7a059c5002f3b144a3db46843737bb6109"
+        },
+        {
+          "path": "A10/2026-08-29T18:58:06Z/RESULT.md",
+          "bytes": 520,
+          "sha256": "sha256:76d0e299e77bbb1666e6f8dc4048a19abfdb51dabe7d99ebe13685b17c40a320"
+        },
+        {
+          "path": "A10/2026-08-29T18:58:06Z/audit-entries.json",
+          "bytes": 71593,
+          "sha256": "sha256:ee5c7031b225c7ac0c0de6a57b3ef70be7b7412fe6ac3fcfac92b5bba7db3a1b"
+        },
+        {
+          "path": "A10/2026-08-29T18:58:06Z/audit-sample.json",
+          "bytes": 3962,
+          "sha256": "sha256:4e877dbfc8692b4683d68d563785e45cd097b790963f949b594b898ce49d55c1"
+        },
+        {
+          "path": "A10/2026-08-29T18:58:06Z/component-logs.jsonl",
+          "bytes": 320,
+          "sha256": "sha256:7c0b2c642bb7acecbb59ec1b640bcc14efa9c2f6a686853aa936d34691172bbb"
+        },
+        {
+          "path": "A10/2026-08-29T18:58:06Z/run-summary.json",
+          "bytes": 241,
+          "sha256": "sha256:e2e70441b4883344fd593e8224f73f054fbc7d2aedfcbd5055a8cbf2df937670"
+        },
+        {
+          "path": "A10/2026-08-29T18:58:06Z/scanner-output.json",
+          "bytes": 133,
+          "sha256": "sha256:33c02deebf8c6aeb9dc74a9b105536307dbe0bbcd2e0b2960fccc66875e601c5"
+        }
+      ]
+    }
+  ]
+}

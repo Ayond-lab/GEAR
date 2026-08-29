@@ -1,0 +1,5 @@
+$ kubectl -n gear-lab logs a6-without-control -c gear-pep
+
+# output
+2026/08/29 11:19:15 WARN gear-pep started without active governed action; action endpoints fail closed
+2026/08/29 11:19:15 INFO gear-pep loopback starting addr=127.0.0.1:9191 policyURL=http://gear-policy.gear-system.svc.cluster.local:8080

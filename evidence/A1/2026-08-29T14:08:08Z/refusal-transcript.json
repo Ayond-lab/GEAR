@@ -1,0 +1,36 @@
+{
+  "operatorResponse": "Operator selected the lawful planning alternative for the next request.",
+  "purposeStatement": "Check the CVs, select the candidates who are not citizens of the EEA.",
+  "response": {
+    "outcome": "refused",
+    "clauses": [
+      {
+        "ID": "D1",
+        "Text": "Forbid CANDIDATE_RANK because legality gate refused protected-attribute selective use.",
+        "Reason": "protected criterion combined with selective verb"
+      },
+      {
+        "ID": "D2",
+        "Text": "Forbid OUTBOUND_COMMS because the purpose does not imply candidate contact.",
+        "Reason": "purpose does not imply candidate contact"
+      }
+    ],
+    "refusal": {
+      "ruleId": "LG-PROTECTED-SELECTIVE-01",
+      "criterion": "citizenship",
+      "verb": "select",
+      "reason": "protected criterion combined with selective verb",
+      "purposeDigest": "sha256:0a0cb01ead78568286e72e56577632622e6e9f15af846d3aad96310ff4f963a4",
+      "operatorResponseRef": "sha256:operator-response-a1",
+      "alternatives": [
+        "Record work-authorisation status for human planning without ranking, filtering, or excluding candidates.",
+        "If a legal/security restriction applies, state the legal instrument as the mandate legal basis."
+      ]
+    },
+    "auditRef": "ae-0000001",
+    "clarification": [
+      "Record work-authorisation status for human planning without ranking, filtering, or excluding candidates.",
+      "If a legal/security restriction applies, state the legal instrument as the mandate legal basis."
+    ]
+  }
+}

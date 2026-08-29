@@ -1,0 +1,1 @@
+hubble CLI not available in this environment

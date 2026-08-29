@@ -1,0 +1,54 @@
+$ kubectl -n gear-lab get networkpolicy gear-ability-egress-baseline -o yaml
+
+# output
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.k8s.io/v1","kind":"NetworkPolicy","metadata":{"annotations":{},"name":"gear-ability-egress-baseline","namespace":"gear-lab"},"spec":{"egress":[{"ports":[{"port":53,"protocol":"UDP"},{"port":53,"protocol":"TCP"}],"to":[{"namespaceSelector":{"matchLabels":{"kubernetes.io/metadata.name":"kube-system"}},"podSelector":{"matchLabels":{"k8s-app":"kube-dns"}}},{"ipBlock":{"cidr":"10.43.0.10/32"}}]},{"ports":[{"port":8080,"protocol":"TCP"},{"port":443,"protocol":"TCP"}],"to":[{"namespaceSelector":{"matchLabels":{"kubernetes.io/metadata.name":"gear-system"}},"podSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["gear-policy","gear-inference","gear-fixture-store"]}]}}]}],"podSelector":{"matchExpressions":[{"key":"gear.eu/ability","operator":"Exists"}]},"policyTypes":["Egress"]}}
+  creationTimestamp: "2026-08-29T07:55:24Z"
+  generation: 2
+  name: gear-ability-egress-baseline
+  namespace: gear-lab
+  resourceVersion: "2790"
+  uid: 5b92173e-e0cc-44bb-a550-493c19206378
+spec:
+  egress:
+  - ports:
+    - port: 53
+      protocol: UDP
+    - port: 53
+      protocol: TCP
+    to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    - ipBlock:
+        cidr: 10.43.0.10/32
+  - ports:
+    - port: 8080
+      protocol: TCP
+    - port: 443
+      protocol: TCP
+    to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: gear-system
+      podSelector:
+        matchExpressions:
+        - key: app.kubernetes.io/name
+          operator: In
+          values:
+          - gear-policy
+          - gear-inference
+          - gear-fixture-store
+  podSelector:
+    matchExpressions:
+    - key: gear.eu/ability
+      operator: Exists
+  policyTypes:
+  - Egress

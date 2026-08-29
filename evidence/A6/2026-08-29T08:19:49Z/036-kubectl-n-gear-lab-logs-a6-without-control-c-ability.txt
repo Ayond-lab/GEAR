@@ -1,0 +1,81 @@
+$ kubectl -n gear-lab logs a6-without-control -c ability
+
+# output
+A6_RESULT {
+  "control": "without-control",
+  "startedAt": "2026-08-29T08:20:04Z",
+  "attacks": [
+    {
+      "id": "policy-dns-http",
+      "description": "Direct HTTP call to gear-policy by service DNS",
+      "target": "http://a6-gear-policy.gear-system.svc.cluster.local:8080/policy",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-policy.gear-system.svc.cluster.local:8080/policy\": context deadline exceeded",
+      "durationMillis": 2003
+    },
+    {
+      "id": "policy-clusterip-http",
+      "description": "Direct HTTP call to gear-policy by ClusterIP",
+      "target": "http://10.43.62.235:8080/policy",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://10.43.62.235:8080/policy\": context deadline exceeded",
+      "durationMillis": 2004
+    },
+    {
+      "id": "inference-dns-http",
+      "description": "Direct HTTP call to gear-inference by service DNS",
+      "target": "http://a6-gear-inference.gear-system.svc.cluster.local:8080/inference",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-inference.gear-system.svc.cluster.local:8080/inference\": dial tcp: lookup a6-gear-inference.gear-system.svc.cluster.local: i/o timeout",
+      "durationMillis": 2001
+    },
+    {
+      "id": "fixture-dns-http",
+      "description": "Direct HTTP call to gear-fixture-store by service DNS",
+      "target": "http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/fixture",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/fixture\": context deadline exceeded",
+      "durationMillis": 2003
+    },
+    {
+      "id": "connector-write-http",
+      "description": "Direct connector-like write call that should be PEP mediated",
+      "target": "http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/connector/candidate-record",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "Get \"http://a6-gear-fixture-store.gear-system.svc.cluster.local:8080/connector/candidate-record\": dial tcp: lookup a6-gear-fixture-store.gear-system.svc.cluster.local: i/o timeout",
+      "durationMillis": 2002
+    },
+    {
+      "id": "dns-assisted-policy",
+      "description": "DNS lookup for a trusted service before egress",
+      "target": "a6-gear-policy.gear-system.svc.cluster.local",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "lookup a6-gear-policy.gear-system.svc.cluster.local on 10.43.0.10:53: dial udp 10.43.0.10:53: i/o timeout",
+      "durationMillis": 2002
+    },
+    {
+      "id": "raw-tcp-policy",
+      "description": "Raw TCP connection to gear-policy ClusterIP",
+      "target": "10.43.62.235:8080",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "dial tcp 10.43.62.235:8080: i/o timeout",
+      "durationMillis": 2001
+    },
+    {
+      "id": "mtls-policy-443",
+      "description": "mTLS attempt to gear-policy without a client certificate",
+      "target": "10.43.62.235:443",
+      "outcome": "blocked",
+      "reached": false,
+      "error": "dial tcp 10.43.62.235:443: i/o timeout",
+      "durationMillis": 2001
+    }
+  ]
+}

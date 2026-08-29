@@ -1,0 +1,12 @@
+$ kubectl -n gear-system get pods,services -l gear.eu/a6-target=true -o wide
+
+# output
+NAME                                         READY   STATUS    RESTARTS   AGE   IP            NODE                    NOMINATED NODE   READINESS GATES
+pod/a6-gear-fixture-store-7f887cd785-gcvjg   1/1     Running   0          30s   10.42.0.213   k3d-gear-lab-server-0   <none>           <none>
+pod/a6-gear-inference-6645c4547c-xn45p       1/1     Running   0          30s   10.42.0.227   k3d-gear-lab-server-0   <none>           <none>
+pod/a6-gear-policy-6594cdc9c8-29gqk          1/1     Running   0          30s   10.42.0.16    k3d-gear-lab-server-0   <none>           <none>
+
+NAME                            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)            AGE   SELECTOR
+service/a6-gear-fixture-store   ClusterIP   10.43.95.95    <none>        8080/TCP           30s   app.kubernetes.io/name=gear-fixture-store,gear.eu/a6-target=true
+service/a6-gear-inference       ClusterIP   10.43.91.53    <none>        8080/TCP           30s   app.kubernetes.io/name=gear-inference,gear.eu/a6-target=true
+service/a6-gear-policy          ClusterIP   10.43.62.235   <none>        8080/TCP,443/TCP   30s   app.kubernetes.io/name=gear-policy,gear.eu/a6-target=true

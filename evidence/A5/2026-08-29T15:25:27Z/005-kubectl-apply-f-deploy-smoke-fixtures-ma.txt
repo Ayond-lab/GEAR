@@ -1,0 +1,9 @@
+$ kubectl apply -f deploy/smoke/fixtures/mandate-candidate-rank-permit.yaml
+
+# output
+The Mandate "MND-CANDIDATE-RANK-PERMIT" is invalid: 
+* spec.purposeStatement: Invalid value: "sha256:0a0cb01ead785682": purpose refused by legality gate: protected criterion combined with selective verb
+* spec.actionGrants: Invalid value: "CANDIDATE_RANK:permit": action class CANDIDATE_RANK was refused by legality gate for protected-attribute selective use
+
+# error
+exit status 1

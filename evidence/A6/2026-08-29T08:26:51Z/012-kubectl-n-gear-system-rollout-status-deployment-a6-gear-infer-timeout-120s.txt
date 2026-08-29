@@ -1,0 +1,4 @@
+$ kubectl -n gear-system rollout status deployment/a6-gear-inference --timeout=120s
+
+# output
+deployment "a6-gear-inference" successfully rolled out

@@ -1,0 +1,4 @@
+$ kubectl -n gear-system get service a6-gear-policy -o jsonpath={.spec.clusterIP}
+
+# output
+10.43.62.235

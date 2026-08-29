@@ -1,0 +1,6 @@
+{
+  "scenario": "500-entry durable chain",
+  "entryCount": 500,
+  "ok": true,
+  "affected": null
+}

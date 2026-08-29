@@ -1,0 +1,70 @@
+[
+  {
+    "seq": 1,
+    "prevHash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "hash": "sha256:dd3ec3474609384732e5332a17ee8a6d1fcffd994d739b01a624365ce81eda2e",
+    "ts": "2026-08-26T00:00:00Z",
+    "type": "decision",
+    "actionRef": "ga-a7-001",
+    "actor": "gear-policy",
+    "mandate": "MND-2026-021:2",
+    "rule": "R-PERMIT:1",
+    "decision": "authorise",
+    "inputsDigest": "sha256:a7-inputs",
+    "model": "none",
+    "dataAccessed": [
+      "sha256:a7-payload"
+    ]
+  },
+  {
+    "seq": 2,
+    "prevHash": "sha256:dd3ec3474609384732e5332a17ee8a6d1fcffd994d739b01a624365ce81eda2e",
+    "hash": "sha256:d3327c37d85dacfc2bb48c1438b42810c72d7526de8e9f17b817c219c09a1e71",
+    "ts": "2026-08-26T00:00:00Z",
+    "type": "decision",
+    "actionRef": "ga-a7-002",
+    "actor": "gear-policy",
+    "mandate": "MND-2026-021:2",
+    "rule": "R-PERMIT:1",
+    "decision": "authorise",
+    "inputsDigest": "sha256:a7-inputs",
+    "model": "none",
+    "dataAccessed": [
+      "sha256:a7-payload"
+    ]
+  },
+  {
+    "seq": 3,
+    "prevHash": "sha256:d3327c37d85dacfc2bb48c1438b42810c72d7526de8e9f17b817c219c09a1e71",
+    "hash": "sha256:bd036b0ac53f2d46f7be40b9073a28ca3a4140d562711e9eba44ae3f3a9bfa2e",
+    "ts": "2026-08-26T00:00:00Z",
+    "type": "decision",
+    "actionRef": "ga-a7-003",
+    "actor": "gear-policy",
+    "mandate": "MND-2026-021:2",
+    "rule": "R-PERMIT:1",
+    "decision": "authorise",
+    "inputsDigest": "sha256:a7-inputs",
+    "model": "none",
+    "dataAccessed": [
+      "sha256:a7-payload"
+    ]
+  },
+  {
+    "seq": 500,
+    "prevHash": "sha256:ae9637e1904c55a35f5063454f83ead1ebde008c622cadbcd3f216677d400c7d",
+    "hash": "sha256:4f49614e9f279873ff865b53a84293f8b38455314ca5aca4866a380d85d05353",
+    "ts": "2026-08-26T00:00:00Z",
+    "type": "decision",
+    "actionRef": "ga-a7-500",
+    "actor": "gear-policy",
+    "mandate": "MND-2026-021:2",
+    "rule": "R-PERMIT:1",
+    "decision": "authorise",
+    "inputsDigest": "sha256:a7-inputs",
+    "model": "none",
+    "dataAccessed": [
+      "sha256:a7-payload"
+    ]
+  }
+]

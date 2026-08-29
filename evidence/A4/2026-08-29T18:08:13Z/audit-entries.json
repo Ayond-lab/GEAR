@@ -1,0 +1,36 @@
+[
+  {
+    "seq": 1,
+    "prevHash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "hash": "sha256:bd9df7406dd6d01b918af39eb7272999db260c70f8a4f2d3f796d21d99d0e564",
+    "ts": "2026-08-29T18:08:13.932208Z",
+    "type": "decision",
+    "actionRef": "ga-031b965a51ce103c",
+    "actor": "gear-policy",
+    "mandate": "MND-2026-021:2",
+    "rule": "R-PERMIT:1",
+    "decision": "authorise",
+    "inputsDigest": "sha256:ef56c2845d3e9c8838ea6108c6579eb18b3c7563496b651f992c97f459f55e55",
+    "model": "none",
+    "dataAccessed": [
+      "sha256:a4-held-constant-payload"
+    ]
+  },
+  {
+    "seq": 2,
+    "prevHash": "sha256:bd9df7406dd6d01b918af39eb7272999db260c70f8a4f2d3f796d21d99d0e564",
+    "hash": "sha256:74f6a03b75c271244e40e6ba188433858b50095aa63f99888a885ae44aeb7ec5",
+    "ts": "2026-08-29T18:08:13.932287Z",
+    "type": "decision",
+    "actionRef": "ga-031b965a51ce103c",
+    "actor": "gear-policy",
+    "mandate": "MND-2026-021:2",
+    "rule": "R-PERMIT:1",
+    "decision": "authorise",
+    "inputsDigest": "sha256:ef56c2845d3e9c8838ea6108c6579eb18b3c7563496b651f992c97f459f55e55",
+    "model": "none",
+    "dataAccessed": [
+      "sha256:a4-held-constant-payload"
+    ]
+  }
+]

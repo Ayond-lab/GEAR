@@ -1,0 +1,3 @@
+{"component":"gear-triggers","event":"non-match-recorded","payloadDigest":"sha256:a10-non-match","reasonCode":"requires-sponsorship-held-for-human-planning"}
+{"component":"gear-policy","event":"summary","decisions":48,"authorised":45,"escalated":3}
+{"component":"gear-audit","event":"verify","ok":true,"entryCount":105}

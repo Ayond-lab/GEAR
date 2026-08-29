@@ -1,0 +1,4 @@
+$ kubectl config current-context
+
+# output
+k3d-gear-lab

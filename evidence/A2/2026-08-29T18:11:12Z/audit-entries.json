@@ -1,0 +1,19 @@
+[
+  {
+    "seq": 1,
+    "prevHash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "hash": "sha256:02c5f70a5b86aa1b0a603a2d5065961a9db33ddc4b274584c27b26c23505eb1f",
+    "ts": "2026-08-29T18:11:12.763094Z",
+    "type": "decision",
+    "actionRef": "ga-ebec76300c763ac8",
+    "actor": "gear-policy",
+    "mandate": "MND-2026-021:2",
+    "rule": "D1:1",
+    "decision": "deny",
+    "inputsDigest": "sha256:efc719fd173af1d10e95b086f86489283a79f8f22871426ccdbb6eaa283085d6",
+    "model": "none",
+    "dataAccessed": [
+      "sha256:08acac380c71a7b78af060fdf2d02a444854fff72e8cab585bbfba7fa6d42355"
+    ]
+  }
+]

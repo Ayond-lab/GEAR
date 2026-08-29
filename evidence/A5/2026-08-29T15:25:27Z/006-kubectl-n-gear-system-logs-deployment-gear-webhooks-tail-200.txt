@@ -1,0 +1,1 @@
+$ kubectl -n gear-system logs deployment/gear-webhooks --tail=200

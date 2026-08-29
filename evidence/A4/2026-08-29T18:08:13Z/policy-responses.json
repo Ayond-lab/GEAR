@@ -1,0 +1,24 @@
+{
+  "clean": {
+    "decision": "authorise",
+    "ruleFired": {
+      "id": "R-PERMIT",
+      "version": 1
+    },
+    "reason": "all validations passed and mandate permits action",
+    "auditRef": "ae-0000001",
+    "token": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY3Rpb25SZWYiOiJnYS0wMzFiOTY1YTUxY2UxMDNjIiwiY29ubmVjdG9yIjoiY2FuZGlkYXRlLXJlY29yZCIsInNjb3BlIjoid3JpdGUiLCJwYXlsb2FkRGlnZXN0Ijoic2hhMjU2OmE0LWhlbGQtY29uc3RhbnQtcGF5bG9hZCIsIm1hbmRhdGVWZXJzaW9uIjoyLCJhdWQiOiJnZWFyLXBlcCIsImV4cCI6MTc4ODAyNjkyMywianRpIjoiYWE5ZGQxZjJjZTZkZDhhNSJ9.QbfxfiOoKxVPwVrQ1NZObMQB9HycKdXjMdc5YvBINbH9Gguc7pW5tOztFa-fsUU82QsRJrBD74L0bFo_gytprw",
+    "escalationRef": null
+  },
+  "injected": {
+    "decision": "authorise",
+    "ruleFired": {
+      "id": "R-PERMIT",
+      "version": 1
+    },
+    "reason": "all validations passed and mandate permits action",
+    "auditRef": "ae-0000002",
+    "token": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY3Rpb25SZWYiOiJnYS0wMzFiOTY1YTUxY2UxMDNjIiwiY29ubmVjdG9yIjoiY2FuZGlkYXRlLXJlY29yZCIsInNjb3BlIjoid3JpdGUiLCJwYXlsb2FkRGlnZXN0Ijoic2hhMjU2OmE0LWhlbGQtY29uc3RhbnQtcGF5bG9hZCIsIm1hbmRhdGVWZXJzaW9uIjoyLCJhdWQiOiJnZWFyLXBlcCIsImV4cCI6MTc4ODAyNjkyMywianRpIjoiN2M1YzdiZjhlMzk0NDcwNyJ9.Dq2hkb1c4BxDVfjY8ibEnLElA_CUROB-COmj5DHTAXqi_144c8pL4ZuOTpB9usi3kBMMPeR3jzoiLdao_z9NTw",
+    "escalationRef": null
+  }
+}

@@ -1,0 +1,3 @@
+would-authorise: decision=deny rule=R-AUDIT-UNAVAILABLE auditRef="" token=<nil> escalation=<nil>
+would-escalate-low-confidence: decision=deny rule=R-AUDIT-UNAVAILABLE auditRef="" token=<nil> escalation=<nil>
+would-escalate-reserved-action: decision=deny rule=R-AUDIT-UNAVAILABLE auditRef="" token=<nil> escalation=<nil>

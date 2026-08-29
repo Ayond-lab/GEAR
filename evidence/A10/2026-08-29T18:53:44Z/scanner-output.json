@@ -1,0 +1,10 @@
+[
+  {
+    "name": "audit-entries.json",
+    "findings": null
+  },
+  {
+    "name": "component-logs.jsonl",
+    "findings": null
+  }
+]

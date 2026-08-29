@@ -1,0 +1,32 @@
+$ kubectl config use-context k3d-gear-lab
+
+# output
+Switched to context "k3d-gear-lab".
+
+$ git rev-parse HEAD
+
+# output
+6b1e855d5f286bcc938359afc4d1131f3ab63101
+
+$ kubectl config current-context
+
+# output
+k3d-gear-lab
+
+$ kubectl apply -f deploy/smoke/fixtures/ability.yaml
+
+# output
+ability.gear.eu/cv-screen unchanged
+
+$ kubectl apply -f deploy/smoke/fixtures/mandate-candidate-rank-permit.yaml
+
+# output
+The Mandate "MND-CANDIDATE-RANK-PERMIT" is invalid: 
+* spec.purposeStatement: Invalid value: "sha256:0a0cb01ead785682": purpose refused by legality gate: protected criterion combined with selective verb
+* spec.actionGrants: Invalid value: "CANDIDATE_RANK:permit": action class CANDIDATE_RANK was refused by legality gate for protected-attribute selective use
+
+# error
+exit status 1
+
+$ kubectl -n gear-system logs deployment/gear-webhooks --tail=200
+

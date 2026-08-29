@@ -1,0 +1,56 @@
+[
+  {
+    "case": {
+      "name": "would-authorise",
+      "action": "RECORD_ANNOTATE",
+      "confidence": "0.84"
+    },
+    "response": {
+      "decision": "deny",
+      "ruleFired": {
+        "id": "R-AUDIT-UNAVAILABLE",
+        "version": 1
+      },
+      "reason": "audit unavailable; fail closed",
+      "auditRef": "",
+      "token": null,
+      "escalationRef": null
+    }
+  },
+  {
+    "case": {
+      "name": "would-escalate-low-confidence",
+      "action": "RECORD_ANNOTATE",
+      "confidence": "0.42"
+    },
+    "response": {
+      "decision": "deny",
+      "ruleFired": {
+        "id": "R-AUDIT-UNAVAILABLE",
+        "version": 1
+      },
+      "reason": "audit unavailable; fail closed",
+      "auditRef": "",
+      "token": null,
+      "escalationRef": null
+    }
+  },
+  {
+    "case": {
+      "name": "would-escalate-reserved-action",
+      "action": "RECORD_MODIFY",
+      "confidence": "0.84"
+    },
+    "response": {
+      "decision": "deny",
+      "ruleFired": {
+        "id": "R-AUDIT-UNAVAILABLE",
+        "version": 1
+      },
+      "reason": "audit unavailable; fail closed",
+      "auditRef": "",
+      "token": null,
+      "escalationRef": null
+    }
+  }
+]

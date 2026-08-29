@@ -1,0 +1,11 @@
+{
+  "scenario": "seq 250 deleted",
+  "entryCount": 499,
+  "ok": false,
+  "affected": [
+    {
+      "start": 250,
+      "end": 251
+    }
+  ]
+}

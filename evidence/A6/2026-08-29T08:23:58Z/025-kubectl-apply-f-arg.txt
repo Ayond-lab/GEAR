@@ -1,0 +1,68 @@
+$ kubectl apply -f -
+
+# stdin
+apiVersion: v1
+kind: Pod
+metadata:
+  name: a6-without-control
+  namespace: gear-lab
+  labels:
+    gear.eu/a6-control: without
+spec:
+  automountServiceAccountToken: false
+  restartPolicy: Never
+  containers:
+    - name: ability
+      image: "ghcr.io/ayond-lab/gear-hostile-runner:dev"
+      imagePullPolicy: IfNotPresent
+      env:
+        - name: A6_CONTROL
+          value: without-control
+        - name: A6_START_DELAY_SECONDS
+          value: "6"
+        - name: A6_POLICY_DNS
+          value: a6-gear-policy.gear-system.svc.cluster.local
+        - name: A6_INFERENCE_DNS
+          value: a6-gear-inference.gear-system.svc.cluster.local
+        - name: A6_FIXTURE_DNS
+          value: a6-gear-fixture-store.gear-system.svc.cluster.local
+        - name: A6_POLICY_IP
+          value: "10.42.0.130"
+      securityContext:
+        runAsUser: 1001
+        runAsNonRoot: true
+        allowPrivilegeEscalation: false
+    - name: gear-pep
+      image: "ghcr.io/ayond-lab/gear-pep:dev"
+      imagePullPolicy: IfNotPresent
+      args:
+        - --listen=127.0.0.1:9191
+      ports:
+        - name: pep-loopback
+          containerPort: 9191
+      env:
+        - name: GEAR_PEP_LISTEN
+          value: 127.0.0.1:9191
+        - name: GEAR_ABILITY_REF
+          value: cv-screen
+      volumeMounts:
+        - name: gear-pep-mtls
+          mountPath: /var/run/gear/mtls
+          readOnly: true
+        - name: gear-connector-credentials
+          mountPath: /var/run/gear/connectors
+          readOnly: true
+      securityContext:
+        runAsUser: 1337
+        runAsNonRoot: true
+        allowPrivilegeEscalation: false
+  volumes:
+    - name: gear-pep-mtls
+      secret:
+        secretName: gear-pep-mtls
+    - name: gear-connector-credentials
+      secret:
+        secretName: gear-connector-credentials
+
+# output
+pod/a6-without-control created

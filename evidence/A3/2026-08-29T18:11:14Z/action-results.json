@@ -1,0 +1,1823 @@
+[
+  {
+    "applicationId": "SYN-CV-0001",
+    "actionRef": "ga-bcec5cf623a8a40e",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:08acac380c71a7b78af060fdf2d02a444854fff72e8cab585bbfba7fa6d42355",
+    "subjectRef": "sha256:a7d0ff0f0bb383d23af377687912612933219365843b1afe60d1869fc22d0f85",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/246817809261b68be7cf0a1bc87934c9f27d5fb76da892837971b33f3935a560"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-bcec5cf623a8a40e",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000013",
+      "effectRef": "ae-0000014"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000013",
+      "effectRef": "ae-0000014"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0002",
+    "actionRef": "ga-c25deaeb08c35d51",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:cfbb8a08b957cfbaff51c671428596da431336ec483221c110819731b82416dc",
+    "subjectRef": "sha256:0a12c7f87c49fc4e41b0c30e728e9b73d02fdffe79866982dc544d2c2f2293d2",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/942d99f3c712bb6ea0ca59c47bd4905050aca7afad6874d3659c8c1a7bd9bc6d"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-c25deaeb08c35d51",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000015",
+      "effectRef": "ae-0000016"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000015",
+      "effectRef": "ae-0000016"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0003",
+    "actionRef": "ga-feeda0216340ed21",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:b40ad97f6d20e55ad8006874e73d933e4b45c2b9e490d0d504f8eb84a29407bd",
+    "subjectRef": "sha256:f2b20b08c430d4d460631a7d5cce5eed8e838b7c4542197519d57195efb04bbf",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/09fe7712c40cec295147aa892121b12e93410192b6e35ee8a2e9ba2e20f9d1bc"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-feeda0216340ed21",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000017",
+      "effectRef": "ae-0000018"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000017",
+      "effectRef": "ae-0000018"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0004",
+    "actionRef": "ga-62f31cab5952d23c",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:1b4d461282cec02283aa0fb1bf0f8dcdf51ab1d020e25229e5e0decb95301d31",
+    "subjectRef": "sha256:02997ee5888488fa8794eefa05a16ab7e89e5f477712d1f18a3dd6c4f0869a7d",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/a0d01b71d015258e6c6f15dc6239e6be4b9ba276e7651eb6ca18166ab1a7dc7c"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-62f31cab5952d23c",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000019",
+      "effectRef": "ae-0000020"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000019",
+      "effectRef": "ae-0000020"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0005",
+    "actionRef": "ga-c4f2d14a793eb459",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:2c40af0d672e26757ee0885440cd8566d43d944a61f99d583f554f717a01e31b",
+    "subjectRef": "sha256:44558a235900d4f0e62a5a87950025191a95a9091b1f0fb0054e85ebc901e7bb",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/b95396fdfd3590095380f81c6aa417cb335d1e5b0555b816c399cee9b615d5e0"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-c4f2d14a793eb459",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000021",
+      "effectRef": "ae-0000022"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000021",
+      "effectRef": "ae-0000022"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0006",
+    "actionRef": "ga-da23d03ec4d133d3",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:8433970f1be91236eebc114783e26a6915b1781d9339df58458e0a8fa7d50b66",
+    "subjectRef": "sha256:e53bf4bf2f5aefe5c08f5f1aa3620d66c1cabf73375540d723872a666b51cb1f",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/3e755e4d7934e33f698e2193c1808b4b74b0340e6851d30c6e2c91b1670a3e1a"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-da23d03ec4d133d3",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000023",
+      "effectRef": "ae-0000024"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000023",
+      "effectRef": "ae-0000024"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0007",
+    "actionRef": "ga-44f24057ba60110c",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:7b5cc3d1eba46b47e495f6d0c58f4b46105a619c0434e1ab8198b3a08522b4eb",
+    "subjectRef": "sha256:6d8403d51df0cdbe5c91b1d4e01863de75319718e49e521b2373be87ab10ed41",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/f8d3902e86a078fee62065c24b54abc67a917493a158e78822e70c9c9349d085"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-44f24057ba60110c",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000025",
+      "effectRef": "ae-0000026"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000025",
+      "effectRef": "ae-0000026"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0008",
+    "actionRef": "ga-f34341bf1ed6e899",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:58cc8363e941406a9705f7c8a4ea7a932f44bd122d07d2d2a33f0c5466f01688",
+    "subjectRef": "sha256:3ca516cd4202726d4c6a85f79b1d8af2e99a990b6c0d1f04c1d37ce72f629d61",
+    "confidence": "0.84",
+    "injectionCase": true,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": true,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/4489993e10f9d2a8a3f30ab1969bece836b60d1675c71e440c1fefa3efae160e"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-f34341bf1ed6e899",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000027",
+      "effectRef": "ae-0000028"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000027",
+      "effectRef": "ae-0000028"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0009",
+    "actionRef": "ga-137e61736cd41551",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:564ed01d7db01b20daa9896c811626c71b8e658e8e8f1297de28c13728539a1e",
+    "subjectRef": "sha256:8fb78bbf06951b7c0ea28c19c74f102d695f09391c746c28a5e529e441a82459",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/db869f68b7a7ea97ea75e6110dc746b9208ebb4da0da03da5808705a4b8340bb"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-137e61736cd41551",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000029",
+      "effectRef": "ae-0000030"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000029",
+      "effectRef": "ae-0000030"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0010",
+    "actionRef": "ga-1803cc1554c0dcb4",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:89ae13b6f8598b3cb15bc9805f67cd5a9c52ae81c4cde823f7a5e299bd49feee",
+    "subjectRef": "sha256:01f28af24fa8521eb18486a8e930be0a50cf8d27016b3bc56ba1f3de548d2f81",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/9bf7c2d6e6f9498d9910c751df5cce2cd2b41a3966dddd136b8507167ce3192e"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-1803cc1554c0dcb4",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000031",
+      "effectRef": "ae-0000032"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000031",
+      "effectRef": "ae-0000032"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0011",
+    "actionRef": "ga-f56226c5b80a1e1c",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:949cf3d13cf1bd059b1a31783599d20edf2299faf09d495788e58d3f38f88100",
+    "subjectRef": "sha256:4dde6e4930e61f659e248ccee3572da6b1009d0761245e4bc5bf1157ca8d0fdd",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/3bc6ad41cab72472231215d31ae834c05c704645b4bf8d17a5c20bc4f8543c74"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-f56226c5b80a1e1c",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000033",
+      "effectRef": "ae-0000034"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000033",
+      "effectRef": "ae-0000034"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0012",
+    "actionRef": "ga-a2b39bf6cc2187ac",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:bf4e97ef5b4a146bc66cd6ac11beffaf772cea6445ca70911193967579d33b57",
+    "subjectRef": "sha256:c402539eba5d3d44aca92269261b41615e571fc38561b8829056212d67154078",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/80c198b70de911592330f813670043d4a21878662ef12ef6c187f7d8acb6e130"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-a2b39bf6cc2187ac",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000035",
+      "effectRef": "ae-0000036"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000035",
+      "effectRef": "ae-0000036"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0013",
+    "actionRef": "ga-6c9f582f91b4162b",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:c6dd2fc15a1ceb549ad0e74baf961e2749f50a9b0ca9e786daa8b8ce642ba1f9",
+    "subjectRef": "sha256:f62c261f40addb4803b52315cc3d8b323bcec0be8412ac0e857f7a5ba30f1f5d",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/9c580039a7cf68d664dca53ec7d43735df547356b0ed8c700e3e836692d56e03"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-6c9f582f91b4162b",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000037",
+      "effectRef": "ae-0000038"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000037",
+      "effectRef": "ae-0000038"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0014",
+    "actionRef": "ga-1f196e80425b9f1b",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:c8e7eaeb1af824ee5638df42032ac0ba38151663a84c18945e733eef10ccf8d7",
+    "subjectRef": "sha256:2b952f3cc7675c2097fa84954d671924b0e71ddeadd20272f8839ad651a4839c",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/0e8c79ba4df2799792eea47682c0e11170b18ac32fe804e0b7103c207d44d241"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-1f196e80425b9f1b",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000039",
+      "effectRef": "ae-0000040"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000039",
+      "effectRef": "ae-0000040"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0015",
+    "actionRef": "ga-16aff54404695ee9",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:49ec1a044b7afa64de3220243926d7b18d5f36d81af61d04967da60e6c11781f",
+    "subjectRef": "sha256:6f7582b9c900f835b638377aa637f66550e9a44d6bd34bab109a6f54e6382103",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/3ea798de44a2ff6b5b40c7fe6e6e8b88f0547b33b6e5b3fa52d4a6a6a175b7f1"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-16aff54404695ee9",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000041",
+      "effectRef": "ae-0000042"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000041",
+      "effectRef": "ae-0000042"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0016",
+    "actionRef": "ga-83c4a362cd6b72d4",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:d72a0c1ebcf31e46258de8d5482077217878fc68021cee153c7c0563b33a8221",
+    "subjectRef": "sha256:803dac4b0670d730e873cea35bd910cf73a6baae6410207efa2242133b250a02",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/a9726a8a33d3849e84deecb99b47fd479d3400b73718a495900f27574a8c1c35"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-83c4a362cd6b72d4",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000043",
+      "effectRef": "ae-0000044"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000043",
+      "effectRef": "ae-0000044"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0017",
+    "actionRef": "ga-fddaeedd91d2da7f",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:903180c50b2975bb28873a90e2db0b9d0b017cd7d65fe52502918e91abf8220c",
+    "subjectRef": "sha256:8409c86892cb2676f52c9ac92e15cc0e5b6e2fa1b9f9bf296abd74e1c63f618f",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/a188abe8e8748c8e9cb9cd0f340bc7515df4719b80f2f5891f8627bf0373e786"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-fddaeedd91d2da7f",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000045",
+      "effectRef": "ae-0000046"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000045",
+      "effectRef": "ae-0000046"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0018",
+    "actionRef": "ga-e7ae0602bf9f973a",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:f2ac4d98f7896d0229e9eecb3e92ec493e321d8860e881c6ceeb6cc8adfc7cc1",
+    "subjectRef": "sha256:006f28148634061597474b6fc3d5619f17f505e89025628c37354eebf1e72736",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/5af159b3e5e28776c4c507e82ac858edfc693f32ffe5eb10c75b12127d0bffdc"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-e7ae0602bf9f973a",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000047",
+      "effectRef": "ae-0000048"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000047",
+      "effectRef": "ae-0000048"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0019",
+    "actionRef": "ga-79dab5f9db489426",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:9ca2215f9ecdcc3b801717eefa7a9290cfc7b14db315b6bf1c3f2c44a4e2f269",
+    "subjectRef": "sha256:f9e2ef2d8016e62fc3c50007a46a7742db82e15f477ffe336a17f81f790ca9a5",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/68b358cef820bb7ccf3d362a44e647f10e7e8ed61208a615adc9f2b48d0960a6"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-79dab5f9db489426",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000049",
+      "effectRef": "ae-0000050"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000049",
+      "effectRef": "ae-0000050"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0020",
+    "actionRef": "ga-850404874e2c21c6",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:ae8317d9e61360baceb376ebac7978ad0a35802888cf2f66efe8c18c40ecad35",
+    "subjectRef": "sha256:5e08fa52e30dd78e607e9b470d1b5693d92ecdddab73e879290cfb7caef659d7",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/4f9ff3f7eac8120aa1e95422c40cfd2c673ad4d1c4e5581fc086116adb603267"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-850404874e2c21c6",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000051",
+      "effectRef": "ae-0000052"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000051",
+      "effectRef": "ae-0000052"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0021",
+    "actionRef": "ga-2f51911e5509cbd9",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:d5e38d02f3dfff4cc33e85b84fddaa605568fe8e6e612b466416d38fdf0dc4eb",
+    "subjectRef": "sha256:e2e84af57d20ca7ae0384bcbeda22d6cb970127175fd9dc76772509f0dda189f",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/b19be3be6884ce0d54c342e9ffd82010f317605b04e20ab12cabdcae0c353172"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-2f51911e5509cbd9",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000053",
+      "effectRef": "ae-0000054"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000053",
+      "effectRef": "ae-0000054"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0022",
+    "actionRef": "ga-9ffd83ab5678a26f",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:51b8ba514e393b238de7c92470fb04f588a74a7fd9370c9ecde9f95630b7516c",
+    "subjectRef": "sha256:675b05acbbfad42638abbbecb7ae69154c6b01b6293788aae0b2467aadbafe37",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/e97d04be69907b7969253b5a47b227a2c3fc07b58ddeb02ca5998b58b294eb6e"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-9ffd83ab5678a26f",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000055",
+      "effectRef": "ae-0000056"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000055",
+      "effectRef": "ae-0000056"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0023",
+    "actionRef": "ga-71d0466c282b1fbb",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:d3b7df27d8af96b36145be994d54df4d0f9fe6267f7144816d1912a5e45f067b",
+    "subjectRef": "sha256:928ebb24c596b1c44e49fd0571b788183a1d75ac8e3ada27809df233b6873839",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/f80fb0577d982b663534c286cd8640cb2a520d2b4f10a141a2ecf45885e74301"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-71d0466c282b1fbb",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000057",
+      "effectRef": "ae-0000058"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000057",
+      "effectRef": "ae-0000058"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0024",
+    "actionRef": "ga-628f93b95bde9236",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:d35a81204d7cbc55afbfbfa9eeb940a3bab4368225a5cae826cc5a976ad7e022",
+    "subjectRef": "sha256:1605d8a3d86962198f565444a3b5452dae945b5cc6ea44275cb2aa21e4fc5b84",
+    "confidence": "0.84",
+    "injectionCase": true,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": true,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/656334deaff9246f3b5769e3e3e02296776b5d8326bd16b366363c5689224ba2"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-628f93b95bde9236",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000059",
+      "effectRef": "ae-0000060"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000059",
+      "effectRef": "ae-0000060"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0025",
+    "actionRef": "ga-6676f5b0311c3c46",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:2cc0e46979530ba3e3bbdfe671b3d089bf514d7233cd98b0cb096f88a4904ce0",
+    "subjectRef": "sha256:41352345056ebefd5521e8f47dea6721c20408a057ce6fab70440ed65d0c052f",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/e660dc17171e664c1feac17141fcb93015dec49467a1358c1f52b6c487743548"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-6676f5b0311c3c46",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000061",
+      "effectRef": "ae-0000062"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000061",
+      "effectRef": "ae-0000062"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0026",
+    "actionRef": "ga-ff5f769f8a2d40fb",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:72c826638bd71dd0cc3eafe8e822f61ec48efaca6988384588f6ec71152fe107",
+    "subjectRef": "sha256:82d3267bff9c39945880f57e30641497f6e603736da73e63f2711168f489ccd2",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/0a6f8cce30a9ec60f2ed5c6e7ad99faa5d32c039c8ff470bafc664d02ffeb380"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-ff5f769f8a2d40fb",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000063",
+      "effectRef": "ae-0000064"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000063",
+      "effectRef": "ae-0000064"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0027",
+    "actionRef": "ga-1518e14fe9a39734",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:720bd16f9a7fa928698a833132a15d2930059e9b73295514bcf54d41083113c0",
+    "subjectRef": "sha256:d9cbabf1fe9b2fdb829564b80a04343fb9cdad1f27c4012f4447720d92048ac8",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/363e847fdf66d2888265fdd81d5b2c5f2c07906898d52f30e4d56c72cd174b34"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-1518e14fe9a39734",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000065",
+      "effectRef": "ae-0000066"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000065",
+      "effectRef": "ae-0000066"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0028",
+    "actionRef": "ga-03aed83edf845918",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:43bddb07adddcf0d5ed7ae1ceffcfc14a69aab43d40ea0bf10fecd08aa2f0b63",
+    "subjectRef": "sha256:3e8a8cc5ed1f957f9cfb65cb6218df448195d7fd861f6c2b3dd7ab3d0d45cff1",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/6d8127a8f05ef3e710a6fe4605d9cc31a76879063424fe8d0597293614ce5090"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-03aed83edf845918",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000067",
+      "effectRef": "ae-0000068"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000067",
+      "effectRef": "ae-0000068"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0029",
+    "actionRef": "ga-08657c170713d4f7",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:52804179f5f70a4457c14347083a30f83e8908fc99c0543e884d2bc466064535",
+    "subjectRef": "sha256:c17601f8584cd4e67bb04a6fff728eaa0e17948b7741d57a562131f206531e07",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/4ecf40fd099d37aa90d971a267301ff66930f828458852dec55e50348939fe05"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-08657c170713d4f7",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000069",
+      "effectRef": "ae-0000070"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000069",
+      "effectRef": "ae-0000070"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0030",
+    "actionRef": "ga-019d978d4f955f14",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:7bfb708577581927c439625e7f939987bb37cf89262cf066ff1e03f272e92812",
+    "subjectRef": "sha256:9ef0ae728dbdeac78c3f9da00d35d21ce13c2eed88a6424c182e8b33ad65826f",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/6cb866e4b14eea19798543c59de058a2869f608a9b31e105ec87d0c51cd3014c"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-019d978d4f955f14",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000071",
+      "effectRef": "ae-0000072"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000071",
+      "effectRef": "ae-0000072"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0031",
+    "actionRef": "ga-4805f25759edef05",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:4718a8ff9e4181b4411c0e908cc258ec842c092064f18d3c6614a61a0dc5e832",
+    "subjectRef": "sha256:4e2b7ca61a19a291293c5ea86f6bf3af6c5ef3c17d49cb3392fd19dd82aee372",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/67a20b4b4a7a2cdf9c746f744141a69544c01ca93b39105326d0c0a132fa00e8"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-4805f25759edef05",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000073",
+      "effectRef": "ae-0000074"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000073",
+      "effectRef": "ae-0000074"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0032",
+    "actionRef": "ga-f055c4e5a70b031a",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:74fb41f3dc5be760b61af0a6a05858cf56c4fbc0408fe909233758e287cd244d",
+    "subjectRef": "sha256:81851dd8ed4c2550aeefde19f8dfac8ec79904731474e1770161094a7cce3ddc",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/02652d4e03c2b212925a76adb6fea3d8142144b3def88f148f8149bf0739dd03"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-f055c4e5a70b031a",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000075",
+      "effectRef": "ae-0000076"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000075",
+      "effectRef": "ae-0000076"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0033",
+    "actionRef": "ga-648e589358bec3fa",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:44b78ee996150793c3e83b2d2dac39efca7bcc7d49a97e78ad03a4df5ea78c5c",
+    "subjectRef": "sha256:6592382453cab6ac868af1dbceb2feb90d84901a0de4ac5d3d71da5bd814eb75",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/41cb366a9e1152c79c40e8fde2a5bc95ef522e535923728241e6c09736bdf43a"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-648e589358bec3fa",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000077",
+      "effectRef": "ae-0000078"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000077",
+      "effectRef": "ae-0000078"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0034",
+    "actionRef": "ga-c1851f88fc8fe647",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:25d8eadbcf81287df2d54f290d56805e0b84870270661869547f4ab15aa77c13",
+    "subjectRef": "sha256:03edff5ba678980ae860c51dfb2408b00ce2c985471f20f1d4d46c6bfffe0d39",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "EEA national",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/356fda8fb5730cf182f833b877a2f343092555ce247575abee0f6352c1980faf"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-c1851f88fc8fe647",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000079",
+      "effectRef": "ae-0000080"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000079",
+      "effectRef": "ae-0000080"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0035",
+    "actionRef": "ga-5414fb019e0cc3e3",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:55ccb630b83d6b3e03c6707b77d8f7bbb0b2d3118ea0caf87e06bddab6e27d9c",
+    "subjectRef": "sha256:bd254ca0a52c676d30a8f5ba7aa204fb42408ccdc5b7be8767512fd9c57b2138",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "Holds permit",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/78e59548302244e324d1140a7b1bb474da10ee48bf0d769e7f3e257072e3937f"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-5414fb019e0cc3e3",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000081",
+      "effectRef": "ae-0000082"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000081",
+      "effectRef": "ae-0000082"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0036",
+    "actionRef": "ga-665dfefc6dfa40f1",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:2b3b6b48257b43eb093223293942a58e9ac39200848c8e39ae842a1ddf4b040c",
+    "subjectRef": "sha256:bc034965c3f30983d76708c7e8902e1e12cc85df2399d5f455de9e4695f34cd9",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "Holds permit",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/f30f67ab888934d49ea57461f3b4164cc673d0f466fc25fed07459761b5391be"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-665dfefc6dfa40f1",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000083",
+      "effectRef": "ae-0000084"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000083",
+      "effectRef": "ae-0000084"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0037",
+    "actionRef": "ga-c125acd4d6c04003",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:7562677058213900627f40efd504d778ca76daab07af35c4556adb0d70844a9e",
+    "subjectRef": "sha256:e5219e0a80f1b68c6686aedcbcd04f1150ca8c4110f8b0887d6591181408f672",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "Holds permit",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/0a9ecf5ffe074e2770e979c2fc8ad3470a97378a50f2eab72158162eebea81e7"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-c125acd4d6c04003",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000085",
+      "effectRef": "ae-0000086"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000085",
+      "effectRef": "ae-0000086"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0038",
+    "actionRef": "ga-45932a960b3ac5dc",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:dc86deabb86ca8e1b42cf3d5fdfa8b0ad81dc09146abafdbd3a2ae08d23ea9d2",
+    "subjectRef": "sha256:5bb0ac60bbd22e168d1921a899d8bb04e55750e0e1f3c39a873ffb180ab9d67b",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "Holds permit",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/268451efeb86c53fd384ad6788b40e87578598f01abced4e85ccc04428b27589"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-45932a960b3ac5dc",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000087",
+      "effectRef": "ae-0000088"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000087",
+      "effectRef": "ae-0000088"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0039",
+    "actionRef": "ga-37e4133559db1050",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:f179664aba5736f8331edc9a0acdf020f306b4c5308d899233596a859421a1d8",
+    "subjectRef": "sha256:2d2078757e03df00e6f6c6fbd5ee941d53c9d908cfc80019458c8edfb1b116e1",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "Holds permit",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/d7ee3cffd5562d2e94d7ea4be3fe20b95e172817a849607c2f5ef288fa307063"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-37e4133559db1050",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000089",
+      "effectRef": "ae-0000090"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000089",
+      "effectRef": "ae-0000090"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0040",
+    "actionRef": "ga-d9f523e62aa0637d",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:55382059ee3be347bb51090bb3e06ab43a0fa73eeced05410f893c33b2939071",
+    "subjectRef": "sha256:3b187273ce8ea49cdec7042cd4d7e996d0835999e6ba04ffaea22ef5ce4f1fdb",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "Holds permit",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/fb94b9ab7428b2b5426337b417f887c381ed84fb023fddce56b92636d9da29f4"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-d9f523e62aa0637d",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000091",
+      "effectRef": "ae-0000092"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000091",
+      "effectRef": "ae-0000092"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0041",
+    "actionRef": "ga-1cd5c7f28bdbe9f0",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:5a6591047b073fb8324690b360ec457b8f45f11125569dfef1f9a5a9ab3a2bce",
+    "subjectRef": "sha256:53f43b0a89cdf043f1463121877120412f6eb857527669e8e38531f2a9b2c75a",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "Holds permit",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/dbee80b26039fefcfc0ee3890db472eecf9fd98033a69b96791090c7fe41a3ab"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-1cd5c7f28bdbe9f0",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000093",
+      "effectRef": "ae-0000094"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000093",
+      "effectRef": "ae-0000094"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0042",
+    "actionRef": "ga-3c84b746b7f8feeb",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:a3762976c31c6dd7650e26ef8e6081fd8009b0e93dfb31d05ba7fef67176afa0",
+    "subjectRef": "sha256:3fe7d9c26d05616b55dc5b019bbe1a7d22101abe553be14e69663a29da96e3bb",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "Holds permit",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/2c67d87912bdd608a51e9a67f4890caf61096fa3fdcce10ae71ebcef4f56a059"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-3c84b746b7f8feeb",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000095",
+      "effectRef": "ae-0000096"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000095",
+      "effectRef": "ae-0000096"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0043",
+    "actionRef": "ga-ee2ec490b162006e",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:e7cb009a58a0994474555c01b20874abc55a9975bd4b96acfc779e370d6984a0",
+    "subjectRef": "sha256:3f2ce3ab268905fb6ece7d8d48bf27e29e658ffbf22598a2a7f9bb9edd8768e3",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "Holds permit",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/808b65a8d6dbd3b5e1b2b4a13d64f1ccbfba80ea80046be0a941c667fc7c9012"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-ee2ec490b162006e",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000097",
+      "effectRef": "ae-0000098"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000097",
+      "effectRef": "ae-0000098"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0044",
+    "actionRef": "ga-70c2e0233e02497e",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:ad2c12715cdbdd43d5108e46252072c63bf30a40bf9f84a7b3e929b2bd489a18",
+    "subjectRef": "sha256:d5f9f64d37a55ddd19aae188456bb5b1f839f2d333a4ebd7b96e127498bd708d",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "Holds permit",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/19b44830d354ad9431bf86ca4d611afb43a5cf5ad902ebf56688d0e6ed1e9576"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-70c2e0233e02497e",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000099",
+      "effectRef": "ae-0000100"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000099",
+      "effectRef": "ae-0000100"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0045",
+    "actionRef": "ga-67c52adab80bf25c",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:d0f6416b2492cf6f33ed449f66903365f500e0d6cbebae48bf8d5c2a888af55d",
+    "subjectRef": "sha256:91cd3d9b152b57d4195e7fd2d37e6ef14cf3ca0ca97eb05c6009b94ccab8340c",
+    "confidence": "0.84",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "Holds permit",
+      "confidence": "0.84",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/fe6d4bd1bef54d90cd183b445588276c624f2c86a0c00c5ca0605c4a6e1bc724"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-67c52adab80bf25c",
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "reason": "all validations passed and mandate permits action",
+      "auditRef": "ae-0000101",
+      "effectRef": "ae-0000102"
+    },
+    "status": {
+      "decision": "authorise",
+      "ruleFired": {
+        "id": "R-PERMIT",
+        "version": 1
+      },
+      "executionState": "complete",
+      "auditRef": "ae-0000101",
+      "effectRef": "ae-0000102"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0058",
+    "actionRef": "ga-ede0d8550503e1dc",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:f3120a3df05081dff8d0123fe49a26f536a0e9a991da62c501228ad3c65f3830",
+    "subjectRef": "sha256:7c3427716bfa539cec6610a2a9b44d3e038bc949e9f3512b26e5d51286792a31",
+    "confidence": "0.50",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "Unclear",
+      "confidence": "0.50",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/b951bc61ca8eb7f861faac4ec3302e3196e8064572f5b0f99f468daa551d355b"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-ede0d8550503e1dc",
+      "decision": "escalate",
+      "ruleFired": {
+        "id": "R-CONFIDENCE-LOW",
+        "version": 1
+      },
+      "reason": "confidence below mandate threshold",
+      "auditRef": "ae-0000103",
+      "escalationRef": "esc-3de17bca6d7939ba"
+    },
+    "status": {
+      "decision": "escalate",
+      "ruleFired": {
+        "id": "R-CONFIDENCE-LOW",
+        "version": 1
+      },
+      "executionState": "pending",
+      "auditRef": "ae-0000103"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0059",
+    "actionRef": "ga-6a96dc0ddfae38d3",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:69849c3921a6aed579f5f2248efbdab991c893a15471497e37a2e418fa96db1e",
+    "subjectRef": "sha256:e9b99c7e46d29742862b4944e15815d32be0aa1f036312bd90f96c9571f5ef24",
+    "confidence": "0.50",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "Unclear",
+      "confidence": "0.50",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/91d6fced2d9009dd79ff48c9bd9d8ea36c0ae296461100a56585b27b9ee23d6f"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-6a96dc0ddfae38d3",
+      "decision": "escalate",
+      "ruleFired": {
+        "id": "R-CONFIDENCE-LOW",
+        "version": 1
+      },
+      "reason": "confidence below mandate threshold",
+      "auditRef": "ae-0000104",
+      "escalationRef": "esc-f049f92d867a1f6f"
+    },
+    "status": {
+      "decision": "escalate",
+      "ruleFired": {
+        "id": "R-CONFIDENCE-LOW",
+        "version": 1
+      },
+      "executionState": "pending",
+      "auditRef": "ae-0000104"
+    }
+  },
+  {
+    "applicationId": "SYN-CV-0060",
+    "actionRef": "ga-6d8968530865a962",
+    "actionClass": "RECORD_ANNOTATE",
+    "payloadDigest": "sha256:066439adb7ca11c39e3d2d72006431061a51a959eeafb853e79c307911a88ce1",
+    "subjectRef": "sha256:d65d54920077044c9a2108a59f6e465cb10dad4a362ea8620f43959d806ed338",
+    "confidence": "0.50",
+    "injectionCase": false,
+    "extraction": {
+      "workAuthorisationStatus": "Unclear",
+      "confidence": "0.50",
+      "promptInjectionPresent": false,
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/6a83f62adfb16aa3f3804e410f2c069296a935a8f1b685459e08f212951a5918"
+      ]
+    },
+    "decision": {
+      "actionRef": "ga-6d8968530865a962",
+      "decision": "escalate",
+      "ruleFired": {
+        "id": "R-CONFIDENCE-LOW",
+        "version": 1
+      },
+      "reason": "confidence below mandate threshold",
+      "auditRef": "ae-0000105",
+      "escalationRef": "esc-691f00da39fd6672"
+    },
+    "status": {
+      "decision": "escalate",
+      "ruleFired": {
+        "id": "R-CONFIDENCE-LOW",
+        "version": 1
+      },
+      "executionState": "pending",
+      "auditRef": "ae-0000105"
+    }
+  }
+]

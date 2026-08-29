@@ -1,0 +1,9 @@
+{
+  "decision": "deny",
+  "ruleFired": {
+    "id": "D1",
+    "version": 1
+  },
+  "executionState": "refused",
+  "auditRef": "ae-0000001"
+}

@@ -1,0 +1,119 @@
+$ kubectl -n gear-lab describe pod a6-with-control
+
+# output
+Name:             a6-with-control
+Namespace:        gear-lab
+Priority:         0
+Service Account:  default
+Node:             k3d-gear-lab-server-0/172.20.0.3
+Start Time:       Sat, 29 Aug 2026 12:19:10 +0100
+Labels:           gear.eu/a6-control=with
+                  gear.eu/ability=cv-screen
+Annotations:      <none>
+Status:           Running
+IP:               10.42.0.216
+IPs:
+  IP:  10.42.0.216
+Init Containers:
+  gear-uid-egress:
+    Container ID:  containerd://509711ee61e89fde59eda806c0bcb9ee08c5b6d9a07c252f502572578704664e
+    Image:         ghcr.io/ayond-lab/gear-netinit:dev
+    Image ID:      sha256:3bc5ae1aaf62ea803bd8ace0363705d742efdf425ef13e452f51fe655bb2fbf3
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      sh
+      -c
+    Args:
+      iptables -A OUTPUT -o lo -j ACCEPT
+      iptables -A OUTPUT -m owner --uid-owner 1337 -j ACCEPT
+      iptables -A OUTPUT -j REJECT --reject-with icmp-admin-prohibited
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sat, 29 Aug 2026 12:19:11 +0100
+      Finished:     Sat, 29 Aug 2026 12:19:11 +0100
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:         <none>
+Containers:
+  ability:
+    Container ID:   containerd://28d9b1e6ee93f84f928f42b1224d8d1ab284121ddc2b1cdd9ad899713cb03c5d
+    Image:          ghcr.io/ayond-lab/gear-hostile-runner:dev
+    Image ID:       sha256:e2922b5e13be3a15c19d5baa40a781e522ffae333c18cb2cefc717a77f6a0cab
+    Port:           <none>
+    Host Port:      <none>
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sat, 29 Aug 2026 12:19:11 +0100
+      Finished:     Sat, 29 Aug 2026 12:19:12 +0100
+    Ready:          False
+    Restart Count:  0
+    Environment:
+      A6_CONTROL:        with-control
+      A6_POLICY_DNS:     a6-gear-policy.gear-system.svc.cluster.local
+      A6_INFERENCE_DNS:  a6-gear-inference.gear-system.svc.cluster.local
+      A6_FIXTURE_DNS:    a6-gear-fixture-store.gear-system.svc.cluster.local
+      A6_POLICY_IP:      10.42.0.63
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-ml8d2 (ro)
+  gear-pep:
+    Container ID:  containerd://fc1f43daaa65a37250602ef532eae2b95615439c6281439d07547d72f10a73b3
+    Image:         ghcr.io/ayond-lab/gear-pep:dev
+    Image ID:      sha256:0f8b85c8fe3dc5cfe05f44452cf6d5e45cc2d3c9bd7a990853cd9f26909d27dc
+    Port:          9191/TCP (pep-loopback)
+    Host Port:     0/TCP (pep-loopback)
+    Args:
+      --listen=127.0.0.1:9191
+    State:          Running
+      Started:      Sat, 29 Aug 2026 12:19:11 +0100
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      GEAR_PEP_LISTEN:   127.0.0.1:9191
+      GEAR_POLICY_URL:   http://gear-policy.gear-system.svc.cluster.local:8080
+      GEAR_ABILITY_REF:   (v1:metadata.labels['gear.eu/ability'])
+    Mounts:
+      /var/run/gear/connectors from gear-connector-credentials (ro)
+      /var/run/gear/mtls from gear-pep-mtls (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       False 
+  ContainersReady             False 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-ml8d2:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+  gear-pep-mtls:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  gear-pep-mtls
+    Optional:    false
+  gear-connector-credentials:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  gear-connector-credentials
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  4s    default-scheduler  Successfully assigned gear-lab/a6-with-control to k3d-gear-lab-server-0
+  Normal  Pulled     4s    kubelet            Container image "ghcr.io/ayond-lab/gear-netinit:dev" already present on machine and can be accessed by the pod
+  Normal  Created    4s    kubelet            Container created
+  Normal  Started    3s    kubelet            Container started
+  Normal  Pulled     3s    kubelet            Container image "ghcr.io/ayond-lab/gear-hostile-runner:dev" already present on machine and can be accessed by the pod
+  Normal  Created    3s    kubelet            Container created
+  Normal  Started    3s    kubelet            Container started
+  Normal  Pulled     3s    kubelet            Container image "ghcr.io/ayond-lab/gear-pep:dev" already present on machine and can be accessed by the pod
+  Normal  Created    3s    kubelet            Container created
+  Normal  Started    3s    kubelet            Container started

@@ -1,0 +1,29 @@
+$ kubectl apply -f -
+
+# stdin
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gear-system
+  labels:
+    kubernetes.io/metadata.name: gear-system
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gear-lab
+  labels:
+    kubernetes.io/metadata.name: gear-lab
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gear-connector-credentials
+  namespace: gear-lab
+type: Opaque
+data: {}
+
+# output
+namespace/gear-system configured
+namespace/gear-lab configured
+secret/gear-connector-credentials configured

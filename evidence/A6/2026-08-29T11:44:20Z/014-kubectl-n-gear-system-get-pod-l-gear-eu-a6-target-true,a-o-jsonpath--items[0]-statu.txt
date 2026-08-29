@@ -1,0 +1,4 @@
+$ kubectl -n gear-system get pod -l gear.eu/a6-target=true,app.kubernetes.io/name=gear-policy -o jsonpath={.items[0].status.podIP}
+
+# output
+10.42.0.67

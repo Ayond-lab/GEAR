@@ -1,0 +1,11 @@
+{
+  "scenario": "seq 250 and 251 reordered",
+  "entryCount": 500,
+  "ok": false,
+  "affected": [
+    {
+      "start": 250,
+      "end": 252
+    }
+  ]
+}

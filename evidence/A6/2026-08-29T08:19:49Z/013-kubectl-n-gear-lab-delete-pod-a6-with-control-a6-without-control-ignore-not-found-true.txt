@@ -1,0 +1,1 @@
+$ kubectl -n gear-lab delete pod a6-with-control a6-without-control --ignore-not-found=true

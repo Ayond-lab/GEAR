@@ -1,0 +1,65 @@
+{
+  "trials": 200,
+  "inferenceWorkers": 4,
+  "inferenceIterations": 48061,
+  "minMicros": 44,
+  "p50Micros": 73,
+  "p95Micros": 364,
+  "maxMicros": 1630,
+  "histogram": [
+    {
+      "upperBoundMicros": 100,
+      "count": 140
+    },
+    {
+      "upperBoundMicros": 250,
+      "count": 36
+    },
+    {
+      "upperBoundMicros": 500,
+      "count": 20
+    },
+    {
+      "upperBoundMicros": 1000,
+      "count": 3
+    },
+    {
+      "upperBoundMicros": 2500,
+      "count": 1
+    },
+    {
+      "upperBoundMicros": 5000,
+      "count": 0
+    },
+    {
+      "upperBoundMicros": 10000,
+      "count": 0
+    },
+    {
+      "upperBoundMicros": 25000,
+      "count": 0
+    },
+    {
+      "upperBoundMicros": 50000,
+      "count": 0
+    },
+    {
+      "upperBoundMicros": -1,
+      "count": 0
+    }
+  ],
+  "decisions": {
+    "authorise": 200
+  },
+  "auditEntries": 200,
+  "chainVerification": {
+    "OK": true,
+    "Affected": null
+  },
+  "loadProfile": {
+    "fixtureCount": 60,
+    "inferenceService": "deterministic synthetic extractor",
+    "policyTrials": 200,
+    "workers": 4
+  }
+}

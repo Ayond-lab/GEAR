@@ -1,0 +1,110 @@
+[
+  {
+    "applicationId": "SYN-CV-0046",
+    "sourceEventId": "source-event-SYN-CV-0046",
+    "sourceRef": "fixture://synthetic-cv-lab/applications/SYN-CV-0046",
+    "subjectRef": "sha256:a9def6fe4dc4abbd4d6207f78500aa7b5234216cb5f74a5586d46c2a4e5e61d0",
+    "payloadDigest": "sha256:3353e829534e83d5576199b192ca329d2e4b04529875b6079c1b221e7e388f53",
+    "reasonCode": "requires-sponsorship-held-for-human-planning",
+    "evidenceDigest": "sha256:5750739bbca79f06f963a80d1ee01b501ec61dd30b5edaacec9d6ae45b515447"
+  },
+  {
+    "applicationId": "SYN-CV-0047",
+    "sourceEventId": "source-event-SYN-CV-0047",
+    "sourceRef": "fixture://synthetic-cv-lab/applications/SYN-CV-0047",
+    "subjectRef": "sha256:04c59013cee7c33842b1d92f4f862a386a8c9bdb7e756ccd3c5c2de06bf5bb27",
+    "payloadDigest": "sha256:2990dc4a605c60c37d6c21290d96f39f0f7dd7bb17f26446c3e73ae9c5574b5e",
+    "reasonCode": "requires-sponsorship-held-for-human-planning",
+    "evidenceDigest": "sha256:f8f0464822715f6a66886a5107372341aa9aa35c967d78a245dcb9fcd28bc808"
+  },
+  {
+    "applicationId": "SYN-CV-0048",
+    "sourceEventId": "source-event-SYN-CV-0048",
+    "sourceRef": "fixture://synthetic-cv-lab/applications/SYN-CV-0048",
+    "subjectRef": "sha256:6e3444039c4ba8916de551a2074a7da9bd73ac960fc5706e37cc0042d82c1849",
+    "payloadDigest": "sha256:9a0bb979fd4ced2def4d29071924bf62d19f2ae2b72cb1d2bd99c678ecdf8f7f",
+    "reasonCode": "requires-sponsorship-held-for-human-planning",
+    "evidenceDigest": "sha256:dd7b41197786077489accefbb30d25d0d2b87ed624a8d2e32daaabd7d899e177"
+  },
+  {
+    "applicationId": "SYN-CV-0049",
+    "sourceEventId": "source-event-SYN-CV-0049",
+    "sourceRef": "fixture://synthetic-cv-lab/applications/SYN-CV-0049",
+    "subjectRef": "sha256:e9260ce1333dcce8314c46e7fe39f529b217f1f4aef1af2d961d071541b3803a",
+    "payloadDigest": "sha256:5e0be8648756252dcb2cd82aa45edd6e9d623ebcdbe5224c554e2c600fda41c4",
+    "reasonCode": "requires-sponsorship-held-for-human-planning",
+    "evidenceDigest": "sha256:c52a1af5dccd656bd81acd9b3e4ad69f5cb583294ea4b63375c9cee00f666acf"
+  },
+  {
+    "applicationId": "SYN-CV-0050",
+    "sourceEventId": "source-event-SYN-CV-0050",
+    "sourceRef": "fixture://synthetic-cv-lab/applications/SYN-CV-0050",
+    "subjectRef": "sha256:0de6cbdd05387f22604b33f9c6049f1a5e163f9d3919cf82bcb9628ba42ade1b",
+    "payloadDigest": "sha256:971647b5459e58bf86dca78e0e38ada4adc8509a1de4d47d8858d051bcd2b371",
+    "reasonCode": "requires-sponsorship-held-for-human-planning",
+    "evidenceDigest": "sha256:9ab66413fa7b82f481e85408b4abac15cdecdd61f78d7ce3d1382bf6738fbdc9"
+  },
+  {
+    "applicationId": "SYN-CV-0051",
+    "sourceEventId": "source-event-SYN-CV-0051",
+    "sourceRef": "fixture://synthetic-cv-lab/applications/SYN-CV-0051",
+    "subjectRef": "sha256:99647588f338e3b34bdd9d9881125a6a4e14322df1d25fa159c8a3b00658cc98",
+    "payloadDigest": "sha256:c32dd738ba728aff4a21faf2e8e7c02db3f3b946e58a667d6823f1ae5c5ce36a",
+    "reasonCode": "requires-sponsorship-held-for-human-planning",
+    "evidenceDigest": "sha256:9e3fedda997a9dab6500e38010613302567af67ca90e10bee889687c2ad98dea"
+  },
+  {
+    "applicationId": "SYN-CV-0052",
+    "sourceEventId": "source-event-SYN-CV-0052",
+    "sourceRef": "fixture://synthetic-cv-lab/applications/SYN-CV-0052",
+    "subjectRef": "sha256:c5a237b1ca77b626185bac697a486d06cf7cda056306eef21375ca3c37feac44",
+    "payloadDigest": "sha256:0188512432a43af613f680da088c85e3324f6d0fc1d87a2a869a95f9455c3804",
+    "reasonCode": "requires-sponsorship-held-for-human-planning",
+    "evidenceDigest": "sha256:f2700d6db753ec33212735079b35125de7b17506d8586e2dbe1e6b71c9323e3e"
+  },
+  {
+    "applicationId": "SYN-CV-0053",
+    "sourceEventId": "source-event-SYN-CV-0053",
+    "sourceRef": "fixture://synthetic-cv-lab/applications/SYN-CV-0053",
+    "subjectRef": "sha256:0c66fc27b31b6e4600fa4a43655308dea8950bcdb8f92a0f74fedfd041012eb1",
+    "payloadDigest": "sha256:40a3936ec89b7fd6ec392c5a9f8d9951e21dad1505e66d8d77b63b5c35b25bb6",
+    "reasonCode": "requires-sponsorship-held-for-human-planning",
+    "evidenceDigest": "sha256:4d0c687864dfefbdc690995fb07f4cb626f493d671b6b38f30b7be208903eb38"
+  },
+  {
+    "applicationId": "SYN-CV-0054",
+    "sourceEventId": "source-event-SYN-CV-0054",
+    "sourceRef": "fixture://synthetic-cv-lab/applications/SYN-CV-0054",
+    "subjectRef": "sha256:25ba8516f6a3024e1e6bbacc4432ac177186bc6d17bf61baf8f1d562bd479182",
+    "payloadDigest": "sha256:01ef6b39ce141ca00b08544ed075f4bd22fe56df78c649511295817e30ea25ef",
+    "reasonCode": "requires-sponsorship-held-for-human-planning",
+    "evidenceDigest": "sha256:f19af86bedc7889716866783a8cb24b119804a1563bb1e77bab1c4c7af733920"
+  },
+  {
+    "applicationId": "SYN-CV-0055",
+    "sourceEventId": "source-event-SYN-CV-0055",
+    "sourceRef": "fixture://synthetic-cv-lab/applications/SYN-CV-0055",
+    "subjectRef": "sha256:75eb5ca51fd6b47db41f88b6a625ec2849961aea8dad2f3d9d7d307c6e98f3d1",
+    "payloadDigest": "sha256:b4ae80fefa2a04dfd8df033484162beba2a3e7001bdbcd8a3cdce4fb8c1ee66a",
+    "reasonCode": "requires-sponsorship-held-for-human-planning",
+    "evidenceDigest": "sha256:48746c078098f3870cbcc8c8956eb9b74bf4b171ad36815e3cb153a8d068122b"
+  },
+  {
+    "applicationId": "SYN-CV-0056",
+    "sourceEventId": "source-event-SYN-CV-0056",
+    "sourceRef": "fixture://synthetic-cv-lab/applications/SYN-CV-0056",
+    "subjectRef": "sha256:94506e099724f5a03c61e6f2a5d24faf389606422f406e97c26302d111cafabc",
+    "payloadDigest": "sha256:d8b51a624b1ad0e2ae4140aa3e55d2f699bc5d25793ac5d7612f84f2f9a0e0ae",
+    "reasonCode": "requires-sponsorship-held-for-human-planning",
+    "evidenceDigest": "sha256:820cd2fe08cc01e4d967d7d0c2d510562d8350a37eb6a0fcde7fe497cdf73706"
+  },
+  {
+    "applicationId": "SYN-CV-0057",
+    "sourceEventId": "source-event-SYN-CV-0057",
+    "sourceRef": "fixture://synthetic-cv-lab/applications/SYN-CV-0057",
+    "subjectRef": "sha256:637967d10f01a6f65c13b347f63360c9acb4ef07bbad69b8044ed5efe12f30d3",
+    "payloadDigest": "sha256:b8a524367dedc0e1880746904f1cc3a771d0970f74d35747ac8b3f7f7a305517",
+    "reasonCode": "requires-sponsorship-held-for-human-planning",
+    "evidenceDigest": "sha256:572ede5ff84c0f1f6753e07a1a0defe7711ba5db3fa1d88cb923abd75cefa65c"
+  }
+]

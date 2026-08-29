@@ -1,0 +1,80 @@
+[
+  {
+    "metadata": {
+      "creationTimestamp": null
+    },
+    "spec": {
+      "actionRef": "ga-ede0d8550503e1dc",
+      "reason": "confidence below mandate threshold",
+      "ruleFired": {
+        "id": "R-CONFIDENCE-LOW",
+        "version": 1
+      },
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/b951bc61ca8eb7f861faac4ec3302e3196e8064572f5b0f99f468daa551d355b"
+      ],
+      "approverSet": [
+        "hiring-manager-1"
+      ],
+      "createdAt": "2026-08-29T18:08:14Z"
+    },
+    "status": {
+      "decision": "info",
+      "decidedBy": "",
+      "decidedAt": null,
+      "reasonRef": ""
+    }
+  },
+  {
+    "metadata": {
+      "creationTimestamp": null
+    },
+    "spec": {
+      "actionRef": "ga-6a96dc0ddfae38d3",
+      "reason": "confidence below mandate threshold",
+      "ruleFired": {
+        "id": "R-CONFIDENCE-LOW",
+        "version": 1
+      },
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/91d6fced2d9009dd79ff48c9bd9d8ea36c0ae296461100a56585b27b9ee23d6f"
+      ],
+      "approverSet": [
+        "hiring-manager-1"
+      ],
+      "createdAt": "2026-08-29T18:08:14Z"
+    },
+    "status": {
+      "decision": "info",
+      "decidedBy": "",
+      "decidedAt": null,
+      "reasonRef": ""
+    }
+  },
+  {
+    "metadata": {
+      "creationTimestamp": null
+    },
+    "spec": {
+      "actionRef": "ga-6d8968530865a962",
+      "reason": "confidence below mandate threshold",
+      "ruleFired": {
+        "id": "R-CONFIDENCE-LOW",
+        "version": 1
+      },
+      "evidenceRefs": [
+        "fixture://synthetic-cv-lab/extractions/6a83f62adfb16aa3f3804e410f2c069296a935a8f1b685459e08f212951a5918"
+      ],
+      "approverSet": [
+        "hiring-manager-1"
+      ],
+      "createdAt": "2026-08-29T18:08:14Z"
+    },
+    "status": {
+      "decision": "info",
+      "decidedBy": "",
+      "decidedAt": null,
+      "reasonRef": ""
+    }
+  }
+]

@@ -1,0 +1,5 @@
+$ kubectl -n kube-system get daemonset cilium -o wide
+
+# output
+NAME     DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE     CONTAINERS     IMAGES                                                                                                  SELECTOR
+cilium   1         1         1       1            1           kubernetes.io/os=linux   3h25m   cilium-agent   quay.io/cilium/cilium:v1.20.1@sha256:ae9ea21f7427fe24bc6ea7247eb552157a1b0a431744045d3f641545ca71d11b   k8s-app=cilium

@@ -1,0 +1,184 @@
+$ kubectl -n gear-lab get pod a6-without-control -o yaml
+
+# output
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Pod","metadata":{"annotations":{},"labels":{"gear.eu/a6-control":"without"},"name":"a6-without-control","namespace":"gear-lab"},"spec":{"automountServiceAccountToken":false,"containers":[{"env":[{"name":"A6_CONTROL","value":"without-control"},{"name":"A6_START_DELAY_SECONDS","value":"6"},{"name":"A6_POLICY_DNS","value":"a6-gear-policy.gear-system.svc.cluster.local"},{"name":"A6_INFERENCE_DNS","value":"a6-gear-inference.gear-system.svc.cluster.local"},{"name":"A6_FIXTURE_DNS","value":"a6-gear-fixture-store.gear-system.svc.cluster.local"},{"name":"A6_POLICY_IP","value":"10.42.0.130"}],"image":"ghcr.io/ayond-lab/gear-hostile-runner:dev","imagePullPolicy":"IfNotPresent","name":"ability","securityContext":{"allowPrivilegeEscalation":false,"runAsNonRoot":true,"runAsUser":1001}},{"args":["--listen=127.0.0.1:9191"],"env":[{"name":"GEAR_PEP_LISTEN","value":"127.0.0.1:9191"},{"name":"GEAR_ABILITY_REF","value":"cv-screen"}],"image":"ghcr.io/ayond-lab/gear-pep:dev","imagePullPolicy":"IfNotPresent","name":"gear-pep","ports":[{"containerPort":9191,"name":"pep-loopback"}],"securityContext":{"allowPrivilegeEscalation":false,"runAsNonRoot":true,"runAsUser":1337},"volumeMounts":[{"mountPath":"/var/run/gear/mtls","name":"gear-pep-mtls","readOnly":true},{"mountPath":"/var/run/gear/connectors","name":"gear-connector-credentials","readOnly":true}]}],"restartPolicy":"Never","volumes":[{"name":"gear-pep-mtls","secret":{"secretName":"gear-pep-mtls"}},{"name":"gear-connector-credentials","secret":{"secretName":"gear-connector-credentials"}}]}}
+  creationTimestamp: "2026-08-29T08:24:18Z"
+  generation: 1
+  labels:
+    gear.eu/a6-control: without
+    gear.eu/ability: cv-screen
+  name: a6-without-control
+  namespace: gear-lab
+  resourceVersion: "2682"
+  uid: 0e1d60f5-61ae-439e-b24f-6c380d56d6ef
+spec:
+  automountServiceAccountToken: false
+  containers:
+  - env:
+    - name: A6_CONTROL
+      value: without-control
+    - name: A6_START_DELAY_SECONDS
+      value: "6"
+    - name: A6_POLICY_DNS
+      value: a6-gear-policy.gear-system.svc.cluster.local
+    - name: A6_INFERENCE_DNS
+      value: a6-gear-inference.gear-system.svc.cluster.local
+    - name: A6_FIXTURE_DNS
+      value: a6-gear-fixture-store.gear-system.svc.cluster.local
+    - name: A6_POLICY_IP
+      value: 10.42.0.130
+    image: ghcr.io/ayond-lab/gear-hostile-runner:dev
+    imagePullPolicy: IfNotPresent
+    name: ability
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsNonRoot: true
+      runAsUser: 1001
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+  - args:
+    - --listen=127.0.0.1:9191
+    env:
+    - name: GEAR_PEP_LISTEN
+      value: 127.0.0.1:9191
+    - name: GEAR_ABILITY_REF
+      value: cv-screen
+    image: ghcr.io/ayond-lab/gear-pep:dev
+    imagePullPolicy: IfNotPresent
+    name: gear-pep
+    ports:
+    - containerPort: 9191
+      name: pep-loopback
+      protocol: TCP
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsNonRoot: true
+      runAsUser: 1337
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/gear/mtls
+      name: gear-pep-mtls
+      readOnly: true
+    - mountPath: /var/run/gear/connectors
+      name: gear-connector-credentials
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: k3d-gear-lab-server-0
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: gear-pep-mtls
+    secret:
+      defaultMode: 420
+      secretName: gear-pep-mtls
+  - name: gear-connector-credentials
+    secret:
+      defaultMode: 420
+      secretName: gear-connector-credentials
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2026-08-29T08:24:19Z"
+    observedGeneration: 1
+    status: "True"
+    type: PodReadyToStartContainers
+  - lastProbeTime: null
+    lastTransitionTime: "2026-08-29T08:24:18Z"
+    observedGeneration: 1
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2026-08-29T08:24:19Z"
+    observedGeneration: 1
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2026-08-29T08:24:19Z"
+    observedGeneration: 1
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2026-08-29T08:24:18Z"
+    observedGeneration: 1
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://f41fb678e17342e8a60c576fa2cd18d31b01231681ae6cfe3829c05063bfc135
+    image: ghcr.io/ayond-lab/gear-hostile-runner:dev
+    imageID: sha256:c92011cef384d28b794dab176bcd1a5194667992cb1dda0ad6eafb28c55a68b5
+    lastState: {}
+    name: ability
+    ready: true
+    resources: {}
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2026-08-29T08:24:19Z"
+    user:
+      linux:
+        gid: 0
+        supplementalGroups:
+        - 0
+        uid: 1001
+  - containerID: containerd://505886923dd6a047ff8384627f7f7d1d045bb1993c2a24a31257bafaa737ff9c
+    image: ghcr.io/ayond-lab/gear-pep:dev
+    imageID: sha256:61fb3579b22602a7a4d6559c02259efc70a5c64c661b571fe31282037ef5dfcd
+    lastState: {}
+    name: gear-pep
+    ready: true
+    resources: {}
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2026-08-29T08:24:19Z"
+    user:
+      linux:
+        gid: 0
+        supplementalGroups:
+        - 0
+        uid: 1337
+    volumeMounts:
+    - mountPath: /var/run/gear/mtls
+      name: gear-pep-mtls
+      readOnly: true
+      recursiveReadOnly: Disabled
+    - mountPath: /var/run/gear/connectors
+      name: gear-connector-credentials
+      readOnly: true
+      recursiveReadOnly: Disabled
+  hostIP: 172.20.0.3
+  hostIPs:
+  - ip: 172.20.0.3
+  observedGeneration: 1
+  phase: Running
+  podIP: 10.42.0.22
+  podIPs:
+  - ip: 10.42.0.22
+  qosClass: BestEffort
+  startTime: "2026-08-29T08:24:18Z"
