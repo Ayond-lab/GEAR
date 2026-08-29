@@ -7,10 +7,12 @@ import (
 	"net/http"
 	"strings"
 	"testing"
+	"time"
 
 	gearv1 "gear/api/v1"
 
 	admissionv1 "k8s.io/api/admission/v1"
+	corev1 "k8s.io/api/core/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -224,10 +226,12 @@ func narrowedMandate() *gearv1.Mandate {
 
 func narrowedMandateSpec() gearv1.MandateSpec {
 	return gearv1.MandateSpec{
-		MandateID:      "MND-2026-021",
-		Version:        2,
-		AbilityRef:     "cv-screen",
-		AbilityVersion: "0.3.0",
+		MandateID:        "MND-2026-021",
+		Version:          2,
+		AbilityRef:       "cv-screen",
+		AbilityVersion:   "0.3.0",
+		PurposeStatement: "Identify candidates who will require work authorisation, for planning.",
+		LegalBasis:       "Right-to-work verification",
 		Sources: []gearv1.Source{
 			{Type: "folder", ID: "applications-inbox"},
 		},
@@ -243,5 +247,14 @@ func narrowedMandateSpec() gearv1.MandateSpec {
 		},
 		Caps:       gearv1.Caps{DailyActions: 50},
 		Thresholds: map[string]string{"extractionConfidence": "0.70"},
+		Approvers: []gearv1.Approver{
+			{ID: "hiring-manager-1", Name: "Hiring Manager"},
+		},
+		Egress:    []gearv1.EgressRule{},
+		ExpiresAt: metav1.Date(2027, 2, 1, 0, 0, 0, 0, time.UTC),
+		CredentialRef: corev1.SecretReference{
+			Name:      "mnd-2026-021-credential",
+			Namespace: "gear-lab",
+		},
 	}
 }

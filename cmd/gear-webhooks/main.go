@@ -46,7 +46,7 @@ func main() {
 	must("register mandate validating webhook", gearwebhooks.RegisterMandateWebhookWithManager(
 		mgr.GetWebhookServer(),
 		mgr.GetScheme(),
-		mgr.GetClient(),
+		mgr.GetAPIReader(),
 	))
 	must("register pod mutating webhook", gearwebhooks.RegisterPodMutationWebhookWithManager(
 		mgr.GetWebhookServer(),

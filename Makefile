@@ -3,8 +3,12 @@ SHELL := /bin/bash
 LOCALBIN ?= $(shell pwd)/bin
 CONTROLLER_GEN ?= $(LOCALBIN)/controller-gen
 CONTROLLER_TOOLS_VERSION ?= v0.17.3
+SETUP_ENVTEST ?= $(LOCALBIN)/setup-envtest
+SETUP_ENVTEST_VERSION ?= v0.20.4
+ENVTEST_K8S_VERSION ?= 1.32.0
+ENVTEST_ASSETS_DIR ?= $(LOCALBIN)/envtest
 
-.PHONY: tools controller-gen generate manifests test test-go test-inference test-console test-envtest opa-test cluster-up docker-build kind-load deploy conformance experiment evidence-pack
+.PHONY: tools controller-gen setup-envtest generate manifests test test-go test-inference test-console test-envtest opa-test cluster-up docker-build kind-load deploy conformance experiment evidence-pack
 
 tools:
 	@echo "Required external tools: go 1.24, python 3.12, node 22, kubectl, helm, opa, k3d/k3s, cilium, hubble, k6"
@@ -20,6 +24,11 @@ controller-gen: $(CONTROLLER_GEN)
 
 $(CONTROLLER_GEN): | $(LOCALBIN)
 	@test -s $(CONTROLLER_GEN) || GOBIN=$(LOCALBIN) go install sigs.k8s.io/controller-tools/cmd/controller-gen@$(CONTROLLER_TOOLS_VERSION)
+
+setup-envtest: $(SETUP_ENVTEST)
+
+$(SETUP_ENVTEST): | $(LOCALBIN)
+	@test -s $(SETUP_ENVTEST) || GOBIN=$(LOCALBIN) go install sigs.k8s.io/controller-runtime/tools/setup-envtest@$(SETUP_ENVTEST_VERSION)
 
 generate: controller-gen
 	$(CONTROLLER_GEN) object:headerFile="hack/boilerplate.go.txt" paths="./api/..."
@@ -48,9 +57,9 @@ test-inference:
 test-console:
 	cd console && node --test src/*.test.js
 
-test-envtest:
+test-envtest: setup-envtest manifests
 	@command -v go >/dev/null || { echo "missing: go"; exit 127; }
-	go test ./internal/webhooks
+	KUBEBUILDER_ASSETS="$$( $(SETUP_ENVTEST) use $(ENVTEST_K8S_VERSION) --bin-dir $(ENVTEST_ASSETS_DIR) -p path )" go test -tags=envtest ./internal/webhooks
 
 opa-test:
 	@if command -v opa >/dev/null; then opa test policy/bundle; else echo "missing: opa; skipped policy bundle tests"; fi
