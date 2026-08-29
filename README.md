@@ -32,6 +32,7 @@ make manifests
 make test
 make opa-test
 make cluster-smoke
+make experiment ID=A6
 ```
 
 `controller-gen` is installed into `bin/` by the Makefile. The first Milestone 1 wiring is present; strict generated CRDs and deepcopy output land when the API skeletons are converted to Kubernetes runtime types.
@@ -47,3 +48,5 @@ Ability pods labelled `gear.eu/ability=<ability-name>` are now handled by a muta
 `make cluster-smoke` creates or starts a local `k3d` cluster named `gear-lab`, installs Cilium, applies the ability egress NetworkPolicy baseline, builds the `gear-webhooks` image, imports it into the cluster, generates local webhook TLS certificates, deploys the CRDs and webhook stack, and applies smoke fixtures. The smoke passes only when the narrowed `Mandate` is accepted and a widened `Mandate` is rejected by Kubernetes admission.
 
 The Milestone 1 network baseline is available through `make network-baseline`. It creates the lab namespace and applies `deploy/network/ability-egress-baseline.yaml`, which selects ability pods and permits egress only to cluster DNS plus trusted GEAR services. If an existing `gear-lab` cluster was created before the Cilium settings were added, run `make cluster-reset` once, then `make cluster-smoke`.
+
+The first hostile experiment is implemented as `make experiment ID=A6`. It runs eight ability-container egress probes with the injected UID control enabled, then repeats the same probes with the init container removed as a negative control. Results and transcripts are retained under `evidence/A6/`.

@@ -12,8 +12,16 @@ CILIUM_VERSION ?= 1.20.1
 GOARCH ?= $(shell go env GOARCH)
 WEBHOOK_IMAGE ?= ghcr.io/ayond-lab/gear-webhooks:dev
 WEBHOOK_IMAGE_CONTEXT ?= $(LOCALBIN)/docker/gear-webhooks
+PEP_IMAGE ?= ghcr.io/ayond-lab/gear-pep:dev
+PEP_IMAGE_CONTEXT ?= $(LOCALBIN)/docker/gear-pep
+NETINIT_IMAGE ?= ghcr.io/ayond-lab/gear-netinit:dev
+NETINIT_BASE_IMAGE ?= rancher/k3s:v1.35.5-k3s1
+HOSTILE_RUNNER_IMAGE ?= ghcr.io/ayond-lab/gear-hostile-runner:dev
+HOSTILE_RUNNER_IMAGE_CONTEXT ?= $(LOCALBIN)/docker/gear-hostile-runner
+HOSTILE_TARGET_IMAGE ?= ghcr.io/ayond-lab/gear-hostile-target:dev
+HOSTILE_TARGET_IMAGE_CONTEXT ?= $(LOCALBIN)/docker/gear-hostile-target
 
-.PHONY: tools controller-gen setup-envtest generate manifests test test-go test-inference test-console test-envtest opa-test cluster-up cluster-reset cilium-install cilium-status network-baseline docker-build kind-load deploy cluster-smoke conformance experiment evidence-pack
+.PHONY: tools controller-gen setup-envtest generate manifests test test-go test-inference test-console test-envtest opa-test cluster-up cluster-reset cilium-install cilium-status network-baseline docker-build docker-build-pep docker-build-netinit docker-build-hostile-runner docker-build-hostile-target hostile-images kind-load hostile-load deploy cluster-smoke conformance experiment experiment-a6 evidence-pack
 
 tools:
 	@echo "Required external tools: go 1.24, python 3.12, node 22, kubectl, helm, opa, k3d/k3s, cilium, hubble, k6"
@@ -91,9 +99,40 @@ docker-build:
 	CGO_ENABLED=0 GOOS=linux GOARCH="$(GOARCH)" go build -o "$(WEBHOOK_IMAGE_CONTEXT)/gear-webhooks" ./cmd/gear-webhooks
 	docker build --platform "linux/$(GOARCH)" -f deploy/docker/gear-webhooks.Dockerfile -t "$(WEBHOOK_IMAGE)" "$(WEBHOOK_IMAGE_CONTEXT)"
 
+docker-build-pep:
+	@command -v go >/dev/null || { echo "missing: go"; exit 127; }
+	@command -v docker >/dev/null || { echo "missing: docker"; exit 127; }
+	mkdir -p "$(PEP_IMAGE_CONTEXT)"
+	CGO_ENABLED=0 GOOS=linux GOARCH="$(GOARCH)" go build -o "$(PEP_IMAGE_CONTEXT)/gear-pep" ./cmd/gear-pep
+	docker build --platform "linux/$(GOARCH)" -f deploy/docker/gear-pep.Dockerfile -t "$(PEP_IMAGE)" "$(PEP_IMAGE_CONTEXT)"
+
+docker-build-netinit:
+	@command -v docker >/dev/null || { echo "missing: docker"; exit 127; }
+	docker build --platform "linux/$(GOARCH)" --build-arg NETINIT_BASE_IMAGE="$(NETINIT_BASE_IMAGE)" -f deploy/docker/gear-netinit.Dockerfile -t "$(NETINIT_IMAGE)" deploy/docker
+
+docker-build-hostile-runner:
+	@command -v go >/dev/null || { echo "missing: go"; exit 127; }
+	@command -v docker >/dev/null || { echo "missing: docker"; exit 127; }
+	mkdir -p "$(HOSTILE_RUNNER_IMAGE_CONTEXT)"
+	CGO_ENABLED=0 GOOS=linux GOARCH="$(GOARCH)" go build -o "$(HOSTILE_RUNNER_IMAGE_CONTEXT)/gear-hostile-runner" ./harness/hostile/cmd/gear-hostile-runner
+	docker build --platform "linux/$(GOARCH)" -f deploy/docker/gear-hostile-runner.Dockerfile -t "$(HOSTILE_RUNNER_IMAGE)" "$(HOSTILE_RUNNER_IMAGE_CONTEXT)"
+
+docker-build-hostile-target:
+	@command -v go >/dev/null || { echo "missing: go"; exit 127; }
+	@command -v docker >/dev/null || { echo "missing: docker"; exit 127; }
+	mkdir -p "$(HOSTILE_TARGET_IMAGE_CONTEXT)"
+	CGO_ENABLED=0 GOOS=linux GOARCH="$(GOARCH)" go build -o "$(HOSTILE_TARGET_IMAGE_CONTEXT)/gear-hostile-target" ./harness/hostile/cmd/gear-hostile-target
+	docker build --platform "linux/$(GOARCH)" -f deploy/docker/gear-hostile-target.Dockerfile -t "$(HOSTILE_TARGET_IMAGE)" "$(HOSTILE_TARGET_IMAGE_CONTEXT)"
+
+hostile-images: docker-build-pep docker-build-netinit docker-build-hostile-runner docker-build-hostile-target
+
 kind-load: cluster-up docker-build
 	@command -v k3d >/dev/null || { echo "missing: k3d"; exit 127; }
 	k3d image import "$(WEBHOOK_IMAGE)" --cluster "$(K3D_CLUSTER)"
+
+hostile-load: cluster-up hostile-images
+	@command -v k3d >/dev/null || { echo "missing: k3d"; exit 127; }
+	k3d image import "$(PEP_IMAGE)" "$(NETINIT_IMAGE)" "$(HOSTILE_RUNNER_IMAGE)" "$(HOSTILE_TARGET_IMAGE)" --cluster "$(K3D_CLUSTER)"
 
 deploy: manifests network-baseline kind-load
 	K3D_CLUSTER="$(K3D_CLUSTER)" WEBHOOK_IMAGE="$(WEBHOOK_IMAGE)" hack/cluster-smoke.sh deploy
@@ -107,8 +146,15 @@ conformance:
 
 experiment:
 	@test -n "$(ID)" || { echo "usage: make experiment ID=A1"; exit 2; }
-	@mkdir -p "evidence/$(ID)/$$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-	@echo "Created evidence directory for $(ID). Experiment runner lands with harness implementation."
+	@if [ "$(ID)" = "A6" ]; then \
+		$(MAKE) experiment-a6; \
+	else \
+		mkdir -p "evidence/$(ID)/$$(date -u +%Y-%m-%dT%H:%M:%SZ)"; \
+		echo "Created evidence directory for $(ID). Experiment runner lands with harness implementation."; \
+	fi
+
+experiment-a6: deploy hostile-load
+	K3D_CLUSTER="$(K3D_CLUSTER)" HOSTILE_RUNNER_IMAGE="$(HOSTILE_RUNNER_IMAGE)" HOSTILE_TARGET_IMAGE="$(HOSTILE_TARGET_IMAGE)" PEP_IMAGE="$(PEP_IMAGE)" NETINIT_IMAGE="$(NETINIT_IMAGE)" go run ./harness/hostile/cmd/a6
 
 evidence-pack:
 	@tar -czf evidence-pack.tgz evidence

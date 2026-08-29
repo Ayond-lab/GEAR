@@ -65,20 +65,13 @@ func hasPolicyType(values []networkingv1.PolicyType, target networkingv1.PolicyT
 }
 
 func allowsDNS(rule networkingv1.NetworkPolicyEgressRule) bool {
-	if len(rule.To) != 1 {
+	if len(rule.To) != 2 {
 		return false
 	}
-	peer := rule.To[0]
-	if peer.NamespaceSelector == nil || peer.PodSelector == nil {
-		return false
-	}
-	if !labelMatches(peer.NamespaceSelector.MatchLabels, "kubernetes.io/metadata.name", "kube-system") {
-		return false
-	}
-	if !labelMatches(peer.PodSelector.MatchLabels, "k8s-app", "kube-dns") {
-		return false
-	}
-	return hasPort(rule.Ports, "UDP", 53) && hasPort(rule.Ports, "TCP", 53)
+	return hasDNSPodPeer(rule.To) &&
+		hasIPBlockPeer(rule.To, "10.43.0.10/32") &&
+		hasPort(rule.Ports, "UDP", 53) &&
+		hasPort(rule.Ports, "TCP", 53)
 }
 
 func allowsGearServices(rule networkingv1.NetworkPolicyEgressRule) bool {
@@ -102,6 +95,30 @@ func allowsGearServices(rule networkingv1.NetworkPolicyEgressRule) bool {
 
 func labelMatches(labels map[string]string, key string, value string) bool {
 	return labels[key] == value
+}
+
+func hasDNSPodPeer(peers []networkingv1.NetworkPolicyPeer) bool {
+	for _, peer := range peers {
+		if peer.NamespaceSelector == nil || peer.PodSelector == nil {
+			continue
+		}
+		if !labelMatches(peer.NamespaceSelector.MatchLabels, "kubernetes.io/metadata.name", "kube-system") {
+			continue
+		}
+		if labelMatches(peer.PodSelector.MatchLabels, "k8s-app", "kube-dns") {
+			return true
+		}
+	}
+	return false
+}
+
+func hasIPBlockPeer(peers []networkingv1.NetworkPolicyPeer, cidr string) bool {
+	for _, peer := range peers {
+		if peer.IPBlock != nil && peer.IPBlock.CIDR == cidr {
+			return true
+		}
+	}
+	return false
 }
 
 func hasPort(ports []networkingv1.NetworkPolicyPort, protocol string, port int32) bool {
