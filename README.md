@@ -1,4 +1,4 @@
-# GEAR: Governed Execution for Consequential Automation
+# GEAR: Governed Execution for Agentic Runtimes
 
 GEAR is a governed execution layer for consequential automation. It separates what an agent is technically able to do from what it is authorised to do in a specific organisational context.
 
