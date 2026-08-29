@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gear-mandate
+  namespace: gear-system
+  labels:
+    app.kubernetes.io/name: gear-mandate
+    app.kubernetes.io/part-of: gear
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: gear-mandate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: gear-mandate
+        app.kubernetes.io/part-of: gear
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10002
+        runAsGroup: 10002
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: gear-mandate
+          image: ghcr.io/ayond-lab/gear-mandate:dev
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: GEAR_ADDR
+              value: ":8080"
+            - name: GEAR_AUDIT_URL
+              value: http://gear-audit.gear-system.svc.cluster.local:8080
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]

@@ -8,15 +8,12 @@ type Clause struct {
 	Reason string
 }
 
-func RefusalClauses(eval legality.Evaluation) []Clause {
-	if eval.Decision != legality.DecisionRefuse {
-		return nil
-	}
+func NarrowedCVClauses() []Clause {
 	return []Clause{
 		{
 			ID:     "D1",
 			Text:   "Forbid CANDIDATE_RANK because legality gate refused protected-attribute selective use.",
-			Reason: eval.Reason,
+			Reason: "protected-attribute selective use is outside this mandate",
 		},
 		{
 			ID:     "D2",
@@ -26,3 +23,11 @@ func RefusalClauses(eval legality.Evaluation) []Clause {
 	}
 }
 
+func RefusalClauses(eval legality.Evaluation) []Clause {
+	if eval.Decision != legality.DecisionRefuse {
+		return nil
+	}
+	clauses := NarrowedCVClauses()
+	clauses[0].Reason = eval.Reason
+	return clauses
+}

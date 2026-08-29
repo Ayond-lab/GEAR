@@ -2,22 +2,44 @@ package conformance
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
+	"strings"
 	"testing"
 
+	gearv1 "gear/api/v1"
 	"gear/internal/auditprivacy"
 	"gear/internal/chain"
-	"gear/internal/legality"
+	"gear/internal/mandatederive"
 	"gear/internal/policy"
+	"gear/internal/webhooks"
 )
 
 func TestA1UnlawfulPurposeIsRefused(t *testing.T) {
-	result := legality.EvaluatePurpose("Check the CVs, select the candidates who are not citizens of the EEA.")
-	if result.Decision != legality.DecisionRefuse {
-		t.Fatalf("A1 expected mandate refusal, got %q", result.Decision)
+	audit := &recordingAudit{}
+	result, err := mandatederive.NewDeriver(audit).Derive(context.Background(), mandatederive.Request{
+		MandateID:           "MND-A1-REFUSED",
+		Version:             1,
+		AbilityRef:          "cv-screen",
+		Ability:             cvAbilitySpec(),
+		PurposeStatement:    "Check the CVs, select the candidates who are not citizens of the EEA.",
+		OperatorResponseRef: "sha256:operator-response-a1",
+	})
+	if err != nil {
+		t.Fatal(err)
 	}
-	if result.Criterion != "citizenship" || result.Verb != "select" {
-		t.Fatalf("A1 expected citizenship/select, got %s/%s", result.Criterion, result.Verb)
+	if result.Outcome != "refused" || result.Mandate != nil {
+		t.Fatalf("A1 expected mandate refusal without mandate, got %#v", result)
+	}
+	if result.Refusal == nil || result.Refusal.Criterion != "citizenship" || result.Refusal.Verb != "select" {
+		t.Fatalf("A1 expected citizenship/select, got %#v", result.Refusal)
+	}
+	if len(audit.entries) != 1 || audit.entries[0].Type != "mandate-refused" {
+		t.Fatalf("A1 expected mandate-refused audit entry, got %#v", audit.entries)
+	}
+	entryJSON, _ := json.Marshal(audit.entries[0])
+	if strings.Contains(string(entryJSON), "citizens") || strings.Contains(string(entryJSON), "Check the CVs") {
+		t.Fatalf("A1 audit entry must not contain raw purpose text: %s", entryJSON)
 	}
 }
 
@@ -52,7 +74,20 @@ func TestA4PromptInjectionCannotChangePolicyInputBoundary(t *testing.T) {
 }
 
 func TestA5InvalidMandateRejectedByAdmission(t *testing.T) {
-	t.Skip("A5 requires validating webhook and envtest in Milestone 1")
+	err := webhooks.ValidateMandateLegality(gearv1.MandateSpec{
+		MandateID:        "MND-CANDIDATE-RANK-PERMIT",
+		PurposeStatement: "Check the CVs, select the candidates who are not citizens of the EEA.",
+		ActionGrants: []gearv1.ActionGrant{
+			{Class: "RECORD_ANNOTATE", Disposition: "permit"},
+			{Class: "CANDIDATE_RANK", Disposition: "permit"},
+		},
+	})
+	if err == nil {
+		t.Fatal("A5 expected admission validation to reject CANDIDATE_RANK permit")
+	}
+	if !strings.Contains(err.Error(), "CANDIDATE_RANK was refused by legality gate") {
+		t.Fatalf("A5 expected legality-gate rejection, got %v", err)
+	}
 }
 
 func TestA6HostileAbilityEgressControls(t *testing.T) {
@@ -151,6 +186,44 @@ func cvRuntimePolicy() policy.RuntimePolicy {
 		ConfidenceThreshold: "0.70",
 		ApproverCount:       1,
 	}
+}
+
+func cvAbilitySpec() gearv1.AbilitySpec {
+	return gearv1.AbilitySpec{
+		Version:       "0.3.0",
+		Certification: "certified",
+		DeclaredTriggers: []gearv1.TriggerDecl{
+			{Type: "folder", ID: "applications-inbox"},
+		},
+		ConnectorScopes: []gearv1.ConnectorScope{
+			{Connector: "applications-store", Scope: "read"},
+			{Connector: "candidate-record", Scope: "write"},
+		},
+		ActionClasses: []string{"RECORD_ANNOTATE", "RECORD_MODIFY", "CANDIDATE_RANK", "OUTBOUND_COMMS"},
+		Reversibility: map[string]string{
+			"RECORD_ANNOTATE": "reversible",
+			"RECORD_MODIFY":   "reversible",
+			"CANDIDATE_RANK":  "reversible",
+			"OUTBOUND_COMMS":  "irreversible",
+		},
+		DataClasses: []string{"personal", "protected-employment"},
+		Ceilings:    gearv1.Ceilings{DailyActions: 500},
+	}
+}
+
+type recordingAudit struct {
+	entries []chain.Entry
+	prev    chain.Entry
+}
+
+func (r *recordingAudit) Append(_ context.Context, entry chain.Entry) (chain.Entry, error) {
+	stored, err := chain.Append(r.prev, entry)
+	if err != nil {
+		return chain.Entry{}, err
+	}
+	r.entries = append(r.entries, stored)
+	r.prev = stored
+	return stored, nil
 }
 
 type outageAudit struct{}

@@ -1,41 +1,44 @@
 apiVersion: gear.eu/v1
 kind: Mandate
 metadata:
+  creationTimestamp: null
   name: mnd-2026-021
   namespace: gear-lab
 spec:
-  mandateId: MND-2026-021
-  version: 2
   abilityRef: cv-screen
   abilityVersion: 0.3.0
-  purposeStatement: Identify candidates who will require work authorisation, for planning.
-  legalBasis: Right-to-work verification
-  sources:
-    - type: folder
-      id: applications-inbox
-  connectorGrants:
-    - connector: applications-store
-      scope: read
-    - connector: candidate-record
-      scope: write
   actionGrants:
-    - class: RECORD_ANNOTATE
-      disposition: permit
-    - class: RECORD_MODIFY
-      disposition: escalate
-    - class: CANDIDATE_RANK
-      disposition: forbid
-    - class: OUTBOUND_COMMS
-      disposition: forbid
+  - class: RECORD_ANNOTATE
+    disposition: permit
+  - class: RECORD_MODIFY
+    disposition: escalate
+  - class: CANDIDATE_RANK
+    disposition: forbid
+  - class: OUTBOUND_COMMS
+    disposition: forbid
+  approvers:
+  - id: hiring-manager-1
+    name: Hiring Manager
   caps:
     dailyActions: 50
-  thresholds:
-    extractionConfidence: "0.70"
-  approvers:
-    - id: hiring-manager-1
-      name: Hiring Manager
-  egress: []
-  expiresAt: "2027-02-01T00:00:00Z"
+  connectorGrants:
+  - connector: applications-store
+    scope: read
+  - connector: candidate-record
+    scope: write
   credentialRef:
     name: mnd-2026-021-credential
     namespace: gear-lab
+  egress: []
+  expiresAt: "2027-02-01T00:00:00Z"
+  legalBasis: Right-to-work verification
+  mandateId: MND-2026-021
+  purposeStatement: Identify candidates who will require work authorisation, for planning.
+  signature: eyJhbGciOiJFUzI1NiIsInR5cCI6ImdlYXItbWFuZGF0ZStqd3MifQ.eyJhYmlsaXR5UmVmIjoiY3Ytc2NyZWVuIiwiYWJpbGl0eVZlcnNpb24iOiIwLjMuMCIsImFjdGlvbkdyYW50cyI6W3siY2xhc3MiOiJSRUNPUkRfQU5OT1RBVEUiLCJkaXNwb3NpdGlvbiI6InBlcm1pdCJ9LHsiY2xhc3MiOiJSRUNPUkRfTU9ESUZZIiwiZGlzcG9zaXRpb24iOiJlc2NhbGF0ZSJ9LHsiY2xhc3MiOiJDQU5ESURBVEVfUkFOSyIsImRpc3Bvc2l0aW9uIjoiZm9yYmlkIn0seyJjbGFzcyI6Ik9VVEJPVU5EX0NPTU1TIiwiZGlzcG9zaXRpb24iOiJmb3JiaWQifV0sImFwcHJvdmVycyI6W3siaWQiOiJoaXJpbmctbWFuYWdlci0xIiwibmFtZSI6IkhpcmluZyBNYW5hZ2VyIn1dLCJjYXBzIjp7ImRhaWx5QWN0aW9ucyI6NTB9LCJjb25uZWN0b3JHcmFudHMiOlt7ImNvbm5lY3RvciI6ImFwcGxpY2F0aW9ucy1zdG9yZSIsInNjb3BlIjoicmVhZCJ9LHsiY29ubmVjdG9yIjoiY2FuZGlkYXRlLXJlY29yZCIsInNjb3BlIjoid3JpdGUifV0sImNyZWRlbnRpYWxSZWYiOnsibmFtZSI6Im1uZC0yMDI2LTAyMS1jcmVkZW50aWFsIiwibmFtZXNwYWNlIjoiZ2Vhci1sYWIifSwiZWdyZXNzIjpbXSwiZXhwaXJlc0F0IjoiMjAyNy0wMi0wMVQwMDowMDowMFoiLCJsZWdhbEJhc2lzIjoiUmlnaHQtdG8td29yayB2ZXJpZmljYXRpb24iLCJtYW5kYXRlSWQiOiJNTkQtMjAyNi0wMjEiLCJwdXJwb3NlU3RhdGVtZW50IjoiSWRlbnRpZnkgY2FuZGlkYXRlcyB3aG8gd2lsbCByZXF1aXJlIHdvcmsgYXV0aG9yaXNhdGlvbiwgZm9yIHBsYW5uaW5nLiIsInNvdXJjZXMiOlt7ImlkIjoiYXBwbGljYXRpb25zLWluYm94IiwidHlwZSI6ImZvbGRlciJ9XSwidGhyZXNob2xkcyI6eyJleHRyYWN0aW9uQ29uZmlkZW5jZSI6IjAuNzAifSwidmVyc2lvbiI6Mn0.1fOhpI0yWOp8hYgAR4oUZLqemMSOar-DggRYHwMuSnmwvn0CCCcEe-REauZWqpbOzye4HELePP22IUGw1_5dBw
+  sources:
+  - id: applications-inbox
+    type: folder
+  thresholds:
+    extractionConfidence: "0.70"
+  version: 2
+status: {}

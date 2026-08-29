@@ -102,8 +102,12 @@ func VerifyES256(publicKey *ecdsa.PublicKey, token string) (Claims, error) {
 }
 
 func DevelopmentPrivateKey() *ecdsa.PrivateKey {
+	return DeterministicPrivateKey("gear-development-es256-execution-token-key")
+}
+
+func DeterministicPrivateKey(label string) *ecdsa.PrivateKey {
 	curve := elliptic.P256()
-	digest := sha256.Sum256([]byte("gear-development-es256-execution-token-key"))
+	digest := sha256.Sum256([]byte(label))
 	d := new(big.Int).SetBytes(digest[:])
 	d.Mod(d, new(big.Int).Sub(curve.Params().N, big.NewInt(1)))
 	d.Add(d, big.NewInt(1))

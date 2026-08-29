@@ -21,30 +21,35 @@ type Evaluation struct {
 	Alternatives []string
 }
 
-var protectedCriteria = map[string][]string{
-	"nationality":          {"nationality", "nationalities", "national"},
-	"citizenship":          {"citizenship", "citizen", "citizens", "eea"},
-	"ethnicOrigin":         {"ethnic origin", "ethnicity", "ethnic"},
-	"race":                 {"race", "racial"},
-	"religion":             {"religion", "religious"},
-	"age":                  {"age", "aged"},
-	"sex":                  {"sex"},
-	"disability":           {"disability", "disabled"},
-	"sexualOrientation":    {"sexual orientation"},
-	"pregnancy":            {"pregnancy", "pregnant"},
-	"maritalStatus":        {"marital status", "married", "single"},
-	"tradeUnionMembership": {"trade union", "union membership"},
+type termSet struct {
+	Canonical string
+	Terms     []string
 }
 
-var selectiveVerbs = map[string][]string{
-	"select":     {"select", "selects", "selected", "selecting"},
-	"rank":       {"rank", "ranks", "ranked", "ranking"},
-	"filter":     {"filter", "filters", "filtered", "filtering"},
-	"exclude":    {"exclude", "excludes", "excluded", "excluding"},
-	"reject":     {"reject", "rejects", "rejected", "rejecting"},
-	"shortlist":  {"shortlist", "shortlists", "shortlisted", "shortlisting"},
-	"prioritise": {"prioritise", "prioritises", "prioritised", "prioritising", "prioritize", "prioritizes", "prioritized", "prioritizing"},
-	"score":      {"score", "scores", "scored", "scoring"},
+var protectedCriteria = []termSet{
+	{Canonical: "nationality", Terms: []string{"nationality", "nationalities", "national"}},
+	{Canonical: "citizenship", Terms: []string{"citizenship", "citizen", "citizens", "eea"}},
+	{Canonical: "ethnicOrigin", Terms: []string{"ethnic origin", "ethnicity", "ethnic"}},
+	{Canonical: "race", Terms: []string{"race", "racial"}},
+	{Canonical: "religion", Terms: []string{"religion", "religious"}},
+	{Canonical: "age", Terms: []string{"age", "aged"}},
+	{Canonical: "sex", Terms: []string{"sex"}},
+	{Canonical: "disability", Terms: []string{"disability", "disabled"}},
+	{Canonical: "sexualOrientation", Terms: []string{"sexual orientation"}},
+	{Canonical: "pregnancy", Terms: []string{"pregnancy", "pregnant"}},
+	{Canonical: "maritalStatus", Terms: []string{"marital status", "married", "single"}},
+	{Canonical: "tradeUnionMembership", Terms: []string{"trade union", "union membership"}},
+}
+
+var selectiveVerbs = []termSet{
+	{Canonical: "select", Terms: []string{"select", "selects", "selected", "selecting"}},
+	{Canonical: "rank", Terms: []string{"rank", "ranks", "ranked", "ranking"}},
+	{Canonical: "filter", Terms: []string{"filter", "filters", "filtered", "filtering"}},
+	{Canonical: "exclude", Terms: []string{"exclude", "excludes", "excluded", "excluding"}},
+	{Canonical: "reject", Terms: []string{"reject", "rejects", "rejected", "rejecting"}},
+	{Canonical: "shortlist", Terms: []string{"shortlist", "shortlists", "shortlisted", "shortlisting"}},
+	{Canonical: "prioritise", Terms: []string{"prioritise", "prioritises", "prioritised", "prioritising", "prioritize", "prioritizes", "prioritized", "prioritizing"}},
+	{Canonical: "score", Terms: []string{"score", "scores", "scored", "scoring"}},
 }
 
 var lawfulAlternatives = []string{
@@ -69,12 +74,12 @@ func EvaluatePurpose(statement string) Evaluation {
 	return Evaluation{Decision: DecisionAllow}
 }
 
-func firstMatch(statement string, dictionary map[string][]string) string {
+func firstMatch(statement string, dictionary []termSet) string {
 	lowered := strings.ToLower(statement)
-	for canonical, terms := range dictionary {
-		for _, term := range terms {
+	for _, set := range dictionary {
+		for _, term := range set.Terms {
 			if containsTerm(lowered, strings.ToLower(term)) {
-				return canonical
+				return set.Canonical
 			}
 		}
 	}
@@ -88,4 +93,3 @@ func containsTerm(statement, term string) bool {
 	re := regexp.MustCompile(`\b` + regexp.QuoteMeta(term) + `\b`)
 	return re.MatchString(statement)
 }
-

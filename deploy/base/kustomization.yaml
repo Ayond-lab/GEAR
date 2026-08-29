@@ -6,6 +6,8 @@ resources:
   - crds/gear.eu_escalationitems.yaml
   - gear-audit-service.yaml
   - gear-audit-statefulset.yaml
+  - gear-mandate-service.yaml
+  - gear-mandate-deployment.yaml
   - gear-policy-service.yaml
   - gear-policy-deployment.yaml
   - webhook-rbac.yaml

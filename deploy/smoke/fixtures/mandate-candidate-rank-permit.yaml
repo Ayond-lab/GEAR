@@ -1,0 +1,41 @@
+apiVersion: gear.eu/v1
+kind: Mandate
+metadata:
+  creationTimestamp: null
+  name: mnd-candidate-rank-permit
+  namespace: gear-lab
+spec:
+  abilityRef: cv-screen
+  abilityVersion: 0.3.0
+  actionGrants:
+  - class: RECORD_ANNOTATE
+    disposition: permit
+  - class: CANDIDATE_RANK
+    disposition: permit
+  approvers:
+  - id: hiring-manager-1
+    name: Hiring Manager
+  caps:
+    dailyActions: 50
+  connectorGrants:
+  - connector: applications-store
+    scope: read
+  - connector: candidate-record
+    scope: write
+  credentialRef:
+    name: mnd-candidate-rank-permit-credential
+    namespace: gear-lab
+  egress: []
+  expiresAt: "2027-02-01T00:00:00Z"
+  legalBasis: Smoke-test negative control
+  mandateId: MND-CANDIDATE-RANK-PERMIT
+  purposeStatement: Check the CVs, select the candidates who are not citizens of the
+    EEA.
+  signature: eyJhbGciOiJFUzI1NiIsInR5cCI6ImdlYXItbWFuZGF0ZStqd3MifQ.eyJhYmlsaXR5UmVmIjoiY3Ytc2NyZWVuIiwiYWJpbGl0eVZlcnNpb24iOiIwLjMuMCIsImFjdGlvbkdyYW50cyI6W3siY2xhc3MiOiJSRUNPUkRfQU5OT1RBVEUiLCJkaXNwb3NpdGlvbiI6InBlcm1pdCJ9LHsiY2xhc3MiOiJDQU5ESURBVEVfUkFOSyIsImRpc3Bvc2l0aW9uIjoicGVybWl0In1dLCJhcHByb3ZlcnMiOlt7ImlkIjoiaGlyaW5nLW1hbmFnZXItMSIsIm5hbWUiOiJIaXJpbmcgTWFuYWdlciJ9XSwiY2FwcyI6eyJkYWlseUFjdGlvbnMiOjUwfSwiY29ubmVjdG9yR3JhbnRzIjpbeyJjb25uZWN0b3IiOiJhcHBsaWNhdGlvbnMtc3RvcmUiLCJzY29wZSI6InJlYWQifSx7ImNvbm5lY3RvciI6ImNhbmRpZGF0ZS1yZWNvcmQiLCJzY29wZSI6IndyaXRlIn1dLCJjcmVkZW50aWFsUmVmIjp7Im5hbWUiOiJtbmQtY2FuZGlkYXRlLXJhbmstcGVybWl0LWNyZWRlbnRpYWwiLCJuYW1lc3BhY2UiOiJnZWFyLWxhYiJ9LCJlZ3Jlc3MiOltdLCJleHBpcmVzQXQiOiIyMDI3LTAyLTAxVDAwOjAwOjAwWiIsImxlZ2FsQmFzaXMiOiJTbW9rZS10ZXN0IG5lZ2F0aXZlIGNvbnRyb2wiLCJtYW5kYXRlSWQiOiJNTkQtQ0FORElEQVRFLVJBTkstUEVSTUlUIiwicHVycG9zZVN0YXRlbWVudCI6IkNoZWNrIHRoZSBDVnMsIHNlbGVjdCB0aGUgY2FuZGlkYXRlcyB3aG8gYXJlIG5vdCBjaXRpemVucyBvZiB0aGUgRUVBLiIsInNvdXJjZXMiOlt7ImlkIjoiYXBwbGljYXRpb25zLWluYm94IiwidHlwZSI6ImZvbGRlciJ9XSwidGhyZXNob2xkcyI6eyJleHRyYWN0aW9uQ29uZmlkZW5jZSI6IjAuNzAifSwidmVyc2lvbiI6MX0.8izdVNIL4UpjJRMDL6mWIjX46g33nNQXx3fZ2ykJGCsuRkIo7vg6fT8IousBXGByrldin8Cv4cJv7sINg6OuaQ
+  sources:
+  - id: applications-inbox
+    type: folder
+  thresholds:
+    extractionConfidence: "0.70"
+  version: 1
+status: {}

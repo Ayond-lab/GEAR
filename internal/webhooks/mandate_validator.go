@@ -2,10 +2,13 @@ package webhooks
 
 import (
 	"context"
+	"crypto/sha256"
 	"errors"
 	"fmt"
 
 	gearv1 "gear/api/v1"
+	"gear/internal/legality"
+	"gear/internal/mandatesign"
 	"gear/internal/subsume"
 
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
@@ -72,6 +75,31 @@ func ValidateMandateSubsumption(ability gearv1.AbilitySpec, mandate gearv1.Manda
 	return invalidMandate(mandate.MandateID, fieldErrorsForViolations(result.Violations))
 }
 
+func ValidateMandateLegality(mandate gearv1.MandateSpec) error {
+	eval := legality.EvaluatePurpose(mandate.PurposeStatement)
+	if eval.Decision != legality.DecisionRefuse {
+		return nil
+	}
+	errs := field.ErrorList{
+		field.Invalid(field.NewPath("spec").Child("purposeStatement"), "sha256:"+shortDigest([]byte(mandate.PurposeStatement)), "purpose refused by legality gate: "+eval.Reason),
+	}
+	for _, grant := range mandate.ActionGrants {
+		if grant.Class == "CANDIDATE_RANK" && grant.Disposition != "forbid" {
+			errs = append(errs, field.Invalid(field.NewPath("spec").Child("actionGrants"), grant.Class+":"+grant.Disposition, "action class CANDIDATE_RANK was refused by legality gate for protected-attribute selective use"))
+		}
+	}
+	return invalidMandate(mandate.MandateID, errs)
+}
+
+func ValidateMandateSignature(mandate gearv1.MandateSpec) error {
+	if err := mandatesign.Verify(mandate, mandatesign.DevelopmentPublicKey()); err != nil {
+		return invalidMandate(mandate.MandateID, field.ErrorList{
+			field.Invalid(field.NewPath("spec").Child("signature"), "<redacted>", err.Error()),
+		})
+	}
+	return nil
+}
+
 func (v MandateValidator) validateMandate(ctx context.Context, mandate *gearv1.Mandate) error {
 	if mandate == nil {
 		return ErrNilMandate
@@ -96,7 +124,13 @@ func (v MandateValidator) validateMandate(ctx context.Context, mandate *gearv1.M
 		return fmt.Errorf("resolve referenced ability %s: %w", key.String(), err)
 	}
 
-	return ValidateMandateSubsumption(ability.Spec, mandate.Spec)
+	if err := ValidateMandateSubsumption(ability.Spec, mandate.Spec); err != nil {
+		return err
+	}
+	if err := ValidateMandateLegality(mandate.Spec); err != nil {
+		return err
+	}
+	return ValidateMandateSignature(mandate.Spec)
 }
 
 func invalidMandate(name string, fieldErrors field.ErrorList) error {
@@ -136,4 +170,9 @@ func pathForViolation(name string) *field.Path {
 	default:
 		return field.NewPath("spec").Child(name)
 	}
+}
+
+func shortDigest(data []byte) string {
+	sum := sha256.Sum256(data)
+	return fmt.Sprintf("%x", sum[:8])
 }

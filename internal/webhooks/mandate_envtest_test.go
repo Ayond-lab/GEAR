@@ -112,6 +112,24 @@ func TestEnvtestMandateAdmissionRejectsWidenedMandate(t *testing.T) {
 	if !strings.Contains(err.Error(), "action class is outside manifest") {
 		t.Fatalf("expected subsumption violation in API admission error, got %v", err)
 	}
+
+	illegal := narrowedMandate()
+	illegal.Name = "mnd-candidate-rank-permit"
+	illegal.Spec.MandateID = "MND-CANDIDATE-RANK-PERMIT"
+	illegal.Spec.PurposeStatement = "Check the CVs, select the candidates who are not citizens of the EEA."
+	illegal.Spec.ActionGrants = []gearv1.ActionGrant{
+		{Class: "RECORD_ANNOTATE", Disposition: "permit"},
+		{Class: "CANDIDATE_RANK", Disposition: "permit"},
+	}
+	illegal.Spec.Signature = mustSignMandateSpec(illegal.Spec)
+
+	err = k8sClient.Create(ctx, illegal)
+	if !apierrors.IsInvalid(err) {
+		t.Fatalf("expected CANDIDATE_RANK permit mandate to be rejected by API admission, got %T: %v", err, err)
+	}
+	if !strings.Contains(err.Error(), "CANDIDATE_RANK was refused by legality gate") {
+		t.Fatalf("expected legality-gate rejection in API admission error, got %v", err)
+	}
 }
 
 func waitForWebhookServer(t *testing.T, server webhook.Server, errCh <-chan error) {

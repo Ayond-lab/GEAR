@@ -10,6 +10,7 @@ import (
 	"time"
 
 	gearv1 "gear/api/v1"
+	"gear/internal/mandatesign"
 
 	admissionv1 "k8s.io/api/admission/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -82,6 +83,59 @@ func TestMandateValidatorRejectsWidenedConnectorGrant(t *testing.T) {
 	}
 	if !strings.Contains(err.Error(), "connector grant is outside manifest scopes") {
 		t.Fatalf("expected connector violation in error, got %v", err)
+	}
+}
+
+func TestMandateValidatorRejectsUnsignedMandate(t *testing.T) {
+	validator := NewMandateValidator(fakeClient(t, cvScreenAbility()))
+	mandate := narrowedMandate()
+	mandate.Spec.Signature = ""
+
+	err := validator.ValidateCreateMandate(context.Background(), mandate)
+
+	if !apierrors.IsInvalid(err) {
+		t.Fatalf("expected invalid error for unsigned mandate, got %T: %v", err, err)
+	}
+	if !strings.Contains(err.Error(), "missing signature") {
+		t.Fatalf("expected missing signature error, got %v", err)
+	}
+}
+
+func TestMandateValidatorRejectsTamperedSignature(t *testing.T) {
+	validator := NewMandateValidator(fakeClient(t, cvScreenAbility()))
+	mandate := narrowedMandate()
+	mandate.Spec.Caps.DailyActions = 51
+
+	err := validator.ValidateCreateMandate(context.Background(), mandate)
+
+	if !apierrors.IsInvalid(err) {
+		t.Fatalf("expected invalid error for tampered mandate, got %T: %v", err, err)
+	}
+	if !strings.Contains(err.Error(), "payload mismatch") {
+		t.Fatalf("expected signature payload mismatch, got %v", err)
+	}
+}
+
+func TestMandateValidatorRejectsLegalityRefusedCandidateRankPermit(t *testing.T) {
+	validator := NewMandateValidator(fakeClient(t, cvScreenAbility()))
+	mandate := narrowedMandate()
+	mandate.Spec.PurposeStatement = "Check the CVs, select the candidates who are not citizens of the EEA."
+	mandate.Spec.ActionGrants = []gearv1.ActionGrant{
+		{Class: "RECORD_ANNOTATE", Disposition: "permit"},
+		{Class: "CANDIDATE_RANK", Disposition: "permit"},
+	}
+	mandate.Spec.Signature = mustSignMandateSpec(mandate.Spec)
+
+	err := validator.ValidateCreateMandate(context.Background(), mandate)
+
+	if !apierrors.IsInvalid(err) {
+		t.Fatalf("expected invalid error for legality-refused mandate, got %T: %v", err, err)
+	}
+	if !strings.Contains(err.Error(), "CANDIDATE_RANK was refused by legality gate") {
+		t.Fatalf("expected legality-gate action rejection, got %v", err)
+	}
+	if strings.Contains(err.Error(), "Check the CVs") || strings.Contains(err.Error(), "citizens of the EEA") {
+		t.Fatalf("admission error should not echo raw unlawful purpose, got %v", err)
 	}
 }
 
@@ -225,7 +279,7 @@ func narrowedMandate() *gearv1.Mandate {
 }
 
 func narrowedMandateSpec() gearv1.MandateSpec {
-	return gearv1.MandateSpec{
+	spec := gearv1.MandateSpec{
 		MandateID:        "MND-2026-021",
 		Version:          2,
 		AbilityRef:       "cv-screen",
@@ -257,4 +311,14 @@ func narrowedMandateSpec() gearv1.MandateSpec {
 			Namespace: "gear-lab",
 		},
 	}
+	spec.Signature = mustSignMandateSpec(spec)
+	return spec
+}
+
+func mustSignMandateSpec(spec gearv1.MandateSpec) string {
+	signature, err := mandatesign.Sign(spec, mandatesign.DevelopmentPrivateKey())
+	if err != nil {
+		panic(err)
+	}
+	return signature
 }

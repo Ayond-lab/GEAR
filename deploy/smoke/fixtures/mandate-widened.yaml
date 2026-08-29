@@ -1,37 +1,40 @@
 apiVersion: gear.eu/v1
 kind: Mandate
 metadata:
+  creationTimestamp: null
   name: mnd-widened
   namespace: gear-lab
 spec:
-  mandateId: MND-WIDENED
-  version: 1
   abilityRef: cv-screen
   abilityVersion: 0.3.0
-  purposeStatement: Attempt to grant an undeclared destructive record operation.
-  legalBasis: Smoke-test negative control
-  sources:
-    - type: folder
-      id: applications-inbox
-  connectorGrants:
-    - connector: applications-store
-      scope: read
-    - connector: candidate-record
-      scope: write
   actionGrants:
-    - class: RECORD_ANNOTATE
-      disposition: permit
-    - class: DELETE_RECORD
-      disposition: permit
+  - class: RECORD_ANNOTATE
+    disposition: permit
+  - class: DELETE_RECORD
+    disposition: permit
+  approvers:
+  - id: hiring-manager-1
+    name: Hiring Manager
   caps:
     dailyActions: 50
-  thresholds:
-    extractionConfidence: "0.70"
-  approvers:
-    - id: hiring-manager-1
-      name: Hiring Manager
-  egress: []
-  expiresAt: "2027-02-01T00:00:00Z"
+  connectorGrants:
+  - connector: applications-store
+    scope: read
+  - connector: candidate-record
+    scope: write
   credentialRef:
     name: mnd-widened-credential
     namespace: gear-lab
+  egress: []
+  expiresAt: "2027-02-01T00:00:00Z"
+  legalBasis: Smoke-test negative control
+  mandateId: MND-WIDENED
+  purposeStatement: Attempt to grant an undeclared destructive record operation.
+  signature: eyJhbGciOiJFUzI1NiIsInR5cCI6ImdlYXItbWFuZGF0ZStqd3MifQ.eyJhYmlsaXR5UmVmIjoiY3Ytc2NyZWVuIiwiYWJpbGl0eVZlcnNpb24iOiIwLjMuMCIsImFjdGlvbkdyYW50cyI6W3siY2xhc3MiOiJSRUNPUkRfQU5OT1RBVEUiLCJkaXNwb3NpdGlvbiI6InBlcm1pdCJ9LHsiY2xhc3MiOiJERUxFVEVfUkVDT1JEIiwiZGlzcG9zaXRpb24iOiJwZXJtaXQifV0sImFwcHJvdmVycyI6W3siaWQiOiJoaXJpbmctbWFuYWdlci0xIiwibmFtZSI6IkhpcmluZyBNYW5hZ2VyIn1dLCJjYXBzIjp7ImRhaWx5QWN0aW9ucyI6NTB9LCJjb25uZWN0b3JHcmFudHMiOlt7ImNvbm5lY3RvciI6ImFwcGxpY2F0aW9ucy1zdG9yZSIsInNjb3BlIjoicmVhZCJ9LHsiY29ubmVjdG9yIjoiY2FuZGlkYXRlLXJlY29yZCIsInNjb3BlIjoid3JpdGUifV0sImNyZWRlbnRpYWxSZWYiOnsibmFtZSI6Im1uZC13aWRlbmVkLWNyZWRlbnRpYWwiLCJuYW1lc3BhY2UiOiJnZWFyLWxhYiJ9LCJlZ3Jlc3MiOltdLCJleHBpcmVzQXQiOiIyMDI3LTAyLTAxVDAwOjAwOjAwWiIsImxlZ2FsQmFzaXMiOiJTbW9rZS10ZXN0IG5lZ2F0aXZlIGNvbnRyb2wiLCJtYW5kYXRlSWQiOiJNTkQtV0lERU5FRCIsInB1cnBvc2VTdGF0ZW1lbnQiOiJBdHRlbXB0IHRvIGdyYW50IGFuIHVuZGVjbGFyZWQgZGVzdHJ1Y3RpdmUgcmVjb3JkIG9wZXJhdGlvbi4iLCJzb3VyY2VzIjpbeyJpZCI6ImFwcGxpY2F0aW9ucy1pbmJveCIsInR5cGUiOiJmb2xkZXIifV0sInRocmVzaG9sZHMiOnsiZXh0cmFjdGlvbkNvbmZpZGVuY2UiOiIwLjcwIn0sInZlcnNpb24iOjF9.oGXc-I57WIaaX-S284raLslRhj1FTvtPAzNjoz12eD0y-D5sKGTs-kzPYY9m4u9ja8afFPGfDyO5WUfhuLBAuA
+  sources:
+  - id: applications-inbox
+    type: folder
+  thresholds:
+    extractionConfidence: "0.70"
+  version: 1
+status: {}
