@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: gear-audit
+  namespace: gear-system
+  labels:
+    app.kubernetes.io/name: gear-audit
+    app.kubernetes.io/part-of: gear
+spec:
+  replicas: 1
+  serviceName: gear-audit
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: gear-audit
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: gear-audit
+        app.kubernetes.io/part-of: gear
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: gear-audit
+          image: ghcr.io/ayond-lab/gear-audit:dev
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: GEAR_ADDR
+              value: ":8080"
+            - name: GEAR_AUDIT_DB
+              value: /data/gear-audit.db
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: data
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi

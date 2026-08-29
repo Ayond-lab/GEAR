@@ -6,6 +6,8 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+
+	"github.com/gowebpki/jcs"
 )
 
 const GenesisHash = "sha256:0000000000000000000000000000000000000000000000000000000000000000"
@@ -27,8 +29,8 @@ type Entry struct {
 }
 
 type Range struct {
-	Start uint64
-	End   uint64
+	Start uint64 `json:"start"`
+	End   uint64 `json:"end"`
 }
 
 type Verification struct {
@@ -99,7 +101,7 @@ func CanonicalJSON(value any) ([]byte, error) {
 	if err := encoder.Encode(value); err != nil {
 		return nil, err
 	}
-	return bytes.TrimSpace(buffer.Bytes()), nil
+	return jcs.Transform(bytes.TrimSpace(buffer.Bytes()))
 }
 
 func Verify(entries []Entry) Verification {

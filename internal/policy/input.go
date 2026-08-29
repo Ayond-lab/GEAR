@@ -5,8 +5,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"math/big"
 	"sort"
+
+	"github.com/shopspring/decimal"
 )
 
 var ErrInvalidDecisionInput = errors.New("invalid decision input")
@@ -95,19 +96,18 @@ func IsDecimalString(value string) bool {
 	if value == "" {
 		return false
 	}
-	_, ok := new(big.Rat).SetString(value)
-	return ok
+	_, err := decimal.NewFromString(value)
+	return err == nil
 }
 
 func CompareDecimalStrings(left, right string) (int, error) {
-	l, ok := new(big.Rat).SetString(left)
-	if !ok {
+	l, err := decimal.NewFromString(left)
+	if err != nil {
 		return 0, fmt.Errorf("%w: invalid decimal %q", ErrInvalidDecisionInput, left)
 	}
-	r, ok := new(big.Rat).SetString(right)
-	if !ok {
+	r, err := decimal.NewFromString(right)
+	if err != nil {
 		return 0, fmt.Errorf("%w: invalid decimal %q", ErrInvalidDecisionInput, right)
 	}
 	return l.Cmp(r), nil
 }
-

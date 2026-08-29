@@ -11,6 +11,8 @@ RENDER_DIR="${RENDER_DIR:-bin/cluster-smoke-rendered}"
 SMOKE_OVERLAY="${SMOKE_OVERLAY:-deploy/smoke}"
 SMOKE_FIXTURES="${SMOKE_FIXTURES:-deploy/smoke/fixtures}"
 WEBHOOK_IMAGE="${WEBHOOK_IMAGE:-ghcr.io/ayond-lab/gear-webhooks:dev}"
+AUDIT_IMAGE="${AUDIT_IMAGE:-ghcr.io/ayond-lab/gear-audit:dev}"
+POLICY_IMAGE="${POLICY_IMAGE:-ghcr.io/ayond-lab/gear-policy:dev}"
 CILIUM_VERSION="${CILIUM_VERSION:-1.20.1}"
 CILIUM_K8S_SERVICE_PORT="${CILIUM_K8S_SERVICE_PORT:-6443}"
 NETWORK_BASELINE="${NETWORK_BASELINE:-deploy/network/ability-egress-baseline.yaml}"
@@ -195,10 +197,15 @@ deploy_stack() {
 		--dry-run=client \
 		-o yaml | kubectl apply -f -
 	kubectl apply -f "$RENDER_DIR/rendered.yaml"
+	kubectl -n "$WEBHOOK_NAMESPACE" set image statefulset/gear-audit gear-audit="$AUDIT_IMAGE"
+	kubectl -n "$WEBHOOK_NAMESPACE" set image deployment/gear-policy gear-policy="$POLICY_IMAGE"
+	kubectl -n "$WEBHOOK_NAMESPACE" set image deployment/gear-webhooks gear-webhooks="$WEBHOOK_IMAGE"
 	kubectl -n "$WEBHOOK_NAMESPACE" rollout restart deployment/gear-webhooks
+	kubectl -n "$WEBHOOK_NAMESPACE" rollout status statefulset/gear-audit --timeout=120s
+	kubectl -n "$WEBHOOK_NAMESPACE" rollout status deployment/gear-policy --timeout=120s
 	kubectl -n "$WEBHOOK_NAMESPACE" rollout status deployment/gear-webhooks --timeout=120s
 
-	echo "GEAR admission stack deployed with image ${WEBHOOK_IMAGE}"
+	echo "GEAR core stack deployed with images ${WEBHOOK_IMAGE}, ${AUDIT_IMAGE}, ${POLICY_IMAGE}"
 }
 
 run_smoke() {

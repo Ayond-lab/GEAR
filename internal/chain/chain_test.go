@@ -50,6 +50,19 @@ func TestRefUsesAuditEntryPrefix(t *testing.T) {
 	}
 }
 
+func TestCanonicalJSONUsesStableKeyOrdering(t *testing.T) {
+	canonical, err := CanonicalJSON(map[string]any{
+		"zeta":  "last",
+		"alpha": "first",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := string(canonical); got != `{"alpha":"first","zeta":"last"}` {
+		t.Fatalf("unexpected canonical JSON %q", got)
+	}
+}
+
 func buildEntries(t *testing.T, count int) []Entry {
 	t.Helper()
 	var prev Entry

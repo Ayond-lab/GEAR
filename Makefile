@@ -12,6 +12,10 @@ CILIUM_VERSION ?= 1.20.1
 GOARCH ?= $(shell go env GOARCH)
 WEBHOOK_IMAGE ?= ghcr.io/ayond-lab/gear-webhooks:dev
 WEBHOOK_IMAGE_CONTEXT ?= $(LOCALBIN)/docker/gear-webhooks
+AUDIT_IMAGE ?= ghcr.io/ayond-lab/gear-audit:dev
+AUDIT_IMAGE_CONTEXT ?= $(LOCALBIN)/docker/gear-audit
+POLICY_IMAGE ?= ghcr.io/ayond-lab/gear-policy:dev
+POLICY_IMAGE_CONTEXT ?= $(LOCALBIN)/docker/gear-policy
 PEP_IMAGE ?= ghcr.io/ayond-lab/gear-pep:dev
 PEP_IMAGE_CONTEXT ?= $(LOCALBIN)/docker/gear-pep
 NETINIT_IMAGE ?= ghcr.io/ayond-lab/gear-netinit:dev
@@ -21,7 +25,7 @@ HOSTILE_RUNNER_IMAGE_CONTEXT ?= $(LOCALBIN)/docker/gear-hostile-runner
 HOSTILE_TARGET_IMAGE ?= ghcr.io/ayond-lab/gear-hostile-target:dev
 HOSTILE_TARGET_IMAGE_CONTEXT ?= $(LOCALBIN)/docker/gear-hostile-target
 
-.PHONY: tools controller-gen setup-envtest generate manifests test test-go test-inference test-console test-envtest opa-test cluster-up cluster-reset cilium-install cilium-status network-baseline docker-build docker-build-pep docker-build-netinit docker-build-hostile-runner docker-build-hostile-target hostile-images kind-load hostile-load deploy cluster-smoke conformance experiment experiment-a6 evidence-pack
+.PHONY: tools controller-gen setup-envtest generate manifests test test-go test-inference test-console test-envtest opa-test cluster-up cluster-reset cilium-install cilium-status network-baseline docker-build docker-build-audit docker-build-policy core-images docker-build-pep docker-build-netinit docker-build-hostile-runner docker-build-hostile-target hostile-images kind-load core-load hostile-load deploy cluster-smoke conformance experiment experiment-a6 experiment-a7 experiment-a9 evidence-pack
 
 tools:
 	@echo "Required external tools: go 1.24, python 3.12, node 22, kubectl, helm, opa, k3d/k3s, cilium, hubble, k6"
@@ -52,6 +56,8 @@ manifests: controller-gen
 	@test -f deploy/base/crds/gear.eu_mandates.yaml
 	@test -f deploy/base/crds/gear.eu_governedactions.yaml
 	@test -f deploy/base/crds/gear.eu_escalationitems.yaml
+	@test -f deploy/base/gear-audit-statefulset.yaml
+	@test -f deploy/base/gear-policy-deployment.yaml
 	@test -f deploy/base/webhook-deployment.yaml
 	@test -f deploy/base/webhook-service.yaml
 	@test -f deploy/base/webhook-validatingconfiguration.yaml
@@ -99,6 +105,22 @@ docker-build:
 	CGO_ENABLED=0 GOOS=linux GOARCH="$(GOARCH)" go build -o "$(WEBHOOK_IMAGE_CONTEXT)/gear-webhooks" ./cmd/gear-webhooks
 	docker build --platform "linux/$(GOARCH)" -f deploy/docker/gear-webhooks.Dockerfile -t "$(WEBHOOK_IMAGE)" "$(WEBHOOK_IMAGE_CONTEXT)"
 
+docker-build-audit:
+	@command -v go >/dev/null || { echo "missing: go"; exit 127; }
+	@command -v docker >/dev/null || { echo "missing: docker"; exit 127; }
+	mkdir -p "$(AUDIT_IMAGE_CONTEXT)"
+	CGO_ENABLED=0 GOOS=linux GOARCH="$(GOARCH)" go build -o "$(AUDIT_IMAGE_CONTEXT)/gear-audit" ./cmd/gear-audit
+	docker build --platform "linux/$(GOARCH)" -f deploy/docker/gear-audit.Dockerfile -t "$(AUDIT_IMAGE)" "$(AUDIT_IMAGE_CONTEXT)"
+
+docker-build-policy:
+	@command -v go >/dev/null || { echo "missing: go"; exit 127; }
+	@command -v docker >/dev/null || { echo "missing: docker"; exit 127; }
+	mkdir -p "$(POLICY_IMAGE_CONTEXT)"
+	CGO_ENABLED=0 GOOS=linux GOARCH="$(GOARCH)" go build -o "$(POLICY_IMAGE_CONTEXT)/gear-policy" ./cmd/gear-policy
+	docker build --platform "linux/$(GOARCH)" -f deploy/docker/gear-policy.Dockerfile -t "$(POLICY_IMAGE)" "$(POLICY_IMAGE_CONTEXT)"
+
+core-images: docker-build-audit docker-build-policy
+
 docker-build-pep:
 	@command -v go >/dev/null || { echo "missing: go"; exit 127; }
 	@command -v docker >/dev/null || { echo "missing: docker"; exit 127; }
@@ -126,19 +148,23 @@ docker-build-hostile-target:
 
 hostile-images: docker-build-pep docker-build-netinit docker-build-hostile-runner docker-build-hostile-target
 
-kind-load: cluster-up docker-build
+kind-load: cluster-up docker-build core-images
 	@command -v k3d >/dev/null || { echo "missing: k3d"; exit 127; }
-	k3d image import "$(WEBHOOK_IMAGE)" --cluster "$(K3D_CLUSTER)"
+	k3d image import "$(WEBHOOK_IMAGE)" "$(AUDIT_IMAGE)" "$(POLICY_IMAGE)" --cluster "$(K3D_CLUSTER)"
+
+core-load: cluster-up core-images
+	@command -v k3d >/dev/null || { echo "missing: k3d"; exit 127; }
+	k3d image import "$(AUDIT_IMAGE)" "$(POLICY_IMAGE)" --cluster "$(K3D_CLUSTER)"
 
 hostile-load: cluster-up hostile-images
 	@command -v k3d >/dev/null || { echo "missing: k3d"; exit 127; }
 	k3d image import "$(PEP_IMAGE)" "$(NETINIT_IMAGE)" "$(HOSTILE_RUNNER_IMAGE)" "$(HOSTILE_TARGET_IMAGE)" --cluster "$(K3D_CLUSTER)"
 
 deploy: manifests network-baseline kind-load
-	K3D_CLUSTER="$(K3D_CLUSTER)" WEBHOOK_IMAGE="$(WEBHOOK_IMAGE)" hack/cluster-smoke.sh deploy
+	K3D_CLUSTER="$(K3D_CLUSTER)" WEBHOOK_IMAGE="$(WEBHOOK_IMAGE)" AUDIT_IMAGE="$(AUDIT_IMAGE)" POLICY_IMAGE="$(POLICY_IMAGE)" hack/cluster-smoke.sh deploy
 
 cluster-smoke: manifests network-baseline kind-load
-	K3D_CLUSTER="$(K3D_CLUSTER)" WEBHOOK_IMAGE="$(WEBHOOK_IMAGE)" hack/cluster-smoke.sh smoke
+	K3D_CLUSTER="$(K3D_CLUSTER)" WEBHOOK_IMAGE="$(WEBHOOK_IMAGE)" AUDIT_IMAGE="$(AUDIT_IMAGE)" POLICY_IMAGE="$(POLICY_IMAGE)" hack/cluster-smoke.sh smoke
 
 conformance:
 	@command -v go >/dev/null || { echo "missing: go"; exit 127; }
@@ -148,6 +174,10 @@ experiment:
 	@test -n "$(ID)" || { echo "usage: make experiment ID=A1"; exit 2; }
 	@if [ "$(ID)" = "A6" ]; then \
 		$(MAKE) experiment-a6; \
+	elif [ "$(ID)" = "A7" ]; then \
+		$(MAKE) experiment-a7; \
+	elif [ "$(ID)" = "A9" ]; then \
+		$(MAKE) experiment-a9; \
 	else \
 		mkdir -p "evidence/$(ID)/$$(date -u +%Y-%m-%dT%H:%M:%SZ)"; \
 		echo "Created evidence directory for $(ID). Experiment runner lands with harness implementation."; \
@@ -155,6 +185,12 @@ experiment:
 
 experiment-a6: deploy hostile-load
 	K3D_CLUSTER="$(K3D_CLUSTER)" HOSTILE_RUNNER_IMAGE="$(HOSTILE_RUNNER_IMAGE)" HOSTILE_TARGET_IMAGE="$(HOSTILE_TARGET_IMAGE)" PEP_IMAGE="$(PEP_IMAGE)" NETINIT_IMAGE="$(NETINIT_IMAGE)" go run ./harness/hostile/cmd/a6
+
+experiment-a7:
+	go run ./harness/tamper/cmd/a7
+
+experiment-a9:
+	go run ./harness/fault/cmd/a9
 
 evidence-pack:
 	@tar -czf evidence-pack.tgz evidence

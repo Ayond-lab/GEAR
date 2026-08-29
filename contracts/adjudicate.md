@@ -27,6 +27,8 @@ No other fields are accepted. In particular, policy must reject request bodies c
 
 The response contains a decision, rule reference, reason, audit reference, and optionally one execution token or one escalation reference.
 
+`gear-policy` must receive a durable acknowledgement from `gear-audit` before returning this response. If audit is unavailable or the append is not acknowledged, the response is `deny` with rule `R-AUDIT-UNAVAILABLE`, and no token or escalation reference is returned.
+
 Allowed decision values:
 
 - `authorise`
@@ -34,4 +36,3 @@ Allowed decision values:
 - `escalate`
 
 Default outcome is `deny`. Unavailability never grants permission.
-

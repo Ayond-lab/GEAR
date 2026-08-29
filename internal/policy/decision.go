@@ -19,15 +19,18 @@ type Disposition struct {
 }
 
 type RuntimePolicy struct {
-	ActionDispositions map[string]Disposition
+	ActionDispositions  map[string]Disposition
 	ConfidenceThreshold string
 	ApproverCount       int
 }
 
 type DecisionResult struct {
-	Decision Decision `json:"decision"`
-	RuleFired RuleRef `json:"ruleFired"`
-	Reason   string  `json:"reason"`
+	Decision      Decision `json:"decision"`
+	RuleFired     RuleRef  `json:"ruleFired"`
+	Reason        string   `json:"reason"`
+	AuditRef      string   `json:"auditRef"`
+	Token         *string  `json:"token"`
+	EscalationRef *string  `json:"escalationRef"`
 }
 
 func Decide(input DecisionInput, runtime RuntimePolicy) DecisionResult {
@@ -90,3 +93,15 @@ func Decide(input DecisionInput, runtime RuntimePolicy) DecisionResult {
 	}
 }
 
+func DefaultCVRuntimePolicy() RuntimePolicy {
+	return RuntimePolicy{
+		ActionDispositions: map[string]Disposition{
+			"RECORD_ANNOTATE": {Value: "permit", Clause: "P1"},
+			"RECORD_MODIFY":   {Value: "escalate", Clause: "E1"},
+			"CANDIDATE_RANK":  {Value: "forbid", Clause: "D1"},
+			"OUTBOUND_COMMS":  {Value: "forbid", Clause: "D2"},
+		},
+		ConfidenceThreshold: "0.70",
+		ApproverCount:       1,
+	}
+}

@@ -1,6 +1,8 @@
 package conformance
 
 import (
+	"context"
+	"errors"
 	"testing"
 
 	"gear/internal/auditprivacy"
@@ -93,7 +95,27 @@ func TestA8PolicyLatencyEvidence(t *testing.T) {
 }
 
 func TestA9AuditOutageDeniesAdjudication(t *testing.T) {
-	t.Skip("A9 requires gear-policy to call gear-audit before returning in Milestone 2")
+	adjudicator := policy.NewAdjudicator(cvRuntimePolicy(), outageAudit{})
+
+	result := adjudicator.Adjudicate(context.Background(), []byte(`{
+		"actionClass":"RECORD_ANNOTATE",
+		"abilityRef":"cv-screen",
+		"abilityVersion":"0.3.0",
+		"mandateRef":"MND-2026-021",
+		"mandateVersion":2,
+		"confidence":"0.84",
+		"dataClasses":["personal","protected-employment"],
+		"reversibility":"reversible",
+		"counters":{"dailyActions":12,"perSubject":1},
+		"payloadDigest":"sha256:payload"
+	}`))
+
+	if result.Decision != policy.Deny || result.RuleFired.ID != "R-AUDIT-UNAVAILABLE" {
+		t.Fatalf("A9 expected audit outage deny, got %#v", result)
+	}
+	if result.Token != nil {
+		t.Fatalf("A9 expected no execution token when audit is unavailable, got %#v", result.Token)
+	}
 }
 
 func TestA10AuditContainsNoPersonalData(t *testing.T) {
@@ -131,3 +153,8 @@ func cvRuntimePolicy() policy.RuntimePolicy {
 	}
 }
 
+type outageAudit struct{}
+
+func (outageAudit) Append(context.Context, chain.Entry) (chain.Entry, error) {
+	return chain.Entry{}, errors.New("audit unavailable")
+}

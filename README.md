@@ -33,6 +33,8 @@ make test
 make opa-test
 make cluster-smoke
 make experiment ID=A6
+make experiment ID=A7
+make experiment ID=A9
 ```
 
 `controller-gen` is installed into `bin/` by the Makefile. The first Milestone 1 wiring is present; strict generated CRDs and deepcopy output land when the API skeletons are converted to Kubernetes runtime types.
@@ -50,3 +52,5 @@ Ability pods labelled `gear.eu/ability=<ability-name>` are now handled by a muta
 The Milestone 1 network baseline is available through `make network-baseline`. It creates the lab namespace and applies `deploy/network/ability-egress-baseline.yaml`, which selects ability pods and permits egress only to cluster DNS plus trusted GEAR services. If an existing `gear-lab` cluster was created before the Cilium settings were added, run `make cluster-reset` once, then `make cluster-smoke`.
 
 The first hostile experiment is implemented as `make experiment ID=A6`. It runs eight ability-container egress probes with the injected UID control enabled, then repeats the same probes with the init container removed as a negative control. Results and transcripts are retained under `evidence/A6/`.
+
+The Milestone 2 policy and audit core is now implemented. `gear-audit` exposes append, verify, list, and reconciliation endpoints over a bbolt-backed hash chain. `gear-policy` exposes `POST /v1/adjudicate`, accepts exactly the ten-field decision input, writes the decision to audit before returning, and fails closed with `R-AUDIT-UNAVAILABLE` when audit cannot durably acknowledge the entry. `make experiment ID=A7` produces chain verification and tamper-detection evidence, while `make experiment ID=A9` records audit-outage denial evidence.
