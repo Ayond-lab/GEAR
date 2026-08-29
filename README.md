@@ -1,60 +1,158 @@
-# GEAR Development Build
+# GEAR: Governed Execution for Consequential Automation
 
-GEAR is a governed execution layer for consequential automation. This subtree contains the development implementation described by the technical specification: authority separation, sidecar enforcement, deterministic policy decisions, and a tamper-evident audit chain.
+GEAR is a governed execution layer for consequential automation. It separates what an agent is technically able to do from what it is authorised to do in a specific organisational context.
 
-The initial scaffold is intentionally dependency-light. Milestone 0 establishes contracts, API shape, local invariants, conformance placeholders, and build targets. Later milestones can replace the local stand-ins with kubebuilder, Kubernetes clients, OPA bundle loading, bbolt persistence, and mTLS runtime wiring.
+An ability performs work. GEAR decides whether a requested action is authorised, refused, or escalated to a human approver, and records decisions and effects in a tamper-evident audit chain.
 
-## Safety Boundary
+This repository contains a laboratory development build using synthetic CV-screening data. It is intended to demonstrate the governed execution path, not to process real personal data or support live recruitment decisions.
 
-- Synthetic data only.
-- No live organisational deployment.
-- No real personal data in fixtures, logs, audit entries, screenshots, or evidence.
-- Default decision is deny.
-- Policy input is exactly ten fields.
-- Ability containers talk only to `gear-pep` on loopback.
+## What This Repository Demonstrates
 
-## Milestones
+- Authority separation between ability manifest, mandate, and runtime decisioning.
+- Mandate subsumption: a mandate may narrow an ability manifest, but may not widen it.
+- Deterministic legality checks before mandate signing.
+- A fixed ten-field policy input for runtime adjudication.
+- Fail-closed decisioning when required services or evidence writes are unavailable.
+- Sidecar enforcement through `gear-pep`.
+- Tamper-evident audit entries using a hash chain.
+- Human escalation for reserved or uncertain actions.
+- Evidence capture for acceptance criteria A1-A10.
+- A professional HR mandate demonstration UI.
 
-1. Repository and contracts.
-2. Cluster and admission baseline.
-3. Policy and audit core.
-4. PEP enforcement.
-5. Mandate derivation.
-6. CV demonstration path.
-7. Console and evidence.
+## Demonstration Scenario
 
-## Local Checks
+The demonstration domain is synthetic CV screening.
 
-```bash
-make controller-gen
-make generate
-make manifests
-make test
-make opa-test
-make cluster-smoke
-make experiment ID=A6
-make experiment ID=A7
-make experiment ID=A9
+An HR user enters a natural-language mandate request through the console, for example:
+
+```text
+Rank the candidates who are citizens of EEA.
 ```
 
-`controller-gen` is installed into `bin/` by the Makefile. The first Milestone 1 wiring is present; strict generated CRDs and deepcopy output land when the API skeletons are converted to Kubernetes runtime types.
+GEAR interprets the request as a selective action involving citizenship. The mandate is refused because the request combines a protected criterion with ranking. The console then presents a lawful alternative:
 
-The API skeletons have now been converted to Kubernetes runtime types. `make generate` emits `api/v1/zz_generated.deepcopy.go`, and `make manifests` emits CRD schemas from the Go API definitions.
+```text
+Record work-authorisation status for human planning without ranking, filtering, or excluding candidates.
+```
 
-The first `gear-webhooks` validation slice is present in `internal/webhooks`: mandate creation/update validation resolves the referenced `Ability` and rejects mandates that widen the ability manifest. `make test-envtest` now runs the webhook validation tests.
+Under the narrowed mandate, the agent may record work-authorisation annotations for planning. It may not rank candidates by citizenship, contact candidates, or exceed the mandate limits. Unclear cases are escalated to a human reviewer, and governed decisions and effects are recorded without writing raw CV text or direct identifiers to the audit chain.
 
-`cmd/gear-webhooks` now starts a controller-runtime manager, registers the Mandate validating webhook at `/validate-gear-eu-v1-mandate`, and exposes health/readiness probes. `deploy/base` includes the webhook Deployment, Service, RBAC, namespace, and fail-closed `ValidatingWebhookConfiguration`.
+## Architecture
 
-Ability pods labelled `gear.eu/ability=<ability-name>` are now handled by a mutating webhook at `/mutate-v1-pod`. It injects the `gear-pep` sidecar, the UID-scoped egress init container, PEP-only credential volumes, disables pod-level service account token automounting, and pins ability/PEP UIDs to `1001` and `1337`.
+| Component | Role |
+|---|---|
+| `gear-webhooks` | Kubernetes admission control, subsumption validation, and sidecar injection |
+| `gear-policy` | Deterministic policy adjudication |
+| `gear-pep` | Local policy enforcement point for ability containers |
+| `gear-audit` | Append-only tamper-evident audit chain |
+| `gear-triggers` | Converts synthetic source events into governed actions |
+| `gear-controllers` | Reconciles GEAR custom resources and execution state |
+| `gear-mandate` | Mandate derivation, refusal, subsumption check, and signing |
+| `gear-inference` | Synthetic CV work-authorisation extraction |
+| `gear-console` | HR demonstration UI and evidence view |
+| `gear-fixture-store` | Development-only synthetic fixture store |
+| `harness` | Conformance tests, hostile experiments, replay, tamper tests, latency tests, and evidence capture |
 
-`make cluster-smoke` creates or starts a local `k3d` cluster named `gear-lab`, installs Cilium, applies the ability egress NetworkPolicy baseline, builds the `gear-webhooks` image, imports it into the cluster, generates local webhook TLS certificates, deploys the CRDs and webhook stack, and applies smoke fixtures. The smoke passes only when the narrowed `Mandate` is accepted and a widened `Mandate` is rejected by Kubernetes admission.
+## Governance Model
 
-The Milestone 1 network baseline is available through `make network-baseline`. It creates the lab namespace and applies `deploy/network/ability-egress-baseline.yaml`, which selects ability pods and permits egress only to cluster DNS plus trusted GEAR services. If an existing `gear-lab` cluster was created before the Cilium settings were added, run `make cluster-reset` once, then `make cluster-smoke`.
+GEAR separates authority into three layers.
 
-The first hostile experiment is implemented as `make experiment ID=A6`. It runs eight ability-container egress probes with the injected UID control enabled, then repeats the same probes with the init container removed as a negative control. Results and transcripts are retained under `evidence/A6/`.
+| Layer | Set by | Defines |
+|---|---|---|
+| Ability manifest | Ability publisher | What the ability is technically capable of doing |
+| Mandate | Principal organisation | What the organisation permits for a specific ability version |
+| Runtime | GEAR | Whether a specific action may proceed now |
 
-The Milestone 2 policy and audit core is now implemented. `gear-audit` exposes append, verify, list, and reconciliation endpoints over a bbolt-backed hash chain. `gear-policy` exposes `POST /v1/adjudicate`, accepts exactly the ten-field decision input, writes the decision to audit before returning, and fails closed with `R-AUDIT-UNAVAILABLE` when audit cannot durably acknowledge the entry. `make experiment ID=A7` produces chain verification and tamper-detection evidence, while `make experiment ID=A9` records audit-outage denial evidence.
+A mandate may narrow the ability manifest, but it may never widen it. Runtime decisioning cannot grant authority that is absent from the signed ability manifest and mandate.
 
-Milestone 3 PEP enforcement is now implemented. `gear-pep` serves the ability-facing loopback API on `127.0.0.1:9191` only, validates requests against trusted active governed-action state, builds the fixed ten-field policy input, calls `gear-policy`, verifies single-use ES256 execution tokens, re-checks connector scope and payload digest immediately before execution, and writes a durable `effect` audit entry before executing the synthetic effect. The lab deployment uses mTLS for PEP-to-policy traffic, with certificates generated by `hack/cluster-smoke.sh`. `make experiment ID=A6` records the hostile-egress proof and negative control under `evidence/A6/`.
+## Policy Boundary
 
-Milestone 4 mandate derivation is now implemented. `gear-mandate` exposes a deterministic derivation endpoint, refuses protected-attribute selective purposes with `mandate-refused` audit evidence, returns the lawful alternatives required by the specification, derives the narrowed CV mandate clauses, enforces subsumption before signing, and signs accepted mandates with the local TRL 4 ES256 key. The validating webhook rejects unsigned or tampered mandates and rejects direct `kubectl apply` attempts that grant `CANDIDATE_RANK: permit` for the refused citizenship-selection purpose. `make experiment ID=A1` and `make experiment ID=A5` retain evidence for those controls.
+`gear-policy` receives exactly ten decision fields:
+
+- `actionClass`
+- `abilityRef`
+- `abilityVersion`
+- `mandateRef`
+- `mandateVersion`
+- `confidence`
+- `dataClasses`
+- `reversibility`
+- `counters`
+- `payloadDigest`
+
+Model output, prompt text, raw CV text, extracted free text, and ability-supplied explanations are excluded from policy inputs.
+
+## Running Locally
+
+Run the main local checks:
+
+```bash
+make test
+make opa-test
+make test-envtest
+make conformance
+```
+
+Run the HR demonstration console:
+
+```bash
+GEAR_ADDR=127.0.0.1:18080 go run ./cmd/gear-console-api
+```
+
+Open:
+
+```text
+http://127.0.0.1:18080
+```
+
+For cluster-based validation, use the Kubernetes and evidence targets in the `Makefile`.
+
+## Validation Evidence
+
+Retained validation artefacts are stored under:
+
+```text
+evidence/A1
+evidence/A2
+evidence/A3
+evidence/A4
+evidence/A5
+evidence/A6
+evidence/A7
+evidence/A8
+evidence/A9
+evidence/A10
+```
+
+The evidence pack files are:
+
+- `evidence-pack-manifest.json`, which summarises the latest retained evidence.
+- `evidence-pack.tgz`, which packages the retained evidence artefacts.
+
+The A1-A10 evidence set corresponds to the acceptance criteria for mandate refusal, policy denial, authorised annotation, prompt-injection control, admission rejection, hostile egress tests, audit tamper detection, latency measurement, audit-outage denial, and privacy scanning.
+
+## Privacy and Safety Constraints
+
+- Synthetic fixtures only.
+- No real personal data.
+- No live operational deployment.
+- No live recruitment decisions.
+- The audit chain excludes direct identifiers, raw CV text, raw email addresses, phone numbers, salts, and human free-text reasons.
+- Human free-text reasons are represented by fixture-store references.
+- Unavailability never grants permission.
+- The ability container communicates with `gear-pep` over loopback; trusted GEAR components mediate policy, inference, store access, and effects.
+
+## Repository Layout
+
+```text
+api/          Kubernetes resource types
+cmd/          Service entry points
+internal/     Core implementation packages
+policy/       OPA/Rego policy bundle
+inference/    Synthetic extraction service
+console/      HR demonstration UI
+deploy/       Kubernetes manifests
+harness/      Experiments and evidence tooling
+evidence/     Retained validation artefacts
+contracts/    Interface and invariant documents
+```
