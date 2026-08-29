@@ -1,0 +1,37 @@
+apiVersion: gear.eu/v1
+kind: Mandate
+metadata:
+  name: mnd-widened
+  namespace: gear-lab
+spec:
+  mandateId: MND-WIDENED
+  version: 1
+  abilityRef: cv-screen
+  abilityVersion: 0.3.0
+  purposeStatement: Attempt to grant an undeclared destructive record operation.
+  legalBasis: Smoke-test negative control
+  sources:
+    - type: folder
+      id: applications-inbox
+  connectorGrants:
+    - connector: applications-store
+      scope: read
+    - connector: candidate-record
+      scope: write
+  actionGrants:
+    - class: RECORD_ANNOTATE
+      disposition: permit
+    - class: DELETE_RECORD
+      disposition: permit
+  caps:
+    dailyActions: 50
+  thresholds:
+    extractionConfidence: "0.70"
+  approvers:
+    - id: hiring-manager-1
+      name: Hiring Manager
+  egress: []
+  expiresAt: "2027-02-01T00:00:00Z"
+  credentialRef:
+    name: mnd-widened-credential
+    namespace: gear-lab

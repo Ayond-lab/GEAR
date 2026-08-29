@@ -7,8 +7,12 @@ SETUP_ENVTEST ?= $(LOCALBIN)/setup-envtest
 SETUP_ENVTEST_VERSION ?= v0.20.4
 ENVTEST_K8S_VERSION ?= 1.32.0
 ENVTEST_ASSETS_DIR ?= $(LOCALBIN)/envtest
+K3D_CLUSTER ?= gear-lab
+GOARCH ?= $(shell go env GOARCH)
+WEBHOOK_IMAGE ?= ghcr.io/ayond-lab/gear-webhooks:dev
+WEBHOOK_IMAGE_CONTEXT ?= $(LOCALBIN)/docker/gear-webhooks
 
-.PHONY: tools controller-gen setup-envtest generate manifests test test-go test-inference test-console test-envtest opa-test cluster-up docker-build kind-load deploy conformance experiment evidence-pack
+.PHONY: tools controller-gen setup-envtest generate manifests test test-go test-inference test-console test-envtest opa-test cluster-up docker-build kind-load deploy cluster-smoke conformance experiment evidence-pack
 
 tools:
 	@echo "Required external tools: go 1.24, python 3.12, node 22, kubectl, helm, opa, k3d/k3s, cilium, hubble, k6"
@@ -65,16 +69,24 @@ opa-test:
 	@if command -v opa >/dev/null; then opa test policy/bundle; else echo "missing: opa; skipped policy bundle tests"; fi
 
 cluster-up:
-	@echo "Cluster automation lands in Milestone 1."
+	K3D_CLUSTER="$(K3D_CLUSTER)" hack/cluster-smoke.sh cluster-up
 
 docker-build:
-	@echo "Container builds land as components become executable services."
+	@command -v go >/dev/null || { echo "missing: go"; exit 127; }
+	@command -v docker >/dev/null || { echo "missing: docker"; exit 127; }
+	mkdir -p "$(WEBHOOK_IMAGE_CONTEXT)"
+	CGO_ENABLED=0 GOOS=linux GOARCH="$(GOARCH)" go build -o "$(WEBHOOK_IMAGE_CONTEXT)/gear-webhooks" ./cmd/gear-webhooks
+	docker build --platform "linux/$(GOARCH)" -f deploy/docker/gear-webhooks.Dockerfile -t "$(WEBHOOK_IMAGE)" "$(WEBHOOK_IMAGE_CONTEXT)"
 
-kind-load:
-	@echo "Image loading lands with cluster automation."
+kind-load: cluster-up docker-build
+	@command -v k3d >/dev/null || { echo "missing: k3d"; exit 127; }
+	k3d image import "$(WEBHOOK_IMAGE)" --cluster "$(K3D_CLUSTER)"
 
-deploy:
-	@echo "Deployment automation lands after Milestone 1 manifests."
+deploy: manifests kind-load
+	K3D_CLUSTER="$(K3D_CLUSTER)" WEBHOOK_IMAGE="$(WEBHOOK_IMAGE)" hack/cluster-smoke.sh deploy
+
+cluster-smoke: manifests kind-load
+	K3D_CLUSTER="$(K3D_CLUSTER)" WEBHOOK_IMAGE="$(WEBHOOK_IMAGE)" hack/cluster-smoke.sh smoke
 
 conformance:
 	@command -v go >/dev/null || { echo "missing: go"; exit 127; }

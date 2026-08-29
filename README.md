@@ -31,6 +31,7 @@ make generate
 make manifests
 make test
 make opa-test
+make cluster-smoke
 ```
 
 `controller-gen` is installed into `bin/` by the Makefile. The first Milestone 1 wiring is present; strict generated CRDs and deepcopy output land when the API skeletons are converted to Kubernetes runtime types.
@@ -42,3 +43,5 @@ The first `gear-webhooks` validation slice is present in `internal/webhooks`: ma
 `cmd/gear-webhooks` now starts a controller-runtime manager, registers the Mandate validating webhook at `/validate-gear-eu-v1-mandate`, and exposes health/readiness probes. `deploy/base` includes the webhook Deployment, Service, RBAC, namespace, and fail-closed `ValidatingWebhookConfiguration`.
 
 Ability pods labelled `gear.eu/ability=<ability-name>` are now handled by a mutating webhook at `/mutate-v1-pod`. It injects the `gear-pep` sidecar, the UID-scoped egress init container, PEP-only credential volumes, disables pod-level service account token automounting, and pins ability/PEP UIDs to `1001` and `1337`.
+
+`make cluster-smoke` creates or starts a local `k3d` cluster named `gear-lab`, builds the `gear-webhooks` image, imports it into the cluster, generates local webhook TLS certificates, deploys the CRDs and webhook stack, and applies smoke fixtures. The smoke passes only when the narrowed `Mandate` is accepted and a widened `Mandate` is rejected by Kubernetes admission.

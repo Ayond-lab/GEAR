@@ -1,0 +1,35 @@
+apiVersion: gear.eu/v1
+kind: Ability
+metadata:
+  name: cv-screen
+  namespace: gear-lab
+spec:
+  publisher:
+    id: ayond-lab
+    name: Ayond Lab
+  version: 0.3.0
+  manifestDigest: sha256:synthetic-cv-screen-0.3.0
+  certificationStatus: certified
+  declaredTriggers:
+    - type: folder
+      id: applications-inbox
+  connectorScopes:
+    - connector: applications-store
+      scope: read
+    - connector: candidate-record
+      scope: write
+  actionClasses:
+    - RECORD_ANNOTATE
+    - RECORD_MODIFY
+    - CANDIDATE_RANK
+    - OUTBOUND_COMMS
+  reversibilityClasses:
+    RECORD_ANNOTATE: reversible
+    RECORD_MODIFY: reversible
+    CANDIDATE_RANK: reversible
+    OUTBOUND_COMMS: irreversible
+  dataClasses:
+    - personal
+    - protected-employment
+  ceilings:
+    dailyActions: 500
