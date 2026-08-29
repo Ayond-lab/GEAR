@@ -11,6 +11,8 @@ resources:
   - gear-fixture-store-deployment.yaml
   - gear-inference-service.yaml
   - gear-inference-deployment.yaml
+  - gear-console-api-service.yaml
+  - gear-console-api-deployment.yaml
   - gear-triggers-service.yaml
   - gear-triggers-deployment.yaml
   - gear-controllers-service.yaml

@@ -11,6 +11,7 @@ import (
 	"gear/internal/auditprivacy"
 	"gear/internal/chain"
 	"gear/internal/cvdemo"
+	"gear/internal/latency"
 	"gear/internal/mandatederive"
 	"gear/internal/policy"
 	"gear/internal/webhooks"
@@ -149,7 +150,16 @@ func TestA7AuditChainTamperDetection(t *testing.T) {
 }
 
 func TestA8PolicyLatencyEvidence(t *testing.T) {
-	t.Skip("A8 requires latency harness and inference load in Milestone 6")
+	result, err := latency.Run(context.Background(), latency.Config{Trials: 200, InferenceWorkers: 2})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if result.Trials < 200 || result.InferenceIterations == 0 || len(result.Histogram) == 0 {
+		t.Fatalf("A8 expected 200 trials with active inference load and histogram, got %#v", result)
+	}
+	if result.Decisions["authorise"] != result.Trials || result.AuditEntries != result.Trials {
+		t.Fatalf("A8 expected all policy trials to authorise with durable audit evidence, got decisions=%#v audit=%d", result.Decisions, result.AuditEntries)
+	}
 }
 
 func TestA9AuditOutageDeniesAdjudication(t *testing.T) {
@@ -177,7 +187,15 @@ func TestA9AuditOutageDeniesAdjudication(t *testing.T) {
 }
 
 func TestA10AuditContainsNoPersonalData(t *testing.T) {
-	findings := auditprivacy.Scan(`{"subjectRef":"sha256:subject","payloadDigest":"sha256:payload","inputsDigest":"sha256:inputs"}`)
+	result, err := cvdemo.RunRecordAnnotationPath(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	auditJSON, err := json.Marshal(result.AuditEntries)
+	if err != nil {
+		t.Fatal(err)
+	}
+	findings := auditprivacy.Scan(string(auditJSON))
 	if len(findings) != 0 {
 		t.Fatalf("A10 expected no findings, got %#v", findings)
 	}

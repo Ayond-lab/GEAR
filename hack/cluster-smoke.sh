@@ -19,6 +19,7 @@ FIXTURE_STORE_IMAGE="${FIXTURE_STORE_IMAGE:-ghcr.io/ayond-lab/gear-fixture-store
 TRIGGERS_IMAGE="${TRIGGERS_IMAGE:-ghcr.io/ayond-lab/gear-triggers:dev}"
 CONTROLLERS_IMAGE="${CONTROLLERS_IMAGE:-ghcr.io/ayond-lab/gear-controllers:dev}"
 INFERENCE_IMAGE="${INFERENCE_IMAGE:-ghcr.io/ayond-lab/gear-inference:dev}"
+CONSOLE_API_IMAGE="${CONSOLE_API_IMAGE:-ghcr.io/ayond-lab/gear-console-api:dev}"
 CILIUM_VERSION="${CILIUM_VERSION:-1.20.1}"
 CILIUM_K8S_SERVICE_PORT="${CILIUM_K8S_SERVICE_PORT:-6443}"
 NETWORK_BASELINE="${NETWORK_BASELINE:-deploy/network/ability-egress-baseline.yaml}"
@@ -307,6 +308,7 @@ deploy_stack() {
 	kubectl -n "$WEBHOOK_NAMESPACE" set image statefulset/gear-audit gear-audit="$AUDIT_IMAGE"
 	kubectl -n "$WEBHOOK_NAMESPACE" set image deployment/gear-fixture-store gear-fixture-store="$FIXTURE_STORE_IMAGE"
 	kubectl -n "$WEBHOOK_NAMESPACE" set image deployment/gear-inference gear-inference="$INFERENCE_IMAGE"
+	kubectl -n "$WEBHOOK_NAMESPACE" set image deployment/gear-console-api gear-console-api="$CONSOLE_API_IMAGE"
 	kubectl -n "$WEBHOOK_NAMESPACE" set image deployment/gear-triggers gear-triggers="$TRIGGERS_IMAGE"
 	kubectl -n "$WEBHOOK_NAMESPACE" set image deployment/gear-controllers gear-controllers="$CONTROLLERS_IMAGE"
 	kubectl -n "$WEBHOOK_NAMESPACE" set image deployment/gear-mandate gear-mandate="$MANDATE_IMAGE"
@@ -316,13 +318,14 @@ deploy_stack() {
 	kubectl -n "$WEBHOOK_NAMESPACE" rollout status statefulset/gear-audit --timeout=120s
 	kubectl -n "$WEBHOOK_NAMESPACE" rollout status deployment/gear-fixture-store --timeout=120s
 	kubectl -n "$WEBHOOK_NAMESPACE" rollout status deployment/gear-inference --timeout=120s
+	kubectl -n "$WEBHOOK_NAMESPACE" rollout status deployment/gear-console-api --timeout=120s
 	kubectl -n "$WEBHOOK_NAMESPACE" rollout status deployment/gear-triggers --timeout=120s
 	kubectl -n "$WEBHOOK_NAMESPACE" rollout status deployment/gear-controllers --timeout=120s
 	kubectl -n "$WEBHOOK_NAMESPACE" rollout status deployment/gear-mandate --timeout=120s
 	kubectl -n "$WEBHOOK_NAMESPACE" rollout status deployment/gear-policy --timeout=120s
 	kubectl -n "$WEBHOOK_NAMESPACE" rollout status deployment/gear-webhooks --timeout=120s
 
-	echo "GEAR lab stack deployed with images ${WEBHOOK_IMAGE}, ${AUDIT_IMAGE}, ${POLICY_IMAGE}, ${MANDATE_IMAGE}, ${FIXTURE_STORE_IMAGE}, ${INFERENCE_IMAGE}, ${TRIGGERS_IMAGE}, ${CONTROLLERS_IMAGE}"
+	echo "GEAR lab stack deployed with images ${WEBHOOK_IMAGE}, ${AUDIT_IMAGE}, ${POLICY_IMAGE}, ${MANDATE_IMAGE}, ${FIXTURE_STORE_IMAGE}, ${INFERENCE_IMAGE}, ${TRIGGERS_IMAGE}, ${CONTROLLERS_IMAGE}, ${CONSOLE_API_IMAGE}"
 }
 
 run_smoke() {

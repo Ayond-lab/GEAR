@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GEAR Console</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">GEAR</span>
+        <span class="brand-copy">Governed Execution Audit Runtime</span>
+      </div>
+      <div class="status-strip" id="runtime-status">Loading</div>
+    </header>
+
+    <nav class="tabs" id="tabs" aria-label="Console views"></nav>
+
+    <main class="workspace">
+      <section class="view active" id="view-mandate-derivation" aria-labelledby="tab-mandate-derivation"></section>
+      <section class="view" id="view-escalation-queue" aria-labelledby="tab-escalation-queue"></section>
+      <section class="view" id="view-evidence-audit" aria-labelledby="tab-evidence-audit"></section>
+    </main>
+
+    <script type="module" src="/src/app.js"></script>
+  </body>
+</html>

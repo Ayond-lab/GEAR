@@ -15,6 +15,7 @@ import (
 	"gear/internal/pepcore"
 	"gear/internal/policy"
 
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -160,6 +161,62 @@ func GenerateApplications() []Application {
 	return applications
 }
 
+func CVScreenAbilitySpec() gearv1.AbilitySpec {
+	return gearv1.AbilitySpec{
+		Publisher:      gearv1.Publisher{ID: "ayond-lab", Name: "Ayond Lab"},
+		Version:        AbilityVersion,
+		ManifestDigest: DigestRef("cv-screen|0.3.0|synthetic-lab-manifest"),
+		Certification:  "certified",
+		DeclaredTriggers: []gearv1.TriggerDecl{
+			{Type: "folder", ID: TriggerID},
+		},
+		ConnectorScopes: []gearv1.ConnectorScope{
+			{Connector: "applications-store", Scope: "read"},
+			{Connector: "candidate-record", Scope: "write"},
+		},
+		ActionClasses: []string{"RECORD_ANNOTATE", "RECORD_MODIFY", "CANDIDATE_RANK", "OUTBOUND_COMMS"},
+		Reversibility: map[string]string{
+			"RECORD_ANNOTATE": "reversible",
+			"RECORD_MODIFY":   "reversible",
+			"CANDIDATE_RANK":  "reversible",
+			"OUTBOUND_COMMS":  "irreversible",
+		},
+		DataClasses: []string{"personal", "protected-employment"},
+		Ceilings:    gearv1.Ceilings{DailyActions: 500},
+	}
+}
+
+func NarrowedMandateSpec(now time.Time) gearv1.MandateSpec {
+	return gearv1.MandateSpec{
+		MandateID:        MandateRef,
+		Version:          MandateVersion,
+		AbilityRef:       AbilityRef,
+		AbilityVersion:   AbilityVersion,
+		PurposeStatement: "Identify candidates who will require work authorisation, for planning.",
+		LegalBasis:       "Right-to-work verification",
+		Sources:          []gearv1.Source{{Type: "folder", ID: TriggerID}},
+		ConnectorGrants: []gearv1.ConnectorScope{
+			{Connector: "applications-store", Scope: "read"},
+			{Connector: "candidate-record", Scope: "write"},
+		},
+		ActionGrants: []gearv1.ActionGrant{
+			{Class: "RECORD_ANNOTATE", Disposition: "permit"},
+			{Class: "RECORD_MODIFY", Disposition: "escalate"},
+			{Class: "CANDIDATE_RANK", Disposition: "forbid"},
+			{Class: "OUTBOUND_COMMS", Disposition: "forbid"},
+		},
+		Caps:       gearv1.Caps{DailyActions: 50},
+		Thresholds: map[string]string{"extractionConfidence": "0.70"},
+		Approvers:  []gearv1.Approver{{ID: "hiring-manager-1", Name: "Hiring Manager"}},
+		Egress:     []gearv1.EgressRule{},
+		ExpiresAt:  metav1.NewTime(time.Date(2027, 2, 1, 0, 0, 0, 0, time.UTC)),
+		CredentialRef: corev1.SecretReference{
+			Name:      "mnd-2026-021-credential",
+			Namespace: "gear-lab",
+		},
+	}
+}
+
 func ExtractWorkAuthorisation(application Application) Extraction {
 	lowered := strings.ToLower(application.ApplicationText)
 	status := StatusUnclear
@@ -215,7 +272,7 @@ func BuildRecordAnnotationPlan(applications []Application) TriggerPlan {
 				SubjectRef:     application.SubjectRef,
 				DataClasses:    []string{"personal", "protected-employment"},
 				Confidence:     extraction.Confidence,
-				TriggerRef:     gearv1.TriggerRef{Type: "folder", ID: TriggerID},
+				TriggerRef:     gearv1.TriggerRef{Type: "folder", ID: TriggerID, EventID: eventID},
 			},
 		})
 	}
@@ -329,7 +386,7 @@ func RunCandidateRankDeny(ctx context.Context, now func() time.Time) (RankDenyRe
 		SubjectRef:     application.SubjectRef,
 		DataClasses:    []string{"personal", "protected-employment"},
 		Confidence:     "0.91",
-		TriggerRef:     gearv1.TriggerRef{Type: "folder", ID: TriggerID},
+		TriggerRef:     gearv1.TriggerRef{Type: "folder", ID: TriggerID, EventID: SourceEventID(application.ApplicationID)},
 	}
 	action := ActionPlan{ApplicationID: application.ApplicationID, SourceEventID: SourceEventID(application.ApplicationID), SourceRef: SourceRef(application.ApplicationID), Spec: spec}
 	decision, err := mediator.RequestEffect(ctx, activeFromSpec(ActionRef(spec), spec), pepcore.EffectIntent{
