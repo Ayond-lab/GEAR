@@ -202,14 +202,6 @@ metadata:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: gear-pep-mtls
-  namespace: gear-lab
-type: Opaque
-data: {}
----
-apiVersion: v1
-kind: Secret
-metadata:
   name: gear-connector-credentials
   namespace: gear-lab
 type: Opaque

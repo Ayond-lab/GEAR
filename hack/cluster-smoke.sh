@@ -7,6 +7,7 @@ K3D_CLUSTER="${K3D_CLUSTER:-gear-lab}"
 WEBHOOK_NAMESPACE="${WEBHOOK_NAMESPACE:-gear-system}"
 SMOKE_NAMESPACE="${SMOKE_NAMESPACE:-gear-lab}"
 CERT_DIR="${CERT_DIR:-bin/cluster-smoke-certs}"
+POLICY_MTLS_DIR="${POLICY_MTLS_DIR:-${CERT_DIR}/policy-mtls}"
 RENDER_DIR="${RENDER_DIR:-bin/cluster-smoke-rendered}"
 SMOKE_OVERLAY="${SMOKE_OVERLAY:-deploy/smoke}"
 SMOKE_FIXTURES="${SMOKE_FIXTURES:-deploy/smoke/fixtures}"
@@ -173,6 +174,93 @@ EOF
 		-extfile "$CERT_DIR/server.conf" >/dev/null 2>&1
 }
 
+write_policy_mtls_certs() {
+	require_tool openssl
+	mkdir -p "$POLICY_MTLS_DIR"
+
+	openssl req \
+		-x509 \
+		-newkey rsa:2048 \
+		-nodes \
+		-keyout "$POLICY_MTLS_DIR/ca.key" \
+		-out "$POLICY_MTLS_DIR/ca.crt" \
+		-days 7 \
+		-subj "/CN=gear-local-policy-ca" >/dev/null 2>&1
+
+	cat >"$POLICY_MTLS_DIR/server.conf" <<EOF
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+prompt = no
+
+[req_distinguished_name]
+CN = gear-policy.${WEBHOOK_NAMESPACE}.svc
+
+[v3_req]
+keyUsage = critical, digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = gear-policy
+DNS.2 = gear-policy.${WEBHOOK_NAMESPACE}
+DNS.3 = gear-policy.${WEBHOOK_NAMESPACE}.svc
+DNS.4 = gear-policy.${WEBHOOK_NAMESPACE}.svc.cluster.local
+EOF
+
+	openssl req \
+		-new \
+		-newkey rsa:2048 \
+		-nodes \
+		-keyout "$POLICY_MTLS_DIR/server.key" \
+		-out "$POLICY_MTLS_DIR/server.csr" \
+		-config "$POLICY_MTLS_DIR/server.conf" >/dev/null 2>&1
+
+	openssl x509 \
+		-req \
+		-in "$POLICY_MTLS_DIR/server.csr" \
+		-CA "$POLICY_MTLS_DIR/ca.crt" \
+		-CAkey "$POLICY_MTLS_DIR/ca.key" \
+		-CAcreateserial \
+		-out "$POLICY_MTLS_DIR/server.crt" \
+		-days 7 \
+		-extensions v3_req \
+		-extfile "$POLICY_MTLS_DIR/server.conf" >/dev/null 2>&1
+
+	cat >"$POLICY_MTLS_DIR/client.conf" <<EOF
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+prompt = no
+
+[req_distinguished_name]
+CN = gear-pep
+
+[v3_req]
+keyUsage = critical, digitalSignature, keyEncipherment
+extendedKeyUsage = clientAuth
+EOF
+
+	openssl req \
+		-new \
+		-newkey rsa:2048 \
+		-nodes \
+		-keyout "$POLICY_MTLS_DIR/client.key" \
+		-out "$POLICY_MTLS_DIR/client.csr" \
+		-config "$POLICY_MTLS_DIR/client.conf" >/dev/null 2>&1
+
+	openssl x509 \
+		-req \
+		-in "$POLICY_MTLS_DIR/client.csr" \
+		-CA "$POLICY_MTLS_DIR/ca.crt" \
+		-CAkey "$POLICY_MTLS_DIR/ca.key" \
+		-CAcreateserial \
+		-out "$POLICY_MTLS_DIR/client.crt" \
+		-days 7 \
+		-extensions v3_req \
+		-extfile "$POLICY_MTLS_DIR/client.conf" >/dev/null 2>&1
+}
+
 render_smoke_manifests() {
 	require_tool kubectl
 	mkdir -p "$RENDER_DIR"
@@ -188,12 +276,26 @@ deploy_stack() {
 	require_tool kubectl
 
 	write_certs
+	write_policy_mtls_certs
 	render_smoke_manifests
 
 	kubectl apply -f deploy/base/namespace.yaml
+	kubectl apply -f "$SMOKE_FIXTURES/namespace.yaml"
 	kubectl -n "$WEBHOOK_NAMESPACE" create secret tls gear-webhooks-serving-cert \
 		--cert="$CERT_DIR/tls.crt" \
 		--key="$CERT_DIR/tls.key" \
+		--dry-run=client \
+		-o yaml | kubectl apply -f -
+	kubectl -n "$WEBHOOK_NAMESPACE" create secret generic gear-policy-mtls \
+		--from-file=tls.crt="$POLICY_MTLS_DIR/server.crt" \
+		--from-file=tls.key="$POLICY_MTLS_DIR/server.key" \
+		--from-file=ca.crt="$POLICY_MTLS_DIR/ca.crt" \
+		--dry-run=client \
+		-o yaml | kubectl apply -f -
+	kubectl -n "$SMOKE_NAMESPACE" create secret generic gear-pep-mtls \
+		--from-file=tls.crt="$POLICY_MTLS_DIR/client.crt" \
+		--from-file=tls.key="$POLICY_MTLS_DIR/client.key" \
+		--from-file=ca.crt="$POLICY_MTLS_DIR/ca.crt" \
 		--dry-run=client \
 		-o yaml | kubectl apply -f -
 	kubectl apply -f "$RENDER_DIR/rendered.yaml"

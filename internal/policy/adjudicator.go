@@ -3,6 +3,7 @@ package policy
 import (
 	"bytes"
 	"context"
+	"crypto/ecdsa"
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
@@ -14,6 +15,7 @@ import (
 	"time"
 
 	"gear/internal/chain"
+	"gear/internal/exectoken"
 )
 
 type AuditAppender interface {
@@ -21,17 +23,25 @@ type AuditAppender interface {
 }
 
 type Adjudicator struct {
-	runtime RuntimePolicy
-	audit   AuditAppender
-	now     func() time.Time
+	runtime  RuntimePolicy
+	audit    AuditAppender
+	now      func() time.Time
+	tokenKey *ecdsa.PrivateKey
+	tokenTTL time.Duration
 }
 
 func NewAdjudicator(runtime RuntimePolicy, audit AuditAppender) *Adjudicator {
 	return &Adjudicator{
-		runtime: runtime,
-		audit:   audit,
-		now:     time.Now,
+		runtime:  runtime,
+		audit:    audit,
+		now:      time.Now,
+		tokenKey: exectoken.DevelopmentPrivateKey(),
+		tokenTTL: 30 * time.Second,
 	}
+}
+
+func (a *Adjudicator) SetExecutionTokenPrivateKey(key *ecdsa.PrivateKey) {
+	a.tokenKey = key
 }
 
 func (a *Adjudicator) Adjudicate(ctx context.Context, raw []byte) DecisionResult {
@@ -58,6 +68,9 @@ func (a *Adjudicator) Adjudicate(ctx context.Context, raw []byte) DecisionResult
 		inputsDigest = InputDigest(input)
 		mandateRef = fmt.Sprintf("%s:%d", input.MandateRef, input.MandateVersion)
 		dataAccessed = []string{input.PayloadDigest}
+		if result.Decision == Authorise {
+			result = a.attachExecutionToken(result, actionRef, input, now())
+		}
 	}
 
 	entry := chain.Entry{
@@ -92,14 +105,46 @@ func (a *Adjudicator) Adjudicate(ctx context.Context, raw []byte) DecisionResult
 	result.AuditRef = chain.Ref(stored.Seq)
 
 	switch result.Decision {
-	case Authorise:
-		token := developmentExecutionToken(actionRef, input, stored.Seq)
-		result.Token = &token
 	case Escalate:
 		escalationRef := "esc-" + shortDigest([]byte(actionRef+result.AuditRef))
 		result.EscalationRef = &escalationRef
 	}
 
+	return result
+}
+
+func (a *Adjudicator) attachExecutionToken(result DecisionResult, actionRef string, input DecisionInput, now time.Time) DecisionResult {
+	scope, ok := a.runtime.TokenScopes[input.ActionClass]
+	if !ok || scope.Connector == "" || scope.Scope == "" {
+		return DecisionResult{
+			Decision:  Deny,
+			RuleFired: RuleRef{ID: "R-TOKEN-SCOPE-MISSING", Version: 1},
+			Reason:    "execution token scope is unavailable; fail closed",
+		}
+	}
+	ttl := a.tokenTTL
+	if ttl <= 0 || ttl > 30*time.Second {
+		ttl = 30 * time.Second
+	}
+	claims := exectoken.Claims{
+		ActionRef:      actionRef,
+		Connector:      scope.Connector,
+		Scope:          scope.Scope,
+		PayloadDigest:  input.PayloadDigest,
+		MandateVersion: input.MandateVersion,
+		Audience:       "gear-pep",
+		ExpiresAt:      now.Add(ttl).Unix(),
+		JTI:            shortDigest([]byte(fmt.Sprintf("%s|%s|%d|%d", actionRef, input.PayloadDigest, input.MandateVersion, now.UnixNano()))),
+	}
+	token, err := exectoken.SignES256(a.tokenKey, claims)
+	if err != nil {
+		return DecisionResult{
+			Decision:  Deny,
+			RuleFired: RuleRef{ID: "R-TOKEN-ISSUE", Version: 1},
+			Reason:    "execution token could not be issued; fail closed",
+		}
+	}
+	result.Token = &token
 	return result
 }
 
@@ -121,10 +166,6 @@ func InputDigest(input DecisionInput) string {
 		return digestBytes([]byte(fmt.Sprintf("%#v", input)))
 	}
 	return digestBytes(data)
-}
-
-func developmentExecutionToken(actionRef string, input DecisionInput, seq uint64) string {
-	return "dev-token." + shortDigest([]byte(fmt.Sprintf("%s|%s|%d|%d", actionRef, input.PayloadDigest, input.MandateVersion, seq)))
 }
 
 func digestBytes(data []byte) string {
@@ -186,9 +227,7 @@ func (c *HTTPAuditClient) Append(ctx context.Context, entry chain.Entry) (chain.
 
 func NewHandler(adjudicator *Adjudicator) http.Handler {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/healthz", func(w http.ResponseWriter, _ *http.Request) {
-		writeJSON(w, http.StatusOK, map[string]string{"component": "gear-policy", "status": "ok"})
-	})
+	mux.Handle("/healthz", NewHealthHandler())
 	mux.HandleFunc("/v1/adjudicate", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodPost {
 			http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
@@ -204,6 +243,12 @@ func NewHandler(adjudicator *Adjudicator) http.Handler {
 		writeJSON(w, http.StatusOK, response)
 	})
 	return mux
+}
+
+func NewHealthHandler() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		writeJSON(w, http.StatusOK, map[string]string{"component": "gear-policy", "status": "ok"})
+	})
 }
 
 func writeJSON(w http.ResponseWriter, status int, value any) {

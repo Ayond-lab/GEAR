@@ -10,6 +10,6 @@ spec:
   selector:
     app.kubernetes.io/name: gear-policy
   ports:
-    - name: http
-      port: 8080
-      targetPort: http
+    - name: https
+      port: 443
+      targetPort: https

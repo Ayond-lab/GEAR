@@ -18,10 +18,16 @@ type Disposition struct {
 	Clause string
 }
 
+type EffectScope struct {
+	Connector string
+	Scope     string
+}
+
 type RuntimePolicy struct {
 	ActionDispositions  map[string]Disposition
 	ConfidenceThreshold string
 	ApproverCount       int
+	TokenScopes         map[string]EffectScope
 }
 
 type DecisionResult struct {
@@ -103,5 +109,9 @@ func DefaultCVRuntimePolicy() RuntimePolicy {
 		},
 		ConfidenceThreshold: "0.70",
 		ApproverCount:       1,
+		TokenScopes: map[string]EffectScope{
+			"RECORD_ANNOTATE": {Connector: "candidate-record", Scope: "write"},
+			"RECORD_MODIFY":   {Connector: "candidate-record", Scope: "write"},
+		},
 	}
 }

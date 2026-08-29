@@ -54,6 +54,8 @@ func cvRuntimePolicy() RuntimePolicy {
 		},
 		ConfidenceThreshold: "0.70",
 		ApproverCount:       1,
+		TokenScopes: map[string]EffectScope{
+			"RECORD_ANNOTATE": {Connector: "candidate-record", Scope: "write"},
+		},
 	}
 }
-

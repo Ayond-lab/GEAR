@@ -30,12 +30,26 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: GEAR_ADDR
+              value: ":8443"
+            - name: GEAR_HEALTH_ADDR
               value: ":8080"
             - name: GEAR_AUDIT_URL
               value: http://gear-audit.gear-system.svc.cluster.local:8080
+            - name: GEAR_TLS_CERT
+              value: /var/run/gear/policy-mtls/tls.crt
+            - name: GEAR_TLS_KEY
+              value: /var/run/gear/policy-mtls/tls.key
+            - name: GEAR_CLIENT_CA
+              value: /var/run/gear/policy-mtls/ca.crt
           ports:
             - name: http
               containerPort: 8080
+            - name: https
+              containerPort: 8443
+          volumeMounts:
+            - name: gear-policy-mtls
+              mountPath: /var/run/gear/policy-mtls
+              readOnly: true
           readinessProbe:
             httpGet:
               path: /healthz
@@ -49,3 +63,7 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               drop: ["ALL"]
+      volumes:
+        - name: gear-policy-mtls
+          secret:
+            secretName: gear-policy-mtls

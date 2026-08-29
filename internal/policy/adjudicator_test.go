@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"gear/internal/chain"
+	"gear/internal/exectoken"
 )
 
 func TestAdjudicatorWritesAuditBeforeReturningDecision(t *testing.T) {
@@ -23,11 +24,37 @@ func TestAdjudicatorWritesAuditBeforeReturningDecision(t *testing.T) {
 	if response.Token == nil || *response.Token == "" {
 		t.Fatalf("expected token only for authorised decision, got %#v", response.Token)
 	}
+	claims, err := exectoken.VerifyES256(exectoken.DevelopmentPublicKey(), *response.Token)
+	if err != nil {
+		t.Fatalf("expected signed execution token, got %v", err)
+	}
+	if claims.Audience != "gear-pep" || claims.Connector != "candidate-record" || claims.Scope != "write" || claims.PayloadDigest != "sha256:payload" {
+		t.Fatalf("unexpected execution token claims %#v", claims)
+	}
 	if len(audit.entries) != 1 {
 		t.Fatalf("expected one durable audit append before return, got %d", len(audit.entries))
 	}
 	if audit.entries[0].Type != "decision" || audit.entries[0].Decision != "authorise" || audit.entries[0].Rule != "R-PERMIT:1" {
 		t.Fatalf("unexpected decision audit entry %#v", audit.entries[0])
+	}
+}
+
+func TestAdjudicatorDeniesWhenAuthorisedActionHasNoTokenScope(t *testing.T) {
+	runtime := cvRuntimePolicy()
+	runtime.TokenScopes = nil
+	audit := &recordingAudit{}
+	adjudicator := NewAdjudicator(runtime, audit)
+
+	response := adjudicator.Adjudicate(context.Background(), []byte(validDecisionInputJSON("RECORD_ANNOTATE", "0.84")))
+
+	if response.Decision != Deny || response.RuleFired.ID != "R-TOKEN-SCOPE-MISSING" {
+		t.Fatalf("expected missing token scope denial, got %#v", response)
+	}
+	if response.Token != nil {
+		t.Fatalf("expected no token when scope is unavailable, got %#v", response.Token)
+	}
+	if len(audit.entries) != 1 || audit.entries[0].Decision != "deny" {
+		t.Fatalf("expected denied token-scope result to be audited, got %#v", audit.entries)
 	}
 }
 

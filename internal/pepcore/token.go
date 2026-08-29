@@ -1,9 +1,12 @@
 package pepcore
 
 import (
+	"crypto/ecdsa"
 	"errors"
 	"fmt"
 	"time"
+
+	"gear/internal/exectoken"
 )
 
 var ErrTokenRejected = errors.New("execution token rejected")
@@ -28,20 +31,52 @@ type EffectRequest struct {
 }
 
 type TokenVerifier struct {
-	seen map[string]bool
-	now  func() time.Time
+	seen      map[string]bool
+	now       func() time.Time
+	publicKey *ecdsa.PublicKey
 }
 
 func NewTokenVerifier() *TokenVerifier {
+	return NewTokenVerifierWithKey(exectoken.DevelopmentPublicKey())
+}
+
+func NewTokenVerifierWithKey(publicKey *ecdsa.PublicKey) *TokenVerifier {
 	return &TokenVerifier{
-		seen: make(map[string]bool),
-		now:  time.Now,
+		seen:      make(map[string]bool),
+		now:       time.Now,
+		publicKey: publicKey,
 	}
 }
 
+func (v *TokenVerifier) VerifyJWS(token string, request EffectRequest, allowedScopes map[string]bool) error {
+	if v == nil {
+		return fmt.Errorf("%w: verifier unavailable", ErrTokenRejected)
+	}
+	claims, err := exectoken.VerifyES256(v.publicKey, token)
+	if err != nil {
+		return fmt.Errorf("%w: %v", ErrTokenRejected, err)
+	}
+	return v.Verify(Claims{
+		ActionRef:      claims.ActionRef,
+		Connector:      claims.Connector,
+		Scope:          claims.Scope,
+		PayloadDigest:  claims.PayloadDigest,
+		MandateVersion: claims.MandateVersion,
+		Audience:       claims.Audience,
+		ExpiresAt:      time.Unix(claims.ExpiresAt, 0),
+		JTI:            claims.JTI,
+	}, request, allowedScopes)
+}
+
 func (v *TokenVerifier) Verify(claims Claims, request EffectRequest, allowedScopes map[string]bool) error {
+	if v == nil {
+		return fmt.Errorf("%w: verifier unavailable", ErrTokenRejected)
+	}
 	if v.now == nil {
 		v.now = time.Now
+	}
+	if v.seen == nil {
+		v.seen = map[string]bool{}
 	}
 	if claims.Audience != "gear-pep" {
 		return fmt.Errorf("%w: wrong audience", ErrTokenRejected)
@@ -70,4 +105,3 @@ func (v *TokenVerifier) Verify(claims Claims, request EffectRequest, allowedScop
 	v.seen[claims.JTI] = true
 	return nil
 }
-

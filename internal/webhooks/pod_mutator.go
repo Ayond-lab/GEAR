@@ -108,7 +108,27 @@ func pepContainer() corev1.Container {
 			},
 			{
 				Name:  "GEAR_POLICY_URL",
-				Value: "http://gear-policy.gear-system.svc.cluster.local:8080",
+				Value: "https://gear-policy.gear-system.svc.cluster.local:443",
+			},
+			{
+				Name:  "GEAR_AUDIT_URL",
+				Value: "http://gear-audit.gear-system.svc.cluster.local:8080",
+			},
+			{
+				Name:  "GEAR_POLICY_CLIENT_CERT",
+				Value: PEPMTLSMountPath + "/tls.crt",
+			},
+			{
+				Name:  "GEAR_POLICY_CLIENT_KEY",
+				Value: PEPMTLSMountPath + "/tls.key",
+			},
+			{
+				Name:  "GEAR_POLICY_CA",
+				Value: PEPMTLSMountPath + "/ca.crt",
+			},
+			{
+				Name:  "GEAR_ALLOWED_SCOPES",
+				Value: "candidate-record:write",
 			},
 			{
 				Name: "GEAR_ABILITY_REF",

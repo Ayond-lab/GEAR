@@ -46,9 +46,9 @@ The request is accepted only when action class and payload digest match the acti
 
 - `deny`: no effect is executed.
 - `escalate`: no effect is executed; the escalation reference is returned when policy supplies one.
-- `authorise`: the policy audit reference is returned and the execution token is retained for the next verification/execution slice. No effect is executed until token verification and final effect execution are implemented.
+- `authorise`: `gear-pep` verifies the ES256 execution token, rejects replayed `jti` values, re-checks connector, scope, action class, payload digest, and mandate version, writes a durable `effect` entry to `gear-audit`, and only then executes the scoped synthetic effect.
 
-Policy outage, malformed policy responses, incomplete trusted state, or authorisation without an execution token all fail closed to `deny`.
+Policy outage, malformed policy responses, incomplete trusted state, token rejection, effect-audit outage, or authorisation without an execution token all fail closed to `deny`.
 
 The ability container calls only this loopback API. `gear-pep` mediates inference, adjudication, and effect execution. Connector credentials and mTLS client certificates are mounted only into `gear-pep`.
 

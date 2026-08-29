@@ -29,6 +29,8 @@ The response contains a decision, rule reference, reason, audit reference, and o
 
 `gear-policy` must receive a durable acknowledgement from `gear-audit` before returning this response. If audit is unavailable or the append is not acknowledged, the response is `deny` with rule `R-AUDIT-UNAVAILABLE`, and no token or escalation reference is returned.
 
+When the decision is `authorise`, `gear-policy` issues a single-use ES256 JWS execution token with `aud=gear-pep`, `exp<=30s`, and claims for `actionRef`, `connector`, `scope`, `payloadDigest`, `mandateVersion`, and `jti`. If the runtime policy cannot derive a connector/scope for the action, the final decision is `deny` with rule `R-TOKEN-SCOPE-MISSING`.
+
 Allowed decision values:
 
 - `authorise`

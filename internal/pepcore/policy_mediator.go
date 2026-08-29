@@ -10,6 +10,7 @@ import (
 	"strings"
 	"time"
 
+	"gear/internal/chain"
 	"gear/internal/policy"
 )
 
@@ -19,15 +20,62 @@ type PolicyAdjudicator interface {
 	Adjudicate(ctx context.Context, input policy.DecisionInput) (policy.DecisionResult, error)
 }
 
+type EffectAuditAppender interface {
+	Append(ctx context.Context, entry chain.Entry) (chain.Entry, error)
+}
+
+type EffectExecutor interface {
+	Execute(ctx context.Context, active ActiveAction, intent EffectIntent) (EffectExecution, error)
+}
+
+type EffectExecution struct {
+	ConnectorRef string
+}
+
+type SyntheticEffectExecutor struct{}
+
+func (SyntheticEffectExecutor) Execute(_ context.Context, _ ActiveAction, intent EffectIntent) (EffectExecution, error) {
+	return EffectExecution{ConnectorRef: intent.Connector + ":" + intent.Scope}, nil
+}
+
 type PolicyEffectMediator struct {
-	Policy PolicyAdjudicator
+	Policy        PolicyAdjudicator
+	TokenVerifier *TokenVerifier
+	Audit         EffectAuditAppender
+	Executor      EffectExecutor
+	AllowedScopes map[string]bool
 }
 
 func NewPolicyEffectMediator(policy PolicyAdjudicator) PolicyEffectMediator {
-	return PolicyEffectMediator{Policy: policy}
+	return PolicyEffectMediator{
+		Policy:        policy,
+		TokenVerifier: NewTokenVerifier(),
+		Executor:      SyntheticEffectExecutor{},
+		AllowedScopes: DefaultAllowedScopes(),
+	}
 }
 
-func (m PolicyEffectMediator) RequestEffect(ctx context.Context, active ActiveAction, _ EffectIntent) (EffectDecision, error) {
+func (m PolicyEffectMediator) WithAudit(audit EffectAuditAppender) PolicyEffectMediator {
+	m.Audit = audit
+	return m
+}
+
+func (m PolicyEffectMediator) WithAllowedScopes(scopes map[string]bool) PolicyEffectMediator {
+	m.AllowedScopes = scopes
+	return m
+}
+
+func (m PolicyEffectMediator) WithTokenVerifier(verifier *TokenVerifier) PolicyEffectMediator {
+	m.TokenVerifier = verifier
+	return m
+}
+
+func (m PolicyEffectMediator) WithExecutor(executor EffectExecutor) PolicyEffectMediator {
+	m.Executor = executor
+	return m
+}
+
+func (m PolicyEffectMediator) RequestEffect(ctx context.Context, active ActiveAction, intent EffectIntent) (EffectDecision, error) {
 	input, err := DecisionInputFromActiveAction(active)
 	if err != nil {
 		return EffectDecision{
@@ -37,9 +85,10 @@ func (m PolicyEffectMediator) RequestEffect(ctx context.Context, active ActiveAc
 			Reason:    "trusted active action state is incomplete; fail closed",
 		}, nil
 	}
+	actionRef := policy.ActionRef(input)
 	if m.Policy == nil {
 		return EffectDecision{
-			ActionRef: active.ActionRef,
+			ActionRef: actionRef,
 			Decision:  "deny",
 			RuleFired: Rule{ID: "R-PEP-POLICY-UNAVAILABLE", Version: 1},
 			Reason:    "policy adjudicator unavailable; fail closed",
@@ -49,7 +98,7 @@ func (m PolicyEffectMediator) RequestEffect(ctx context.Context, active ActiveAc
 	result, err := m.Policy.Adjudicate(ctx, input)
 	if err != nil {
 		return EffectDecision{
-			ActionRef: active.ActionRef,
+			ActionRef: actionRef,
 			Decision:  "deny",
 			RuleFired: Rule{ID: "R-PEP-POLICY-UNAVAILABLE", Version: 1},
 			Reason:    "policy adjudicator unavailable; fail closed",
@@ -57,7 +106,7 @@ func (m PolicyEffectMediator) RequestEffect(ctx context.Context, active ActiveAc
 	}
 
 	decision := EffectDecision{
-		ActionRef: active.ActionRef,
+		ActionRef: actionRef,
 		Decision:  string(result.Decision),
 		RuleFired: Rule{ID: result.RuleFired.ID, Version: result.RuleFired.Version},
 		Reason:    result.Reason,
@@ -73,22 +122,98 @@ func (m PolicyEffectMediator) RequestEffect(ctx context.Context, active ActiveAc
 	case policy.Authorise:
 		if result.Token == nil || *result.Token == "" {
 			return EffectDecision{
-				ActionRef: active.ActionRef,
+				ActionRef: actionRef,
 				Decision:  "deny",
 				RuleFired: Rule{ID: "R-PEP-EXECUTION-TOKEN-MISSING", Version: 1},
 				Reason:    "policy authorised without execution token; fail closed",
 				AuditRef:  result.AuditRef,
 			}, nil
 		}
+		if m.TokenVerifier == nil {
+			return denyAfterPolicy(actionRef, result.AuditRef, "R-PEP-TOKEN-VERIFIER-UNAVAILABLE", "execution token verifier unavailable; fail closed")
+		}
+		allowedScopes := m.AllowedScopes
+		if allowedScopes == nil {
+			allowedScopes = map[string]bool{}
+		}
+		request := EffectRequest{
+			ActionRef:      actionRef,
+			Connector:      intent.Connector,
+			Scope:          intent.Scope,
+			PayloadDigest:  intent.PayloadDigest,
+			MandateVersion: active.MandateVersion,
+		}
+		if err := m.TokenVerifier.VerifyJWS(*result.Token, request, allowedScopes); err != nil {
+			return denyAfterPolicy(actionRef, result.AuditRef, "R-PEP-TOKEN-REJECTED", "execution token rejected; fail closed")
+		}
+		if err := validateFinalEffectAuthority(active, intent, allowedScopes); err != nil {
+			return denyAfterPolicy(actionRef, result.AuditRef, "R-PEP-AUTHORITY-RECHECK", "final effect authority re-check failed; fail closed")
+		}
+		if m.Executor == nil {
+			return denyAfterPolicy(actionRef, result.AuditRef, "R-PEP-EFFECT-EXECUTOR-UNAVAILABLE", "effect executor unavailable; fail closed")
+		}
+		if m.Audit == nil {
+			return denyAfterPolicy(actionRef, result.AuditRef, "R-PEP-EFFECT-AUDIT-UNAVAILABLE", "effect audit unavailable; fail closed")
+		}
+		stored, err := m.Audit.Append(ctx, effectAuditEntry(input, actionRef, result, intent))
+		if err != nil {
+			return denyAfterPolicy(actionRef, result.AuditRef, "R-PEP-EFFECT-AUDIT-UNAVAILABLE", "effect audit unavailable; fail closed")
+		}
+		if _, err := m.Executor.Execute(ctx, active, intent); err != nil {
+			return denyAfterPolicy(actionRef, result.AuditRef, "R-PEP-EFFECT-EXECUTION-FAILED", "effect execution failed; fail closed")
+		}
+		decision.EffectRef = chain.Ref(stored.Seq)
 		return decision, nil
 	default:
 		return EffectDecision{
-			ActionRef: active.ActionRef,
+			ActionRef: actionRef,
 			Decision:  "deny",
 			RuleFired: Rule{ID: "R-PEP-POLICY-DECISION-INVALID", Version: 1},
 			Reason:    "policy returned an unknown decision; fail closed",
 			AuditRef:  result.AuditRef,
 		}, nil
+	}
+}
+
+func denyAfterPolicy(actionRef, auditRef, rule, reason string) (EffectDecision, error) {
+	return EffectDecision{
+		ActionRef: actionRef,
+		Decision:  "deny",
+		RuleFired: Rule{ID: rule, Version: 1},
+		Reason:    reason,
+		AuditRef:  auditRef,
+	}, nil
+}
+
+func validateFinalEffectAuthority(active ActiveAction, intent EffectIntent, allowedScopes map[string]bool) error {
+	if intent.ActionClass != active.ActionClass {
+		return fmt.Errorf("%w: actionClass mismatch", ErrRequestRejected)
+	}
+	if intent.PayloadDigest != active.PayloadDigest {
+		return fmt.Errorf("%w: payloadDigest mismatch", ErrRequestRejected)
+	}
+	if !allowedScopes[intent.Connector+":"+intent.Scope] {
+		return fmt.Errorf("%w: unsupported connector scope", ErrRequestRejected)
+	}
+	return nil
+}
+
+func effectAuditEntry(input policy.DecisionInput, actionRef string, result policy.DecisionResult, intent EffectIntent) chain.Entry {
+	dataAccessed := []string{intent.PayloadDigest}
+	if intent.BodyDigest != "" {
+		dataAccessed = append(dataAccessed, intent.BodyDigest)
+	}
+	return chain.Entry{
+		TS:           time.Now().UTC().Format(time.RFC3339Nano),
+		Type:         "effect",
+		ActionRef:    actionRef,
+		Actor:        "gear-pep",
+		Mandate:      fmt.Sprintf("%s:%d", input.MandateRef, input.MandateVersion),
+		Rule:         fmt.Sprintf("%s:%d", result.RuleFired.ID, result.RuleFired.Version),
+		Decision:     string(result.Decision),
+		InputsDigest: policy.InputDigest(input),
+		Model:        "none",
+		DataAccessed: dataAccessed,
 	}
 }
 
@@ -123,6 +248,22 @@ func cloneCounters(counters map[string]int) map[string]int {
 		clone[key] = value
 	}
 	return clone
+}
+
+func DefaultAllowedScopes() map[string]bool {
+	return map[string]bool{"candidate-record:write": true}
+}
+
+func ParseAllowedScopes(value string) map[string]bool {
+	scopes := map[string]bool{}
+	for _, item := range strings.Split(value, ",") {
+		item = strings.TrimSpace(item)
+		if item == "" {
+			continue
+		}
+		scopes[item] = true
+	}
+	return scopes
 }
 
 type HTTPPolicyClient struct {
