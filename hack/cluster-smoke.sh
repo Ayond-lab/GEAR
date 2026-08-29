@@ -11,6 +11,9 @@ RENDER_DIR="${RENDER_DIR:-bin/cluster-smoke-rendered}"
 SMOKE_OVERLAY="${SMOKE_OVERLAY:-deploy/smoke}"
 SMOKE_FIXTURES="${SMOKE_FIXTURES:-deploy/smoke/fixtures}"
 WEBHOOK_IMAGE="${WEBHOOK_IMAGE:-ghcr.io/ayond-lab/gear-webhooks:dev}"
+CILIUM_VERSION="${CILIUM_VERSION:-1.20.1}"
+CILIUM_K8S_SERVICE_PORT="${CILIUM_K8S_SERVICE_PORT:-6443}"
+NETWORK_BASELINE="${NETWORK_BASELINE:-deploy/network/ability-egress-baseline.yaml}"
 
 require_tool() {
 	local tool="$1"
@@ -31,12 +34,87 @@ ensure_cluster() {
 	if cluster_exists; then
 		k3d cluster start "$K3D_CLUSTER" >/dev/null 2>&1 || true
 	else
-		k3d cluster create "$K3D_CLUSTER" --servers 1 --agents 0 --wait --k3s-arg "--disable=traefik@server:0"
+		k3d cluster create "$K3D_CLUSTER" \
+			--servers 1 \
+			--agents 0 \
+			--wait \
+			--k3s-arg "--disable=traefik@server:0" \
+			--k3s-arg "--flannel-backend=none@server:0" \
+			--k3s-arg "--disable-network-policy@server:0"
 	fi
 
 	kubectl config use-context "k3d-${K3D_CLUSTER}" >/dev/null
 	kubectl cluster-info >/dev/null
 	echo "Cluster ready: k3d-${K3D_CLUSTER}"
+}
+
+delete_cluster() {
+	require_tool k3d
+
+	if cluster_exists; then
+		k3d cluster delete "$K3D_CLUSTER"
+	else
+		echo "Cluster does not exist: ${K3D_CLUSTER}"
+	fi
+}
+
+use_cluster_context() {
+	require_tool kubectl
+	kubectl config use-context "k3d-${K3D_CLUSTER}" >/dev/null
+}
+
+cilium_installed() {
+	kubectl -n kube-system get daemonset cilium >/dev/null 2>&1
+}
+
+cilium_k8s_service_host() {
+	kubectl get node "k3d-${K3D_CLUSTER}-server-0" -o jsonpath='{.status.addresses[?(@.type=="InternalIP")].address}'
+}
+
+install_cilium() {
+	require_tool cilium
+	require_tool kubectl
+
+	use_cluster_context
+
+	if cilium_installed; then
+		cilium status --wait
+		echo "Cilium already installed and healthy."
+		return
+	fi
+
+	local k8s_service_host
+	k8s_service_host="$(cilium_k8s_service_host)"
+
+	cilium install \
+		--version "$CILIUM_VERSION" \
+		--set operator.replicas=1 \
+		--set ipam.operator.clusterPoolIPv4PodCIDRList=10.42.0.0/16 \
+		--set kubeProxyReplacement=true \
+		--set k8sServiceHost="$k8s_service_host" \
+		--set k8sServicePort="$CILIUM_K8S_SERVICE_PORT" \
+		--set hubble.enabled=true \
+		--set hubble.relay.enabled=true \
+		--set hubble.ui.enabled=false
+
+	cilium status --wait
+	echo "Cilium installed and healthy."
+}
+
+cilium_status() {
+	require_tool cilium
+	use_cluster_context
+	cilium status --wait
+}
+
+apply_network_baseline() {
+	require_tool kubectl
+	use_cluster_context
+
+	kubectl apply -f "$SMOKE_FIXTURES/namespace.yaml"
+	kubectl apply -f "$NETWORK_BASELINE"
+	kubectl -n "$SMOKE_NAMESPACE" get networkpolicy gear-ability-egress-baseline
+	echo "Ability egress NetworkPolicy baseline applied."
 }
 
 write_certs() {
@@ -157,15 +235,36 @@ case "$mode" in
 	cluster-up)
 		ensure_cluster
 		;;
+	cluster-reset)
+		delete_cluster
+		;;
+	cilium-install)
+		ensure_cluster
+		install_cilium
+		;;
+	cilium-status)
+		cilium_status
+		;;
+	network-baseline)
+		ensure_cluster
+		install_cilium
+		apply_network_baseline
+		;;
 	deploy)
+		ensure_cluster
+		install_cilium
+		apply_network_baseline
 		deploy_stack
 		;;
 	smoke)
+		ensure_cluster
+		install_cilium
+		apply_network_baseline
 		deploy_stack
 		run_smoke
 		;;
 	*)
-		echo "usage: $0 [cluster-up|deploy|smoke]" >&2
+		echo "usage: $0 [cluster-up|cluster-reset|cilium-install|cilium-status|network-baseline|deploy|smoke]" >&2
 		exit 2
 		;;
 esac

@@ -8,11 +8,12 @@ SETUP_ENVTEST_VERSION ?= v0.20.4
 ENVTEST_K8S_VERSION ?= 1.32.0
 ENVTEST_ASSETS_DIR ?= $(LOCALBIN)/envtest
 K3D_CLUSTER ?= gear-lab
+CILIUM_VERSION ?= 1.20.1
 GOARCH ?= $(shell go env GOARCH)
 WEBHOOK_IMAGE ?= ghcr.io/ayond-lab/gear-webhooks:dev
 WEBHOOK_IMAGE_CONTEXT ?= $(LOCALBIN)/docker/gear-webhooks
 
-.PHONY: tools controller-gen setup-envtest generate manifests test test-go test-inference test-console test-envtest opa-test cluster-up docker-build kind-load deploy cluster-smoke conformance experiment evidence-pack
+.PHONY: tools controller-gen setup-envtest generate manifests test test-go test-inference test-console test-envtest opa-test cluster-up cluster-reset cilium-install cilium-status network-baseline docker-build kind-load deploy cluster-smoke conformance experiment evidence-pack
 
 tools:
 	@echo "Required external tools: go 1.24, python 3.12, node 22, kubectl, helm, opa, k3d/k3s, cilium, hubble, k6"
@@ -71,6 +72,18 @@ opa-test:
 cluster-up:
 	K3D_CLUSTER="$(K3D_CLUSTER)" hack/cluster-smoke.sh cluster-up
 
+cluster-reset:
+	K3D_CLUSTER="$(K3D_CLUSTER)" hack/cluster-smoke.sh cluster-reset
+
+cilium-install: cluster-up
+	K3D_CLUSTER="$(K3D_CLUSTER)" CILIUM_VERSION="$(CILIUM_VERSION)" hack/cluster-smoke.sh cilium-install
+
+cilium-status:
+	K3D_CLUSTER="$(K3D_CLUSTER)" hack/cluster-smoke.sh cilium-status
+
+network-baseline: cilium-install
+	K3D_CLUSTER="$(K3D_CLUSTER)" hack/cluster-smoke.sh network-baseline
+
 docker-build:
 	@command -v go >/dev/null || { echo "missing: go"; exit 127; }
 	@command -v docker >/dev/null || { echo "missing: docker"; exit 127; }
@@ -82,10 +95,10 @@ kind-load: cluster-up docker-build
 	@command -v k3d >/dev/null || { echo "missing: k3d"; exit 127; }
 	k3d image import "$(WEBHOOK_IMAGE)" --cluster "$(K3D_CLUSTER)"
 
-deploy: manifests kind-load
+deploy: manifests network-baseline kind-load
 	K3D_CLUSTER="$(K3D_CLUSTER)" WEBHOOK_IMAGE="$(WEBHOOK_IMAGE)" hack/cluster-smoke.sh deploy
 
-cluster-smoke: manifests kind-load
+cluster-smoke: manifests network-baseline kind-load
 	K3D_CLUSTER="$(K3D_CLUSTER)" WEBHOOK_IMAGE="$(WEBHOOK_IMAGE)" hack/cluster-smoke.sh smoke
 
 conformance:
