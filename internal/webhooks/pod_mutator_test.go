@@ -45,6 +45,7 @@ func TestMutateAbilityPodInjectsPEPAndEgressControls(t *testing.T) {
 	}
 	assertVolumeMount(t, *pep, PEPMTLSVolumeName, PEPMTLSMountPath)
 	assertVolumeMount(t, *pep, ConnectorCredentialsVolumeName, ConnectorCredentialsMountPath)
+	assertEnvValue(t, *pep, "GEAR_POLICY_URL", "http://gear-policy.gear-system.svc.cluster.local:8080")
 
 	init := findContainer(pod.Spec.InitContainers, EgressInitContainerName)
 	if init == nil {
@@ -240,6 +241,16 @@ func assertVolume(t *testing.T, volumes []corev1.Volume, name string, secretName
 		}
 	}
 	t.Fatalf("expected secret volume %s from secret %s in %#v", name, secretName, volumes)
+}
+
+func assertEnvValue(t *testing.T, container corev1.Container, name string, value string) {
+	t.Helper()
+	for _, env := range container.Env {
+		if env.Name == name && env.Value == value {
+			return
+		}
+	}
+	t.Fatalf("expected env %s=%s in %#v", name, value, container.Env)
 }
 
 func hasCapability(capabilities []corev1.Capability, name string) bool {

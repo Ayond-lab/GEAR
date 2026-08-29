@@ -107,6 +107,10 @@ func pepContainer() corev1.Container {
 				Value: "127.0.0.1:9191",
 			},
 			{
+				Name:  "GEAR_POLICY_URL",
+				Value: "http://gear-policy.gear-system.svc.cluster.local:8080",
+			},
+			{
 				Name: "GEAR_ABILITY_REF",
 				ValueFrom: &corev1.EnvVarSource{
 					FieldRef: &corev1.ObjectFieldSelector{

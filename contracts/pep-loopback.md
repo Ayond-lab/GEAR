@@ -42,7 +42,13 @@ Request:
 }
 ```
 
-The request is accepted only when action class and payload digest match the active governed action. Until the policy-backed mediator is configured, the endpoint returns a fail-closed `deny` and executes no effect.
+The request is accepted only when action class and payload digest match the active governed action. `gear-pep` constructs the fixed ten-field policy input from trusted active action state, calls `gear-policy` at `/v1/adjudicate`, and enforces the decision returned by policy.
+
+- `deny`: no effect is executed.
+- `escalate`: no effect is executed; the escalation reference is returned when policy supplies one.
+- `authorise`: the policy audit reference is returned and the execution token is retained for the next verification/execution slice. No effect is executed until token verification and final effect execution are implemented.
+
+Policy outage, malformed policy responses, incomplete trusted state, or authorisation without an execution token all fail closed to `deny`.
 
 The ability container calls only this loopback API. `gear-pep` mediates inference, adjudication, and effect execution. Connector credentials and mTLS client certificates are mounted only into `gear-pep`.
 

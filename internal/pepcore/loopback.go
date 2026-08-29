@@ -22,16 +22,18 @@ var (
 )
 
 type ActiveAction struct {
-	ActionRef      string   `json:"actionRef"`
-	ActionClass    string   `json:"actionClass"`
-	AbilityRef     string   `json:"abilityRef"`
-	AbilityVersion string   `json:"abilityVersion"`
-	MandateRef     string   `json:"mandateRef"`
-	MandateVersion int      `json:"mandateVersion"`
-	SubjectRef     string   `json:"subjectRef"`
-	DataClasses    []string `json:"dataClasses"`
-	Confidence     string   `json:"confidence"`
-	PayloadDigest  string   `json:"payloadDigest"`
+	ActionRef      string         `json:"actionRef"`
+	ActionClass    string         `json:"actionClass"`
+	AbilityRef     string         `json:"abilityRef"`
+	AbilityVersion string         `json:"abilityVersion"`
+	MandateRef     string         `json:"mandateRef"`
+	MandateVersion int            `json:"mandateVersion"`
+	SubjectRef     string         `json:"subjectRef"`
+	DataClasses    []string       `json:"dataClasses"`
+	Confidence     string         `json:"confidence"`
+	Reversibility  string         `json:"reversibility"`
+	Counters       map[string]int `json:"counters"`
+	PayloadDigest  string         `json:"payloadDigest"`
 }
 
 func (a ActiveAction) Available() bool {
@@ -238,6 +240,9 @@ func validateExtractRequest(request ExtractRequest) error {
 	if request.PayloadDigest == "" {
 		return fmt.Errorf("%w: payloadDigest is required", ErrRequestRejected)
 	}
+	if !isSHA256Ref(request.PayloadDigest) {
+		return fmt.Errorf("%w: payloadDigest must be a sha256 reference", ErrRequestRejected)
+	}
 	if request.Profile == "" {
 		return fmt.Errorf("%w: profile is required", ErrRequestRejected)
 	}
@@ -256,6 +261,12 @@ func validateEffectIntent(intent EffectIntent) error {
 	}
 	if intent.PayloadDigest == "" {
 		return fmt.Errorf("%w: payloadDigest is required", ErrRequestRejected)
+	}
+	if !isSHA256Ref(intent.PayloadDigest) {
+		return fmt.Errorf("%w: payloadDigest must be a sha256 reference", ErrRequestRejected)
+	}
+	if intent.BodyDigest != "" && !isSHA256Ref(intent.BodyDigest) {
+		return fmt.Errorf("%w: bodyDigest must be a sha256 reference", ErrRequestRejected)
 	}
 	return nil
 }
@@ -311,6 +322,10 @@ func ActiveActionFromEnv(lookup func(string) (string, bool)) (ActiveAction, erro
 		}
 		mandateVersion = parsed
 	}
+	counters, err := countersFromEnv(lookup)
+	if err != nil {
+		return ActiveAction{}, err
+	}
 
 	return ActiveAction{
 		ActionRef:      env(lookup, "GEAR_ACTION_REF"),
@@ -322,8 +337,37 @@ func ActiveActionFromEnv(lookup func(string) (string, bool)) (ActiveAction, erro
 		SubjectRef:     env(lookup, "GEAR_SUBJECT_REF"),
 		DataClasses:    csvEnv(lookup, "GEAR_DATA_CLASSES"),
 		Confidence:     env(lookup, "GEAR_CONFIDENCE"),
+		Reversibility:  env(lookup, "GEAR_REVERSIBILITY"),
+		Counters:       counters,
 		PayloadDigest:  env(lookup, "GEAR_PAYLOAD_DIGEST"),
 	}, nil
+}
+
+func countersFromEnv(lookup func(string) (string, bool)) (map[string]int, error) {
+	counters := map[string]int{}
+	if value := env(lookup, "GEAR_COUNTERS"); value != "" {
+		if err := json.Unmarshal([]byte(value), &counters); err != nil {
+			return nil, fmt.Errorf("invalid GEAR_COUNTERS: %w", err)
+		}
+	}
+	for _, item := range []struct {
+		key  string
+		name string
+	}{
+		{key: "GEAR_COUNTER_DAILY_ACTIONS", name: "dailyActions"},
+		{key: "GEAR_COUNTER_PER_SUBJECT", name: "perSubject"},
+	} {
+		value := env(lookup, item.key)
+		if value == "" {
+			continue
+		}
+		parsed, err := strconv.Atoi(value)
+		if err != nil {
+			return nil, fmt.Errorf("invalid %s: %w", item.key, err)
+		}
+		counters[item.name] = parsed
+	}
+	return counters, nil
 }
 
 func env(lookup func(string) (string, bool), key string) string {
@@ -359,4 +403,20 @@ func NewLoopbackServer(addr string, handler http.Handler) (*http.Server, error) 
 		Handler:           handler,
 		ReadHeaderTimeout: 5 * time.Second,
 	}, nil
+}
+
+func isSHA256Ref(value string) bool {
+	if !strings.HasPrefix(value, "sha256:") {
+		return false
+	}
+	digest := strings.TrimPrefix(value, "sha256:")
+	if len(digest) == 64 {
+		for _, r := range digest {
+			if !strings.ContainsRune("0123456789abcdefABCDEF", r) {
+				return false
+			}
+		}
+		return true
+	}
+	return digest != ""
 }

@@ -149,16 +149,19 @@ func TestValidateLoopbackListenAddress(t *testing.T) {
 
 func TestActiveActionFromEnv(t *testing.T) {
 	env := map[string]string{
-		"GEAR_ACTION_REF":      "ga-001",
-		"GEAR_ACTION_CLASS":    "RECORD_ANNOTATE",
-		"GEAR_ABILITY_REF":     "cv-screen",
-		"GEAR_ABILITY_VERSION": "0.3.0",
-		"GEAR_MANDATE_REF":     "MND-2026-021",
-		"GEAR_MANDATE_VERSION": "2",
-		"GEAR_SUBJECT_REF":     "sha256:subject",
-		"GEAR_DATA_CLASSES":    "personal, protected-employment",
-		"GEAR_CONFIDENCE":      "0.84",
-		"GEAR_PAYLOAD_DIGEST":  "sha256:payload",
+		"GEAR_ACTION_REF":          "ga-001",
+		"GEAR_ACTION_CLASS":        "RECORD_ANNOTATE",
+		"GEAR_ABILITY_REF":         "cv-screen",
+		"GEAR_ABILITY_VERSION":     "0.3.0",
+		"GEAR_MANDATE_REF":         "MND-2026-021",
+		"GEAR_MANDATE_VERSION":     "2",
+		"GEAR_SUBJECT_REF":         "sha256:subject",
+		"GEAR_DATA_CLASSES":        "personal, protected-employment",
+		"GEAR_CONFIDENCE":          "0.84",
+		"GEAR_REVERSIBILITY":       "reversible",
+		"GEAR_COUNTERS":            `{"dailyActions":12}`,
+		"GEAR_COUNTER_PER_SUBJECT": "1",
+		"GEAR_PAYLOAD_DIGEST":      "sha256:payload",
 	}
 	action, err := ActiveActionFromEnv(func(key string) (string, bool) {
 		value, ok := env[key]
@@ -167,7 +170,7 @@ func TestActiveActionFromEnv(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !action.Available() || action.MandateVersion != 2 || len(action.DataClasses) != 2 {
+	if !action.Available() || action.MandateVersion != 2 || len(action.DataClasses) != 2 || action.Counters["perSubject"] != 1 {
 		t.Fatalf("unexpected active action %#v", action)
 	}
 }
@@ -193,6 +196,8 @@ func activeActionFixture() ActiveAction {
 		SubjectRef:     "sha256:subject",
 		DataClasses:    []string{"personal", "protected-employment"},
 		Confidence:     "0.84",
+		Reversibility:  "reversible",
+		Counters:       map[string]int{"dailyActions": 12, "perSubject": 1},
 		PayloadDigest:  "sha256:payload",
 	}
 }
