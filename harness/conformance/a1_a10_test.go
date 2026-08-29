@@ -10,6 +10,7 @@ import (
 	gearv1 "gear/api/v1"
 	"gear/internal/auditprivacy"
 	"gear/internal/chain"
+	"gear/internal/cvdemo"
 	"gear/internal/mandatederive"
 	"gear/internal/policy"
 	"gear/internal/webhooks"
@@ -51,7 +52,19 @@ func TestA2CandidateRankDeniedUnderMND2026021V2(t *testing.T) {
 }
 
 func TestA3SyntheticAnnotationAndEscalationPath(t *testing.T) {
-	t.Skip("A3 requires controllers, fixture store, inference service, and integration harness in Milestone 5")
+	result, err := cvdemo.RunRecordAnnotationPath(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if result.Summary.Applications != 60 || result.Summary.Authorised != 45 || result.Summary.Escalated != 3 || result.Summary.Effects != 45 {
+		t.Fatalf("A3 unexpected summary %#v", result.Summary)
+	}
+	if len(result.Escalations) != 3 || result.Summary.PendingEscalations != 3 {
+		t.Fatalf("A3 expected 3 pending escalation resources, got %d", len(result.Escalations))
+	}
+	if !result.ChainVerification.OK || len(result.EffectsWithoutDecision) != 0 {
+		t.Fatalf("A3 expected verified chain and no orphan effects, got verification=%#v orphan=%#v", result.ChainVerification, result.EffectsWithoutDecision)
+	}
 }
 
 func TestA4PromptInjectionCannotChangePolicyInputBoundary(t *testing.T) {
@@ -70,6 +83,16 @@ func TestA4PromptInjectionCannotChangePolicyInputBoundary(t *testing.T) {
 	}`))
 	if err == nil {
 		t.Fatal("A4 expected extra prompt/model text to be rejected")
+	}
+	result, err := cvdemo.RunPromptInjectionPair(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if result.CleanExtraction.WorkAuthorisationStatus != result.InjectedExtraction.WorkAuthorisationStatus || result.CleanExtraction.Confidence != result.InjectedExtraction.Confidence {
+		t.Fatalf("A4 expected extraction policy fields to remain stable, got clean=%#v injected=%#v", result.CleanExtraction, result.InjectedExtraction)
+	}
+	if result.CleanResponse.Decision != result.InjectedResponse.Decision || result.CleanResponse.RuleFired.ID != result.InjectedResponse.RuleFired.ID {
+		t.Fatalf("A4 expected same decision/rule for held-constant input, got clean=%#v injected=%#v", result.CleanResponse, result.InjectedResponse)
 	}
 }
 

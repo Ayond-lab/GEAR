@@ -47,6 +47,7 @@ func TestMutateAbilityPodInjectsPEPAndEgressControls(t *testing.T) {
 	assertVolumeMount(t, *pep, ConnectorCredentialsVolumeName, ConnectorCredentialsMountPath)
 	assertEnvValue(t, *pep, "GEAR_POLICY_URL", "https://gear-policy.gear-system.svc.cluster.local:443")
 	assertEnvValue(t, *pep, "GEAR_AUDIT_URL", "http://gear-audit.gear-system.svc.cluster.local:8080")
+	assertEnvValue(t, *pep, "GEAR_INFERENCE_URL", "http://gear-inference.gear-system.svc.cluster.local:8080")
 	assertEnvValue(t, *pep, "GEAR_POLICY_CLIENT_CERT", PEPMTLSMountPath+"/tls.crt")
 	assertEnvValue(t, *pep, "GEAR_POLICY_CLIENT_KEY", PEPMTLSMountPath+"/tls.key")
 	assertEnvValue(t, *pep, "GEAR_POLICY_CA", PEPMTLSMountPath+"/ca.crt")

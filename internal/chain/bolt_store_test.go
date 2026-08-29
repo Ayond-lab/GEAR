@@ -133,6 +133,36 @@ func TestBoltStoreReportsEffectsWithoutDecisions(t *testing.T) {
 	}
 }
 
+func TestBoltStoreReportsEffectsBeforeDecisions(t *testing.T) {
+	store := openTestBoltStore(t, filepath.Join(t.TempDir(), "audit.db"))
+	defer store.Close()
+
+	appendEntry(t, store, Entry{
+		Type:      "effect",
+		ActionRef: "ga-late-decision",
+		Actor:     "gear-pep",
+		Mandate:   "MND-2026-021:2",
+		Rule:      "R-PERMIT:1",
+		Decision:  "authorise",
+	})
+	appendEntry(t, store, Entry{
+		Type:      "decision",
+		ActionRef: "ga-late-decision",
+		Actor:     "gear-policy",
+		Mandate:   "MND-2026-021:2",
+		Rule:      "R-PERMIT:1",
+		Decision:  "authorise",
+	})
+
+	missing, err := store.EffectsWithoutDecisions(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(missing) != 1 || missing[0] != "ga-late-decision" {
+		t.Fatalf("expected effect before decision to be reported, got %#v", missing)
+	}
+}
+
 func buildTamperStore(t *testing.T) string {
 	t.Helper()
 	path := filepath.Join(t.TempDir(), "audit.db")

@@ -109,19 +109,17 @@ func (s *BoltStore) EffectsWithoutDecisions(ctx context.Context) ([]string, erro
 		return nil, err
 	}
 
-	decisions := make(map[string]bool)
-	for _, entry := range entries {
-		if entry.Type == "decision" && entry.ActionRef != "" {
-			decisions[entry.ActionRef] = true
-		}
-	}
-
+	precedingDecisions := make(map[string]bool)
 	missingSet := make(map[string]bool)
 	for _, entry := range entries {
-		if entry.Type != "effect" || entry.ActionRef == "" {
+		if entry.ActionRef == "" {
 			continue
 		}
-		if !decisions[entry.ActionRef] {
+		if entry.Type == "decision" {
+			precedingDecisions[entry.ActionRef] = true
+			continue
+		}
+		if entry.Type == "effect" && !precedingDecisions[entry.ActionRef] {
 			missingSet[entry.ActionRef] = true
 		}
 	}

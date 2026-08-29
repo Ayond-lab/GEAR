@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gear-controllers
+  namespace: gear-system
+  labels:
+    app.kubernetes.io/name: gear-controllers
+    app.kubernetes.io/part-of: gear
+spec:
+  selector:
+    app.kubernetes.io/name: gear-controllers
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http

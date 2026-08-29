@@ -21,6 +21,7 @@ func main() {
 	listen := flag.String("listen", getenv("GEAR_PEP_LISTEN", pepcore.LoopbackListenAddress), "loopback listen address")
 	policyURL := flag.String("policy-url", getenv("GEAR_POLICY_URL", "http://gear-policy.gear-system.svc.cluster.local:8080"), "gear-policy base URL")
 	auditURL := flag.String("audit-url", getenv("GEAR_AUDIT_URL", "http://gear-audit.gear-system.svc.cluster.local:8080"), "gear-audit base URL")
+	inferenceURL := flag.String("inference-url", os.Getenv("GEAR_INFERENCE_URL"), "gear-inference base URL")
 	policyClientCert := flag.String("policy-client-cert", os.Getenv("GEAR_POLICY_CLIENT_CERT"), "gear-policy client certificate")
 	policyClientKey := flag.String("policy-client-key", os.Getenv("GEAR_POLICY_CLIENT_KEY"), "gear-policy client key")
 	policyCA := flag.String("policy-ca", os.Getenv("GEAR_POLICY_CA"), "gear-policy CA certificate")
@@ -59,8 +60,13 @@ func main() {
 		WithAudit(policy.NewHTTPAuditClient(*auditURL)).
 		WithTokenVerifier(verifier).
 		WithAllowedScopes(pepcore.ParseAllowedScopes(*allowedScopes))
+	var extractor pepcore.Extractor
+	if *inferenceURL != "" {
+		extractor = pepcore.NewHTTPExtractor(*inferenceURL)
+	}
 	server, err := pepcore.NewLoopbackServer(*listen, pepcore.NewLoopbackHandler(pepcore.LoopbackConfig{
 		ActiveAction: active,
+		Extractor:    extractor,
 		Effects:      effects,
 	}))
 	if err != nil {

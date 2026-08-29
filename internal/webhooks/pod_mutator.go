@@ -115,6 +115,10 @@ func pepContainer() corev1.Container {
 				Value: "http://gear-audit.gear-system.svc.cluster.local:8080",
 			},
 			{
+				Name:  "GEAR_INFERENCE_URL",
+				Value: "http://gear-inference.gear-system.svc.cluster.local:8080",
+			},
+			{
 				Name:  "GEAR_POLICY_CLIENT_CERT",
 				Value: PEPMTLSMountPath + "/tls.crt",
 			},

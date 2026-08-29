@@ -26,8 +26,15 @@ HOSTILE_RUNNER_IMAGE ?= ghcr.io/ayond-lab/gear-hostile-runner:dev
 HOSTILE_RUNNER_IMAGE_CONTEXT ?= $(LOCALBIN)/docker/gear-hostile-runner
 HOSTILE_TARGET_IMAGE ?= ghcr.io/ayond-lab/gear-hostile-target:dev
 HOSTILE_TARGET_IMAGE_CONTEXT ?= $(LOCALBIN)/docker/gear-hostile-target
+FIXTURE_STORE_IMAGE ?= ghcr.io/ayond-lab/gear-fixture-store:dev
+FIXTURE_STORE_IMAGE_CONTEXT ?= $(LOCALBIN)/docker/gear-fixture-store
+TRIGGERS_IMAGE ?= ghcr.io/ayond-lab/gear-triggers:dev
+TRIGGERS_IMAGE_CONTEXT ?= $(LOCALBIN)/docker/gear-triggers
+CONTROLLERS_IMAGE ?= ghcr.io/ayond-lab/gear-controllers:dev
+CONTROLLERS_IMAGE_CONTEXT ?= $(LOCALBIN)/docker/gear-controllers
+INFERENCE_IMAGE ?= ghcr.io/ayond-lab/gear-inference:dev
 
-.PHONY: tools controller-gen setup-envtest generate manifests test test-go test-inference test-console test-envtest opa-test cluster-up cluster-reset cilium-install cilium-status network-baseline docker-build docker-build-audit docker-build-policy docker-build-mandate core-images docker-build-pep docker-build-netinit docker-build-hostile-runner docker-build-hostile-target hostile-images kind-load core-load hostile-load deploy cluster-smoke conformance experiment experiment-a1 experiment-a5 experiment-a6 experiment-a7 experiment-a9 evidence-pack
+.PHONY: tools controller-gen setup-envtest generate manifests test test-go test-inference test-console test-envtest opa-test cluster-up cluster-reset cilium-install cilium-status network-baseline docker-build docker-build-audit docker-build-policy docker-build-mandate docker-build-fixture-store docker-build-triggers docker-build-controllers docker-build-inference core-images docker-build-pep docker-build-netinit docker-build-hostile-runner docker-build-hostile-target hostile-images kind-load core-load hostile-load deploy cluster-smoke conformance experiment experiment-a1 experiment-a2 experiment-a3 experiment-a4 experiment-a5 experiment-a6 experiment-a7 experiment-a9 evidence-pack
 
 tools:
 	@echo "Required external tools: go 1.24, python 3.12, node 22, kubectl, helm, opa, k3d/k3s, cilium, hubble, k6"
@@ -59,8 +66,17 @@ manifests: controller-gen
 	@test -f deploy/base/crds/gear.eu_governedactions.yaml
 	@test -f deploy/base/crds/gear.eu_escalationitems.yaml
 	@test -f deploy/base/gear-audit-statefulset.yaml
+	@test -f deploy/base/gear-fixture-store-pvc.yaml
+	@test -f deploy/base/gear-controllers-deployment.yaml
+	@test -f deploy/base/gear-controllers-service.yaml
+	@test -f deploy/base/gear-fixture-store-deployment.yaml
+	@test -f deploy/base/gear-fixture-store-service.yaml
+	@test -f deploy/base/gear-inference-deployment.yaml
+	@test -f deploy/base/gear-inference-service.yaml
 	@test -f deploy/base/gear-mandate-deployment.yaml
 	@test -f deploy/base/gear-policy-deployment.yaml
+	@test -f deploy/base/gear-triggers-deployment.yaml
+	@test -f deploy/base/gear-triggers-service.yaml
 	@test -f deploy/base/webhook-deployment.yaml
 	@test -f deploy/base/webhook-service.yaml
 	@test -f deploy/base/webhook-validatingconfiguration.yaml
@@ -129,7 +145,32 @@ docker-build-mandate:
 	CGO_ENABLED=0 GOOS=linux GOARCH="$(GOARCH)" go build -o "$(MANDATE_IMAGE_CONTEXT)/gear-mandate" ./cmd/gear-mandate
 	docker build --platform "linux/$(GOARCH)" -f deploy/docker/gear-mandate.Dockerfile -t "$(MANDATE_IMAGE)" "$(MANDATE_IMAGE_CONTEXT)"
 
-core-images: docker-build-audit docker-build-policy docker-build-mandate
+docker-build-fixture-store:
+	@command -v go >/dev/null || { echo "missing: go"; exit 127; }
+	@command -v docker >/dev/null || { echo "missing: docker"; exit 127; }
+	mkdir -p "$(FIXTURE_STORE_IMAGE_CONTEXT)"
+	CGO_ENABLED=0 GOOS=linux GOARCH="$(GOARCH)" go build -o "$(FIXTURE_STORE_IMAGE_CONTEXT)/gear-fixture-store" ./cmd/gear-fixture-store
+	docker build --platform "linux/$(GOARCH)" -f deploy/docker/gear-fixture-store.Dockerfile -t "$(FIXTURE_STORE_IMAGE)" "$(FIXTURE_STORE_IMAGE_CONTEXT)"
+
+docker-build-triggers:
+	@command -v go >/dev/null || { echo "missing: go"; exit 127; }
+	@command -v docker >/dev/null || { echo "missing: docker"; exit 127; }
+	mkdir -p "$(TRIGGERS_IMAGE_CONTEXT)"
+	CGO_ENABLED=0 GOOS=linux GOARCH="$(GOARCH)" go build -o "$(TRIGGERS_IMAGE_CONTEXT)/gear-triggers" ./cmd/gear-triggers
+	docker build --platform "linux/$(GOARCH)" -f deploy/docker/gear-triggers.Dockerfile -t "$(TRIGGERS_IMAGE)" "$(TRIGGERS_IMAGE_CONTEXT)"
+
+docker-build-controllers:
+	@command -v go >/dev/null || { echo "missing: go"; exit 127; }
+	@command -v docker >/dev/null || { echo "missing: docker"; exit 127; }
+	mkdir -p "$(CONTROLLERS_IMAGE_CONTEXT)"
+	CGO_ENABLED=0 GOOS=linux GOARCH="$(GOARCH)" go build -o "$(CONTROLLERS_IMAGE_CONTEXT)/gear-controllers" ./cmd/gear-controllers
+	docker build --platform "linux/$(GOARCH)" -f deploy/docker/gear-controllers.Dockerfile -t "$(CONTROLLERS_IMAGE)" "$(CONTROLLERS_IMAGE_CONTEXT)"
+
+docker-build-inference:
+	@command -v docker >/dev/null || { echo "missing: docker"; exit 127; }
+	docker build --platform "linux/$(GOARCH)" -f deploy/docker/gear-inference.Dockerfile -t "$(INFERENCE_IMAGE)" inference
+
+core-images: docker-build-audit docker-build-policy docker-build-mandate docker-build-fixture-store docker-build-triggers docker-build-controllers docker-build-inference
 
 docker-build-pep:
 	@command -v go >/dev/null || { echo "missing: go"; exit 127; }
@@ -160,21 +201,21 @@ hostile-images: docker-build-pep docker-build-netinit docker-build-hostile-runne
 
 kind-load: cluster-up docker-build core-images
 	@command -v k3d >/dev/null || { echo "missing: k3d"; exit 127; }
-	k3d image import "$(WEBHOOK_IMAGE)" "$(AUDIT_IMAGE)" "$(POLICY_IMAGE)" "$(MANDATE_IMAGE)" --cluster "$(K3D_CLUSTER)"
+	k3d image import "$(WEBHOOK_IMAGE)" "$(AUDIT_IMAGE)" "$(POLICY_IMAGE)" "$(MANDATE_IMAGE)" "$(FIXTURE_STORE_IMAGE)" "$(TRIGGERS_IMAGE)" "$(CONTROLLERS_IMAGE)" "$(INFERENCE_IMAGE)" --cluster "$(K3D_CLUSTER)"
 
 core-load: cluster-up core-images
 	@command -v k3d >/dev/null || { echo "missing: k3d"; exit 127; }
-	k3d image import "$(AUDIT_IMAGE)" "$(POLICY_IMAGE)" "$(MANDATE_IMAGE)" --cluster "$(K3D_CLUSTER)"
+	k3d image import "$(AUDIT_IMAGE)" "$(POLICY_IMAGE)" "$(MANDATE_IMAGE)" "$(FIXTURE_STORE_IMAGE)" "$(TRIGGERS_IMAGE)" "$(CONTROLLERS_IMAGE)" "$(INFERENCE_IMAGE)" --cluster "$(K3D_CLUSTER)"
 
 hostile-load: cluster-up hostile-images
 	@command -v k3d >/dev/null || { echo "missing: k3d"; exit 127; }
 	k3d image import "$(PEP_IMAGE)" "$(NETINIT_IMAGE)" "$(HOSTILE_RUNNER_IMAGE)" "$(HOSTILE_TARGET_IMAGE)" --cluster "$(K3D_CLUSTER)"
 
 deploy: manifests network-baseline kind-load
-	K3D_CLUSTER="$(K3D_CLUSTER)" WEBHOOK_IMAGE="$(WEBHOOK_IMAGE)" AUDIT_IMAGE="$(AUDIT_IMAGE)" POLICY_IMAGE="$(POLICY_IMAGE)" MANDATE_IMAGE="$(MANDATE_IMAGE)" hack/cluster-smoke.sh deploy
+	K3D_CLUSTER="$(K3D_CLUSTER)" WEBHOOK_IMAGE="$(WEBHOOK_IMAGE)" AUDIT_IMAGE="$(AUDIT_IMAGE)" POLICY_IMAGE="$(POLICY_IMAGE)" MANDATE_IMAGE="$(MANDATE_IMAGE)" FIXTURE_STORE_IMAGE="$(FIXTURE_STORE_IMAGE)" TRIGGERS_IMAGE="$(TRIGGERS_IMAGE)" CONTROLLERS_IMAGE="$(CONTROLLERS_IMAGE)" INFERENCE_IMAGE="$(INFERENCE_IMAGE)" hack/cluster-smoke.sh deploy
 
 cluster-smoke: manifests network-baseline kind-load
-	K3D_CLUSTER="$(K3D_CLUSTER)" WEBHOOK_IMAGE="$(WEBHOOK_IMAGE)" AUDIT_IMAGE="$(AUDIT_IMAGE)" POLICY_IMAGE="$(POLICY_IMAGE)" MANDATE_IMAGE="$(MANDATE_IMAGE)" hack/cluster-smoke.sh smoke
+	K3D_CLUSTER="$(K3D_CLUSTER)" WEBHOOK_IMAGE="$(WEBHOOK_IMAGE)" AUDIT_IMAGE="$(AUDIT_IMAGE)" POLICY_IMAGE="$(POLICY_IMAGE)" MANDATE_IMAGE="$(MANDATE_IMAGE)" FIXTURE_STORE_IMAGE="$(FIXTURE_STORE_IMAGE)" TRIGGERS_IMAGE="$(TRIGGERS_IMAGE)" CONTROLLERS_IMAGE="$(CONTROLLERS_IMAGE)" INFERENCE_IMAGE="$(INFERENCE_IMAGE)" hack/cluster-smoke.sh smoke
 
 conformance:
 	@command -v go >/dev/null || { echo "missing: go"; exit 127; }
@@ -184,6 +225,12 @@ experiment:
 	@test -n "$(ID)" || { echo "usage: make experiment ID=A1"; exit 2; }
 	@if [ "$(ID)" = "A1" ]; then \
 		$(MAKE) experiment-a1; \
+	elif [ "$(ID)" = "A2" ]; then \
+		$(MAKE) experiment-a2; \
+	elif [ "$(ID)" = "A3" ]; then \
+		$(MAKE) experiment-a3; \
+	elif [ "$(ID)" = "A4" ]; then \
+		$(MAKE) experiment-a4; \
 	elif [ "$(ID)" = "A5" ]; then \
 		$(MAKE) experiment-a5; \
 	elif [ "$(ID)" = "A6" ]; then \
@@ -199,6 +246,15 @@ experiment:
 
 experiment-a1:
 	go run ./harness/mandate/cmd/a1
+
+experiment-a2:
+	go run ./harness/cvdemo/cmd/a2
+
+experiment-a3:
+	go run ./harness/cvdemo/cmd/a3
+
+experiment-a4:
+	go run ./harness/cvdemo/cmd/a4
 
 experiment-a5: cluster-smoke
 	K3D_CLUSTER="$(K3D_CLUSTER)" go run ./harness/admission/cmd/a5

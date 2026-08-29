@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gear-inference
+  namespace: gear-system
+  labels:
+    app.kubernetes.io/name: gear-inference
+    app.kubernetes.io/part-of: gear
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: gear-inference
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: gear-inference
+        app.kubernetes.io/part-of: gear
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: gear-inference
+          image: ghcr.io/ayond-lab/gear-inference:dev
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: GEAR_FIXTURE_STORE_URL
+              value: http://gear-fixture-store.gear-system.svc.cluster.local:8080
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]

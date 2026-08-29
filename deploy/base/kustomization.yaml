@@ -6,6 +6,15 @@ resources:
   - crds/gear.eu_escalationitems.yaml
   - gear-audit-service.yaml
   - gear-audit-statefulset.yaml
+  - gear-fixture-store-pvc.yaml
+  - gear-fixture-store-service.yaml
+  - gear-fixture-store-deployment.yaml
+  - gear-inference-service.yaml
+  - gear-inference-deployment.yaml
+  - gear-triggers-service.yaml
+  - gear-triggers-deployment.yaml
+  - gear-controllers-service.yaml
+  - gear-controllers-deployment.yaml
   - gear-mandate-service.yaml
   - gear-mandate-deployment.yaml
   - gear-policy-service.yaml

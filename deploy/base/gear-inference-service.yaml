@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gear-inference
+  namespace: gear-system
+  labels:
+    app.kubernetes.io/name: gear-inference
+    app.kubernetes.io/part-of: gear
+spec:
+  selector:
+    app.kubernetes.io/name: gear-inference
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
